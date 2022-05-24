@@ -1,9 +1,10 @@
 Maze map;
 void setup() {
-  size(560, 600);
+  size(560, 620);
   map = new Maze("highScore.txt", "pacman.txt");
 }
 void draw() {
+  map.displayMaze();
 }
 void keyPressed() {
 }
