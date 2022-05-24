@@ -1,2 +1,4 @@
-public class Ghost extends Character {
+public class Ghost implements Character {
+  boolean eatable;
+  int mode;
 }

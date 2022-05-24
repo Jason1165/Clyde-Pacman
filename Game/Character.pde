@@ -1,2 +1,2 @@
-public class Character {
+interface Character {
 }
