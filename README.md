@@ -10,4 +10,5 @@ Both: Sorting out branching and merging.
 
 ##### 05/24/2022
 Jason: Added on to the skeleton of maze and completed file reading related methods and a basic display of the maze. Added files to data folder for storing information.
+
 Ryan:  Added abstract methods to character interface and created constructor for Pacman class. Started methods in Pacman class.
