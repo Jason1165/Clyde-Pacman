@@ -17,40 +17,47 @@ public class Maze {
 
   int getHighScore(String file) {
     try {
-      File f = new File(file);
-      Scanner in = new Scanner(f);
-      int x = in.nextInt();
-      in.close();
-      return x;
+      BufferedReader r = createReader(file);
+      String x = r.readLine();
+      int bestScore = Integer.parseInt(x);
+      return bestScore;
     }
-    catch (FileNotFoundException ex) {
-      println("Throw");
+    catch (IOException ex) {
+      ex.printStackTrace();
       return 0;
     }
   }
 
   void generateMaze(String file) {
     try {
-      File f = new File(file);
-      Scanner in = new Scanner(f);
-      ArrayList lines = new ArrayList<String>();
-      while (in.hasNextLine()) {
-        String x = in.nextLine();
-        lines.add(x);
-        println("hello");
+      BufferedReader r = createReader(file);
+      String line;
+      line = r.readLine();
+      ArrayList<String> lines = new ArrayList<String>();
+      while (line != null) {
+        lines.add(line);
+        line = r.readLine();
       }
-      in.close();
+        
       maze = new char[lines.size()][];
-      //for (int i = 0; i < lines.size(); i++) {
-      //  maze[i] = toCharArray(lines.get(i));
-      //}
+      for (int i = 0; i < lines.size(); i++) {
+        maze[i] = toCharArray(lines.get(i));
+      }
     }
-    catch (FileNotFoundException ex) {
-      println("Thorw");
+    catch (IOException ex) {
+      ex.printStackTrace();
     }
   }
   
   void displayMaze() {
+    for (int i = 0; i < maze.length; i++) {
+      for (int j = 0; j < maze[i].length; j++) {
+        if (maze[i][j] == 'W') {
+          fill(0, 0, 255);
+          rect(j*20, i*20, 20, 20);
+        }
+      }
+    }
   }
   
   int getScore() {
