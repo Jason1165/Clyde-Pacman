@@ -24,10 +24,52 @@ public class Maze {
       return x;
     }
     catch (FileNotFoundException ex) {
+      println("Throw");
       return 0;
     }
   }
 
   void generateMaze(String file) {
+    try {
+      File f = new File(file);
+      Scanner in = new Scanner(f);
+      ArrayList lines = new ArrayList<String>();
+      while (in.hasNextLine()) {
+        String x = in.nextLine();
+        lines.add(x);
+        println("hello");
+      }
+      in.close();
+      maze = new char[lines.size()][];
+      //for (int i = 0; i < lines.size(); i++) {
+      //  maze[i] = toCharArray(lines.get(i));
+      //}
+    }
+    catch (FileNotFoundException ex) {
+      println("Thorw");
+    }
+  }
+  
+  void displayMaze() {
+  }
+  
+  int getScore() {
+    return score;
+  }
+  
+  int getLives() {
+    return lives;
+  }
+  
+  int getLevel() {
+    return level;
+  }
+  
+  int addLives(int num) {
+    lives += num;
+    return getLives();
+  }
+  
+  void storeHighScore(String file) {
   }
 }
