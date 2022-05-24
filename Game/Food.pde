@@ -1,2 +1,2 @@
-public class Food {
+interface Food {
 }
