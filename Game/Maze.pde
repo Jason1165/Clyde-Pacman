@@ -38,7 +38,7 @@ public class Maze {
         lines.add(line);
         line = r.readLine();
       }
-        
+
       maze = new char[lines.size()][];
       for (int i = 0; i < lines.size(); i++) {
         maze[i] = toCharArray(lines.get(i));
@@ -48,35 +48,48 @@ public class Maze {
       ex.printStackTrace();
     }
   }
-  
+
   void displayMaze() {
+    noStroke();
+    background(0);
     for (int i = 0; i < maze.length; i++) {
       for (int j = 0; j < maze[i].length; j++) {
         if (maze[i][j] == 'W') {
           fill(0, 0, 255);
-          rect(j*20, i*20, 20, 20);
+          rect(j*20, (i+down)*20, 20, 20);
+        } else if (maze[i][j] == 'S') {
+          fill(128);
+          rect(j*20, (i+down)*20, 20, 20);
+        } else if (maze[i][j] == 'P') {
+        } else if (maze[i][j] == 'D') {
+          fill(128);
+          rect(j*20, (i+down)*20, 20, 20);
+          fill (255, 245, 235);
+          float offset = 6;
+          rect(j*20 + ((20-offset)/2), (i+down)*20 + ((20-offset)/2), offset, offset);
         }
       }
     }
   }
-  
+
+
   int getScore() {
     return score;
   }
-  
+
   int getLives() {
     return lives;
   }
-  
+
   int getLevel() {
     return level;
   }
-  
+
   int addLives(int num) {
     lives += num;
     return getLives();
   }
-  
+
   void storeHighScore(String file) {
   }
 }

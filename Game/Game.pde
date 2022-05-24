@@ -1,6 +1,7 @@
 Maze map;
+final static int down = 3;
 void setup() {
-  size(560, 620);
+  size(560, 720);
   map = new Maze("highScore.txt", "pacman.txt");
 }
 void draw() {
