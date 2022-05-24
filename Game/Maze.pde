@@ -50,6 +50,14 @@ public class Maze {
   }
   
   void displayMaze() {
+    for (int i = 0; i < maze.length; i++) {
+      for (int j = 0; j < maze[i].length; j++) {
+        if (maze[i][j] == 'W') {
+          fill(0, 0, 255);
+          rect(j*20, i*20, 20, 20);
+        }
+      }
+    }
   }
   
   int getScore() {
