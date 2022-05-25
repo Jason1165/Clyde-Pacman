@@ -5,7 +5,7 @@ interface Character {
   int getY();
   void setX(int newX);
   void setY(int newY);
-  float getSpeed();
+  float getSpeed();;
   void setSpeed(float newSpeed);
   
 }
