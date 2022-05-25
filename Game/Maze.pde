@@ -48,7 +48,15 @@ public class Maze {
       ex.printStackTrace();
     }
   }
-
+  /*
+  W = Wall
+  S = Space or path
+  D = Dot
+  V = Void, darkness cannot be access
+  P = Pellet with ability
+  G = Gate
+  O = Old food used to be here 
+  */
   void displayMaze() {
     noStroke();
     background(0);
@@ -65,6 +73,10 @@ public class Maze {
         else if (maze[i][j] == 'S') {
           boxBackground(j, i);
         } 
+        else if (maze[i][j] == 'G') {
+          fill(255, 153, 204);
+          rect(j*20, (i+down)*20 + 6, 20, 8);
+        }
         else if (maze[i][j] == 'P') {
           boxBackground(j, i);
           fill(255, 128, 128);
@@ -84,9 +96,10 @@ public class Maze {
     text("1UP", 60, 20);
     text("HIGH SCORE", 200, 20); 
     fill(255, 255, 0);
-    // one of these looks better ...
-    arc(40, 700, 25, 25, 9*EIGHT_PI, 23*EIGHT_PI, PIE); 
-    arc(80, 700, 25, 25, 7*SIXTH_PI, 17*SIXTH_PI, PIE); 
+    // lives left, you are using one of your lives
+    for (int i = 1; i < lives; i++) {
+      arc(40*i, 700, 25, 25, 7*SIXTH_PI, 17*SIXTH_PI, PIE); 
+    }
   }
 
   private void boxBackground(int x, int y) {
@@ -112,5 +125,13 @@ public class Maze {
   }
 
   void storeHighScore(String file) {
+    try {
+      PrintWriter output;
+      output = createWriter(file);
+      output.close();
+    }
+    catch (IOException ex) {
+      ex.printStackTrace();
+    }
   }
 }
