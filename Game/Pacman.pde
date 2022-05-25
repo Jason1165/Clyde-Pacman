@@ -1,3 +1,4 @@
+
 public class Pacman implements Character {
   boolean abilityOn;
   int xDirection;
@@ -5,44 +6,45 @@ public class Pacman implements Character {
   int x;
   int y;
   float speed;
-  public Pacman(int xcor, int ycor, float s, int xDir, int yDir){
-   abilityOn = false;
-   xDirection = xDir;
-   yDirection = yDir;
-   x = xcor;
-   y = ycor;
-   speed = s;
+  final int radius = 18;
+  public Pacman(int xcor, int ycor, float s, int xDir, int yDir) {
+    abilityOn = false;
+    xDirection = xDir;
+    yDirection = yDir;
+    x = xcor;
+    y = ycor;
+    speed = s;
   }
-  
-  void move(){//need to account for boundaries later
+
+  void move() {//need to account for boundaries later
     x += speed * xDirection;
     y += speed * yDirection;
   }
-  
-  int getX(){
+
+  int getX() {
     return x;
   }
-  
-  int getY(){
+
+  int getY() {
     return y;
   }
-  
-  void setX(int newX){
+
+  void setX(int newX) {
     x = newX;
   }
-  
-  void setY(int newY){
+
+  void setY(int newY) {
     y = newY;
   }
-  
-  float getSpeed(){
+
+  float getSpeed() {
     return speed;
   }
-  
-  void setSpeed(float newSpeed){
-   speed = newSpeed; 
+
+  void setSpeed(float newSpeed) {
+    speed = newSpeed;
   }
-  /*
-  void display(int x, int y);
-  */
+  void display(int x, int y){
+    arc(x, y, radius, radius, 7*SIXTH_PI, 17*SIXTH_PI, PIE);
+  }
 }

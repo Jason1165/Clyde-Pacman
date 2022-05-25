@@ -57,20 +57,16 @@ public class Maze {
         if (maze[i][j] == 'W') {
           fill(51, 51, 255);
           rect(j*20, (i+down)*20, 20, 20);
-        } 
-        else if (maze[i][j] == 'V') {
+        } else if (maze[i][j] == 'V') {
           fill(0);
           rect(j*20, (i+down)*20, 20, 20);
-        }
-        else if (maze[i][j] == 'S') {
+        } else if (maze[i][j] == 'S') {
           boxBackground(j, i);
-        } 
-        else if (maze[i][j] == 'P') {
+        } else if (maze[i][j] == 'P') {
           boxBackground(j, i);
           fill(255, 128, 128);
           ellipse(j*20 + 10, (i+down)*20 + 10, 15, 15);
-        } 
-        else if (maze[i][j] == 'D') {
+        } else if (maze[i][j] == 'D') {
           boxBackground(j, i);
           fill (255, 245, 235);
           float offset = 6;
@@ -86,7 +82,7 @@ public class Maze {
     fill(255, 255, 0);
     // one of these looks better ...
     arc(40, 700, 25, 25, 9*EIGHT_PI, 23*EIGHT_PI, PIE); 
-    arc(80, 700, 25, 25, 7*SIXTH_PI, 17*SIXTH_PI, PIE); 
+    arc(80, 700, 25, 25, 7*SIXTH_PI, 17*SIXTH_PI, PIE);
   }
 
   private void boxBackground(int x, int y) {
