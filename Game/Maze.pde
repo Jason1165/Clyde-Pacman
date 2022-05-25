@@ -8,11 +8,12 @@ public class Maze {
   int level;
   int highScore;
 
-  Maze(String score, String maze) {
+  Maze(String scores, String maze) {
     level = 0;
     lives = 3;
-    highScore = getHighScore(score);
+    highScore = getHighScore(scores);
     generateMaze(maze);
+    this.score = 1000;
   }
 
   int getHighScore(String file) {
@@ -48,9 +49,9 @@ public class Maze {
       ex.printStackTrace();
     }
   }
-  
+
   /*
-  W = Wall
+   W = Wall
    S = Space or path
    D = Dot
    V = Void, darkness cannot be access
@@ -91,7 +92,7 @@ public class Maze {
     fill(255);
     // experiment with PFont later
     text("1UP", 60, 20);
-    text("HIGH SCORE " + highScore , 200, 20); 
+    text("HIGH SCORE " + highScore, 200, 20); 
     text("SCORE " + score, 160, 40);
     fill(255, 255, 0);
     // lives left, you are using one of your lives
@@ -123,21 +124,16 @@ public class Maze {
   }
 
   void storeHighScore(String file) {
-    try {
-      BufferedReader r = createReader(file);
-      String x = r.readLine();
-      int bestScore = Integer.parseInt(x);
-      if (score > bestScore) {
-        PrintWriter output;
-        output = createWriter(file);
-        output.println(score);
-      }
-    }
-    catch (IOException ex) {
-      ex.printStackTrace();
+    if (score > highScore) {
+      println(score + " " + highScore); 
+      PrintWriter output;
+      output = createWriter("data/"+file);
+      output.println(score);
+      output.flush();
+      output.close();
     }
   }
-  
+
   void refillFood() {
     for (int i = 0; i < maze.length; i++) {
       for (int j = 0; j < maze[i].length; j++) {
@@ -146,12 +142,11 @@ public class Maze {
       }
     }
   }
-  
+
   char getObject(int x, int y) {
     return maze[x][y];
   }
-  
+
   void respawn() {
-    
   }
 }
