@@ -12,3 +12,8 @@ Both: Sorting out branching and merging.
 Jason: Added on to the skeleton of maze and completed file reading related methods and a basic display of the maze. Added files to data folder for storing information.
 
 Ryan:  Added abstract methods to character interface and created constructor for Pacman class. Made getter and setter methods in Pacman.
+
+##### 05/25/2022
+Jason: Created refillFood method and storeHigHScore as well as a few comments for what each char represents in the map.
+
+Ryan: 
