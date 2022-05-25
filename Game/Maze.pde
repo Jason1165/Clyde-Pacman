@@ -48,7 +48,17 @@ public class Maze {
       ex.printStackTrace();
     }
   }
-
+  
+  /*
+  W = Wall
+   S = Space or path
+   D = Dot
+   V = Void, darkness cannot be access
+   P = Pellet with ability
+   G = Gate
+   d = old dot
+   p = old pellet
+   */
   void displayMaze() {
     noStroke();
     background(0);
@@ -57,20 +67,19 @@ public class Maze {
         if (maze[i][j] == 'W') {
           fill(51, 51, 255);
           rect(j*20, (i+down)*20, 20, 20);
-        } 
-        else if (maze[i][j] == 'V') {
+        } else if (maze[i][j] == 'V') {
           fill(0);
           rect(j*20, (i+down)*20, 20, 20);
-        }
-        else if (maze[i][j] == 'S') {
+        } else if (maze[i][j] == 'S') {
           boxBackground(j, i);
-        } 
-        else if (maze[i][j] == 'P') {
+        } else if (maze[i][j] == 'G') {
+          fill(255, 153, 204);
+          rect(j*20, (i+down)*20 + 6, 20, 8);
+        } else if (maze[i][j] == 'P') {
           boxBackground(j, i);
           fill(255, 128, 128);
           ellipse(j*20 + 10, (i+down)*20 + 10, 15, 15);
-        } 
-        else if (maze[i][j] == 'D') {
+        } else if (maze[i][j] == 'D') {
           boxBackground(j, i);
           fill (255, 245, 235);
           float offset = 6;
@@ -82,11 +91,13 @@ public class Maze {
     fill(255);
     // experiment with PFont later
     text("1UP", 60, 20);
-    text("HIGH SCORE", 200, 20); 
+    text("HIGH SCORE " + highScore , 200, 20); 
+    text("SCORE " + score, 160, 40);
     fill(255, 255, 0);
-    // one of these looks better ...
-    arc(40, 700, 25, 25, 9*EIGHT_PI, 23*EIGHT_PI, PIE); 
-    arc(80, 700, 25, 25, 7*SIXTH_PI, 17*SIXTH_PI, PIE); 
+    // lives left, you are using one of your lives
+    for (int i = 1; i < lives; i++) {
+      arc(40*i, 700, 25, 25, 7*SIXTH_PI, 17*SIXTH_PI, PIE);
+    }
   }
 
   private void boxBackground(int x, int y) {
@@ -112,5 +123,35 @@ public class Maze {
   }
 
   void storeHighScore(String file) {
+    try {
+      BufferedReader r = createReader(file);
+      String x = r.readLine();
+      int bestScore = Integer.parseInt(x);
+      if (score > bestScore) {
+        PrintWriter output;
+        output = createWriter(file);
+        output.println(score);
+      }
+    }
+    catch (IOException ex) {
+      ex.printStackTrace();
+    }
+  }
+  
+  void refillFood() {
+    for (int i = 0; i < maze.length; i++) {
+      for (int j = 0; j < maze[i].length; j++) {
+        if (maze[i][j] == 'd') maze[i][j] = 'D';
+        if (maze[i][j] == 'p') maze[i][j] = 'P';
+      }
+    }
+  }
+  
+  char getObject(int x, int y) {
+    return maze[x][y];
+  }
+  
+  void respawn() {
+    
   }
 }
