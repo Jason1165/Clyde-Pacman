@@ -18,13 +18,31 @@ public class Pacman implements Character {
     x += speed * xDirection;
     y += speed * yDirection;
   }
+  
+  int getX(){
+    return x;
+  }
+  
+  int getY(){
+    return y;
+  }
+  
+  void setX(int newX){
+    x = newX;
+  }
+  
+  void setY(int newY){
+    y = newY;
+  }
+  
+  float getSpeed(){
+    return speed;
+  }
+  
+  void setSpeed(float newSpeed){
+   speed = newSpeed; 
+  }
   /*
   void display(int x, int y);
-  int getX();
-  int getY();
-  void setX(int newX);
-  void setY(int newY);
-  float getSpeed();
-  void setSpeed(float newSpeed);
   */
 }
