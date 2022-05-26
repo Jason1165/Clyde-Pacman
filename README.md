@@ -16,4 +16,4 @@ Ryan:  Added abstract methods to character interface and created constructor for
 ##### 05/25/2022
 Jason: Created refillFood method and storeHigHScore as well as a few comments for what each char represents in the map.
 
-Ryan: 
+Ryan: Adjusted some abstract methods in Character and adjusted move methods in pacman class to get pacman to move. Pacman moves crudely in Game class.
