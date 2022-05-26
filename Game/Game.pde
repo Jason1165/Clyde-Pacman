@@ -13,6 +13,17 @@ void draw() {
   p.display(p.getX(), p.getY());
 }
 void keyPressed() {
+  if(keyPressed){
+    if(key == 'w'){
+      p.setY(p.getY()-1);
+    }else if(key =='a'){
+      p.setX(p.getX()-1);
+    }else if(key =='s'){
+      p.setY(p.getY()+1);
+    }else if(key =='d'){
+      p.setX(p.getX()+1);
+    }
+  }
 }
 //branch message
 
