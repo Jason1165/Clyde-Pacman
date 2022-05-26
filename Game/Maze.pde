@@ -8,11 +8,12 @@ public class Maze {
   int level;
   int highScore;
 
-  Maze(String score, String maze) {
+  Maze(String scores, String maze) {
     level = 0;
     lives = 3;
-    highScore = getHighScore(score);
+    highScore = getHighScore(scores);
     generateMaze(maze);
+    this.score = 1000;
   }
 
   int getHighScore(String file) {
@@ -49,6 +50,16 @@ public class Maze {
     }
   }
 
+  /*
+   W = Wall
+   S = Space or path
+   D = Dot
+   V = Void, darkness cannot be access
+   P = Pellet with ability
+   G = Gate
+   d = old dot
+   p = old pellet
+   */
   void displayMaze() {
     noStroke();
     background(0);
@@ -62,6 +73,9 @@ public class Maze {
           rect(j*20, (i+down)*20, 20, 20);
         } else if (maze[i][j] == 'S') {
           boxBackground(j, i);
+        } else if (maze[i][j] == 'G') {
+          fill(255, 153, 204);
+          rect(j*20, (i+down)*20 + 6, 20, 8);
         } else if (maze[i][j] == 'P') {
           boxBackground(j, i);
           fill(255, 128, 128);
@@ -78,11 +92,13 @@ public class Maze {
     fill(255);
     // experiment with PFont later
     text("1UP", 60, 20);
-    text("HIGH SCORE", 200, 20); 
+    text("HIGH SCORE " + highScore, 200, 20); 
+    text("SCORE " + score, 160, 40);
     fill(255, 255, 0);
-    // one of these looks better ...
-    arc(40, 700, 25, 25, 9*EIGHT_PI, 23*EIGHT_PI, PIE); 
-    arc(80, 700, 25, 25, 7*SIXTH_PI, 17*SIXTH_PI, PIE);
+    // lives left, you are using one of your lives
+    for (int i = 1; i < lives; i++) {
+      arc(40*i, 700, 25, 25, 7*SIXTH_PI, 17*SIXTH_PI, PIE);
+    }
   }
 
   private void boxBackground(int x, int y) {
@@ -108,5 +124,29 @@ public class Maze {
   }
 
   void storeHighScore(String file) {
+    if (score > highScore) {
+      println(score + " " + highScore); 
+      PrintWriter output;
+      output = createWriter("data/"+file);
+      output.println(score);
+      output.flush();
+      output.close();
+    }
+  }
+
+  void refillFood() {
+    for (int i = 0; i < maze.length; i++) {
+      for (int j = 0; j < maze[i].length; j++) {
+        if (maze[i][j] == 'd') maze[i][j] = 'D';
+        if (maze[i][j] == 'p') maze[i][j] = 'P';
+      }
+    }
+  }
+
+  char getObject(int x, int y) {
+    return maze[x][y];
+  }
+
+  void respawn() {
   }
 }
