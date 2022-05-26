@@ -155,7 +155,7 @@ public class Maze {
     if (row >= maze.length || maze[0].length <= col || row < 0 || col < 0) return false;
     // println(row + " " + col);
     char c = maze[row][col];
-    println(c);
+    // println(c);
     if (c == 'W' || c == 'V') return false;
     return true;
     // return c == 'P' || c == 'D' || c == 'p' || c == 'd' || c == 'S';

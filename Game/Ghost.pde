@@ -16,11 +16,11 @@ public class Ghost implements Character {
   void move() {
     int x_ = (int)random(0, 3) - 1;
     int y_ = (int)random(0, 3) - 1;
-    while (!map.isValid(x+x_, y+y) && (x_ == y_) && (x_*-1 == y_)){
+    while (!map.isValid(x+x_, y+y_) || (x_ == y_) ||(x_*-1 == y_)){
       x_ = (int)random(0, 3) - 1;
       y_ = (int)random(0, 3) - 1;
+      //println(x_ + " " + y_);
     }
-    println(x_ + " " + y_);
     x += x_;
     y += y_;
   }
