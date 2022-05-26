@@ -65,4 +65,7 @@ public class Pacman implements Character {
   void display(int x, int y){
     arc(x, y, radius, radius, 7*SIXTH_PI, 17*SIXTH_PI, PIE);
   }
+  int getRadius(){
+   return radius; 
+  }
 }

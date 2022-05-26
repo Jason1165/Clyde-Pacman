@@ -7,7 +7,7 @@ final float SIXTH_PI = HALF_PI/3; // const for pacman arc;
 void setup() {
   size(560, 720);
   map = new Maze("highScore.txt", "pacman.txt");
-  p = new Pacman(width / 2,529,1);
+  p = new Pacman(width / 2, 529, 1);
 }
 
 void draw() {
@@ -16,17 +16,24 @@ void draw() {
 }
 
 void keyPressed() {
-  if(keyPressed){
-    if(key == 'w'){
-      p.setDirYUp();
-      p.moveY();
-    }else if(key =='a'){
-      p.setDirXLeft();
-      p.moveX();
-    }else if(key =='s'){
+  if (keyPressed) {
+    if (key == 'w') {
+      while (get(p.getX(), p.getY() - p.getRadius()) != color(51, 51, 255)) {
+        p.setDirYUp();
+        p.moveY();
+      }
+    } else if (key =='a') {
+      while (get(p.getX() - p.getRadius() / 2, p.getY()) != color(51, 51, 255)) {
+        {
+          delay(5);
+          p.setDirXLeft();
+          p.moveX();
+        }
+      }
+    } else if (key =='s') {
       p.setDirYDown();
       p.moveY();
-    }else if(key =='d'){
+    } else if (key =='d') {
       p.setDirXRight();
       p.moveX();
     }
