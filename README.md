@@ -17,3 +17,6 @@ Ryan:  Added abstract methods to character interface and created constructor for
 Jason: Created refillFood method and storeHigHScore as well as a few comments for what each char represents in the map.
 
 Ryan: Adjusted some abstract methods in Character and adjusted move methods in pacman class to get pacman to move. Pacman moves crudely in Game class.
+
+##### 05/26/2022
+Jason: Completed Ghost class and made ghosts move in a random direction for now. Fixed some methods in Maze where inputs were x which could be confused with this.x.
