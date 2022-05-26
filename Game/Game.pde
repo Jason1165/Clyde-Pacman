@@ -7,14 +7,14 @@ ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
 void setup() {
   size(560, 720);
   map = new Maze("highScore.txt", "pacman.txt");
-  ghosts.add(new Ghost(11, 14, 1));
+  ghosts.add(new Ghost(11, 13, 1));
 }
 void draw() {
   map.displayMaze();
   ghosts.get(0).display();
 }
 void keyPressed() {
-  ghosts.get(0).move();
+  //ghosts.get(0).move();
 }
 //branch message
 
