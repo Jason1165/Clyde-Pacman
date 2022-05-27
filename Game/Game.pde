@@ -7,14 +7,15 @@ boolean u;
 boolean d;
 boolean l;
 boolean r;
+ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
 
 void setup() {
   size(560, 720);
   map = new Maze("highScore.txt", "pacman.txt");
   p = new Pacman(width / 2, 529, 1);
   frameRate(60);
+  ghosts.add(new Ghost(11, 13, 1));
 }
-
 void draw() {
   map.displayMaze();
   p.display(p.getX(), p.getY());
@@ -39,8 +40,8 @@ void draw() {
       p.moveX();
     }
   }
+  ghosts.get(0).display();
 }
-
 void keyPressed() {
   if (keyPressed) {
     if (key == 'w') {
@@ -65,7 +66,9 @@ void keyPressed() {
       r=true;
     }
   }
+  ghosts.get(0).move();
 }
+//branch message
 
 
 public static char[] toCharArray(String str) {

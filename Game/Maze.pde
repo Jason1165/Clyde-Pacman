@@ -8,12 +8,11 @@ public class Maze {
   int level;
   int highScore;
 
-  Maze(String scores, String maze) {
+  Maze(String score, String maze) {
     level = 0;
     lives = 3;
-    highScore = getHighScore(scores);
+    highScore = getHighScore(score);
     generateMaze(maze);
-    this.score = 1000;
   }
 
   int getHighScore(String file) {
@@ -49,9 +48,9 @@ public class Maze {
       ex.printStackTrace();
     }
   }
-
+  
   /*
-   W = Wall
+  W = Wall
    S = Space or path
    D = Dot
    V = Void, darkness cannot be access
@@ -92,7 +91,7 @@ public class Maze {
     fill(255);
     // experiment with PFont later
     text("1UP", 60, 20);
-    text("HIGH SCORE " + highScore, 200, 20); 
+    text("HIGH SCORE " + highScore , 200, 20); 
     text("SCORE " + score, 160, 40);
     fill(255, 255, 0);
     // lives left, you are using one of your lives
@@ -124,16 +123,21 @@ public class Maze {
   }
 
   void storeHighScore(String file) {
-    if (score > highScore) {
-      println(score + " " + highScore); 
-      PrintWriter output;
-      output = createWriter("data/"+file);
-      output.println(score);
-      output.flush();
-      output.close();
+    try {
+      BufferedReader r = createReader(file);
+      String x = r.readLine();
+      int bestScore = Integer.parseInt(x);
+      if (score > bestScore) {
+        PrintWriter output;
+        output = createWriter(file);
+        output.println(score);
+      }
+    }
+    catch (IOException ex) {
+      ex.printStackTrace();
     }
   }
-
+  
   void refillFood() {
     for (int i = 0; i < maze.length; i++) {
       for (int j = 0; j < maze[i].length; j++) {
@@ -142,11 +146,22 @@ public class Maze {
       }
     }
   }
-
-  char getObject(int x, int y) {
-    return maze[x][y];
+  
+  char getObject(int xV, int yV) {
+    return maze[xV][yV];
   }
-
+  
+  boolean isValid(int row, int col) {
+    if (row >= maze.length || maze[0].length <= col || row < 0 || col < 0) return false;
+    // println(row + " " + col);
+    char c = maze[row][col];
+    // println(c);
+    if (c == 'W' || c == 'V') return false;
+    return true;
+    // return c == 'P' || c == 'D' || c == 'p' || c == 'd' || c == 'S';
+  }
+  
   void respawn() {
+    
   }
 }
