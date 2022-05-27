@@ -41,6 +41,11 @@ void draw() {
     }
   }
   ghosts.get(0).display();
+  int xTile = (int)(p.getX() / 20);
+  int yTile = (int)(p.getY() / 20);
+  if(map.getObject(xTile, yTile) == 'P'){
+    map.setObject(xTile, yTile, 'p');
+  }
 }
 void keyPressed() {
   if (keyPressed) {
