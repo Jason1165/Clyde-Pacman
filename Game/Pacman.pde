@@ -1,48 +1,71 @@
+
 public class Pacman implements Character {
   boolean abilityOn;
-  int xDirection;
-  int yDirection;
-  int x;
-  int y;
+  int[] directions;
+  float x;
+  float y;
   float speed;
-  public Pacman(int xcor, int ycor, float s, int xDir, int yDir){
-   abilityOn = false;
-   xDirection = xDir;
-   yDirection = yDir;
-   x = xcor;
-   y = ycor;
-   speed = s;
+  final int radius = 9;
+  public Pacman(int xcor, int ycor, float s) {
+    int[] d = new int[2];
+    abilityOn = false;
+    directions = d;
+    x = xcor;
+    y = ycor;
+    speed = s;
+  }
+
+  void moveX() {
+     x = x + speed * directions[0];
   }
   
-  void move(){//need to account for boundaries later
-    x += speed * xDirection;
-    y += speed * yDirection;
+  void moveY() {
+     y = y + speed * directions[1];
   }
-  
-  int getX(){
+
+  float getX() {
     return x;
   }
-  
-  int getY(){
+
+  float getY() {
     return y;
   }
-  
-  void setX(int newX){
+
+  void setX(float newX) {
     x = newX;
   }
-  
-  void setY(int newY){
+
+  void setY(float newY) {
     y = newY;
   }
-  
-  float getSpeed(){
+
+  float getSpeed() {
     return speed;
   }
   
-  void setSpeed(float newSpeed){
-   speed = newSpeed; 
+  void setDirXLeft(){
+    directions[0] = -1;
   }
-  /*
-  void display(int x, int y);
-  */
+  
+  void setDirXRight(){
+    directions[0] = 1;
+  }
+  
+  void setDirYUp(){
+    directions[1] = -1;
+  }
+  
+  void setDirYDown(){
+    directions[1] = 1;
+  }
+
+  void setSpeed(float newSpeed) {
+    speed = newSpeed;
+  }
+  void display(float x, float y){
+    arc(x, y, radius * 2, radius * 2, 7*SIXTH_PI, 17*SIXTH_PI, PIE);
+  }
+  int getRadius(){
+   return radius; 
+  }
 }
