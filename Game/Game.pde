@@ -11,7 +11,7 @@ boolean r;
 void setup() {
   size(560, 720);
   map = new Maze("highScore.txt", "pacman.txt");
-  p = new Pacman(width / 2, 529, 5);
+  p = new Pacman(width / 2, 529, 1);
   frameRate(60);
 }
 
