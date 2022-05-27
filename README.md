@@ -20,3 +20,5 @@ Ryan: Adjusted some abstract methods in Character and adjusted move methods in p
 
 ##### 05/26/2022
 Jason: Completed Ghost class and made ghosts move in a random direction for now. Fixed some methods in Maze where inputs were x which could be confused with this.x.
+
+Ryan: Made small adjustments to data types of instance variables for Pacman class. Made pacman move continuously in the direction of a key press and accounted for boundaries.
