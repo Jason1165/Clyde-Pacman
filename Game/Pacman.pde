@@ -63,6 +63,7 @@ public class Pacman implements Character {
     speed = newSpeed;
   }
   void display(float x, float y){
+    fill(255, 255, 0);
     arc(x, y, radius * 2, radius * 2, 7*SIXTH_PI, 17*SIXTH_PI, PIE);
   }
   int getRadius(){

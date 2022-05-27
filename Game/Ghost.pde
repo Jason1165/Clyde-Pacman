@@ -10,25 +10,35 @@ public class Ghost implements Character {
   float x; 
   float y;
   float speed;
+  color colour;
+  int[] oldDir;
 
-  Ghost(float xcor, float ycor, float s) {
+  Ghost(int xcor, int ycor, float s, color c) {
     eatable = false;
     mode = 0;
     x = xcor;
     y = ycor;
     speed = s;
+    colour = c;
+    oldDir = new int[2];
   }
 
   void move() {
     int x_ = (int)random(0, 3) - 1;
     int y_ = (int)random(0, 3) - 1;
-    while (!map.isValid((int)(x+x_), (int)(y+y_)) || ((int)x_ == (int)y_) ||((int)x_*-1 == (int)y_)){
+    while (!map.isValid((int)(x+x_), (int)(y+y_)) || (x_ == y_) ||(x_*-1 == y_) || oppositeDir((int)x_, (int)y_)){
       x_ = (int)random(0, 3) - 1;
       y_ = (int)random(0, 3) - 1;
-      //println(x_ + " " + y_);
     }
+    oldDir[0] = x_;
+    oldDir[1] = y_;
     x += x_;
     y += y_;
+  }
+  
+  void display(float xCor, float yCor) {
+    fill(colour);
+    rect(xCor, yCor, 20, 20);
   }
   
   void moveX(){
@@ -37,14 +47,6 @@ public class Ghost implements Character {
   
   void moveY(){
     
-  }
-
-  void display() {
-    fill(0, 255, 0);
-    rect(y*20, (x+3)*20, 20, 20);
-  }
-
-  void display(float x, float y) {
   }
 
   void setX(float newX) {
@@ -69,5 +71,12 @@ public class Ghost implements Character {
 
   float getSpeed() {
     return speed;
+  }
+  
+  boolean oppositeDir(int x_, int y_) {
+    if (oldDir[0] == 0 && y_ == oldDir[1]) return false;
+    if (oldDir[1] == 0 && x_ == oldDir[0]) return false;
+    if (oldDir[0] != x_ && oldDir[1] != y_) return false;
+    return true;
   }
 }
