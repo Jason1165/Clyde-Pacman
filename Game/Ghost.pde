@@ -1,9 +1,3 @@
-
-
-//public class Ghost implements Character {
-//  boolean eatable;
-//  int mode;
-//}
 public class Ghost implements Character {
   boolean eatable;
   int mode;
@@ -12,7 +6,8 @@ public class Ghost implements Character {
   float speed;
   color colour;
   int[] oldDir;
-
+  int[] newDir;
+  
   Ghost(int xcor, int ycor, float s, color c) {
     eatable = false;
     mode = 0;
@@ -21,19 +16,34 @@ public class Ghost implements Character {
     speed = s;
     colour = c;
     oldDir = new int[2];
+    newDir = new int[2];
+    chooseDir();
   }
-
+  
   void move() {
+   x += newDir[0];
+   y += newDir[1];
+   oldDir[0] = newDir[0];
+   oldDir[1] = newDir[1];
+  }
+  
+  void chooseDir() {
     int x_ = (int)random(0, 3) - 1;
     int y_ = (int)random(0, 3) - 1;
     while (!map.isValid((int)(x+x_), (int)(y+y_)) || (x_ == y_) ||(x_*-1 == y_) || oppositeDir((int)x_, (int)y_)){
       x_ = (int)random(0, 3) - 1;
       y_ = (int)random(0, 3) - 1;
     }
-    oldDir[0] = x_;
-    oldDir[1] = y_;
-    x += x_;
-    y += y_;
+    newDir[0] = x_;
+    newDir[1] = y_;
+  }
+  
+  int dirX() {
+    return newDir[0];
+  }
+  
+  int dirY() {
+    return newDir[1];
   }
   
   void display(float xCor, float yCor) {

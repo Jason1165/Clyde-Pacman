@@ -17,17 +17,20 @@ void setup() {
   ghosts.add(new Ghost(11, 15, 50, color(0, 255, 0)));
   ghosts.add(new Ghost(11, 16, 40, color(0, 0, 255)));
   ghosts.add(new Ghost(11, 17, 30, color(0, 155, 0)));
-}  
+  frameRate(240);
+} 
 
 void draw() {
   map.displayMaze();
   for (int i = 0; i < ghosts.size(); i++) {
     Ghost g = ghosts.get(i);
-    g.display(g.getY()*20, (g.getX()+down)*20);
+    g.display(g.getY()*20 + g.dirY()*(20/g.getSpeed()) * (frameCount%g.getSpeed()), (g.getX()+down)*20 + g.dirX()*(20/g.getSpeed()) * (frameCount%g.getSpeed()));
     if (frameCount % g.getSpeed() == 0) {
       ghosts.get(i).move();
+      ghosts.get(i).chooseDir();
     }
   }
+  
   p.display(p.getX(), p.getY());
   if (u) {
     if (get((int)p.getX(), (int)p.getY() - p.getRadius() - 2 ) != color(51, 51, 255)) {
@@ -53,6 +56,7 @@ void draw() {
 }
 
 void keyPressed() {
+  if (key == ' ') delay(2000);
   if (keyPressed) {
     if (key == 'w') {
       u=true;
