@@ -1,10 +1,11 @@
 interface Character {
-  void move();
-  void display(int x, int y);
-  int getX();
-  int getY();
-  void setX(int newX);
-  void setY(int newY);
+  void moveX();
+  void moveY();
+  void display(float x, float y);
+  float getX();
+  float getY();
+  void setX(float newX);
+  void setY(float newY);
   float getSpeed();;
   void setSpeed(float newSpeed);
   
