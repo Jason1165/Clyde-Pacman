@@ -79,14 +79,14 @@ public class Maze {
           boxBackground(j, i);
           fill(255, 128, 128);
           ellipse(j*20 + 10, (i+down)*20 + 10, 15, 15);
-        } else if (maze[i][j] == 'p') {
-          boxBackground(j, i);
-          fill(255, 128, 128);
         } else if (maze[i][j] == 'D') {
           boxBackground(j, i);
           fill (255, 245, 235);
           float offset = 6;
           rect(j*20 + ((20-offset)/2), (i+down)*20 + ((20-offset)/2), offset, offset);
+        }else if (maze[i][j] == 'd' || maze[i][j] == 'p') {
+          boxBackground(j, i);
+          fill(255, 128, 128);
         }
       }
     }
@@ -110,6 +110,10 @@ public class Maze {
 
   int getScore() {
     return score;
+  }
+  
+  void setScore(int s) {
+    score = s;
   }
 
   int getLives() {

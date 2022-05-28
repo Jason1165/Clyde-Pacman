@@ -42,9 +42,13 @@ void draw() {
   }
   ghosts.get(0).display();
   int xTile = (int)(p.getX() / 20);
-  int yTile = (int)(p.getY() / 20);
-  if(map.getObject(xTile, yTile) == 'P'){
-    map.setObject(xTile, yTile, 'p');
+  int yTile = (int)(p.getY() / 20) - down;
+  if(map.getObject(yTile, xTile) == 'D'){
+    map.setScore(map.getScore() + 10);
+    map.setObject(yTile, xTile, 'd');
+  }else if(map.getObject(yTile, xTile) == 'P'){
+    map.setScore(map.getScore() + 50);
+    map.setObject(yTile, xTile, 'p');
   }
 }
 void keyPressed() {
