@@ -8,6 +8,7 @@ public class Pacman implements Character {
   final int radius = 9;
   int dir;
   int[] newDir;
+  int tryDir;
   
   public Pacman(int xcor, int ycor, float s) {
     int[] d = new int[2];
@@ -18,10 +19,19 @@ public class Pacman implements Character {
     speed = s;
     dir = 3;
     newDir = new int[2];
+    tryDir = 3;
   }
   
   int getDir() {
     return dir;
+  }
+  
+  int getTryDir() {
+    return tryDir;
+  }
+  
+  void setTryDir(int tryD) {
+    tryDir = tryD;
   }
   
   void setDir(int newDir) {
