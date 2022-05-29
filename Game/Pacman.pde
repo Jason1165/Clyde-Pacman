@@ -7,6 +7,7 @@ public class Pacman implements Character {
   float speed;
   final int radius = 9;
   int dir;
+  int[] newDir;
   
   public Pacman(int xcor, int ycor, float s) {
     int[] d = new int[2];
@@ -16,6 +17,7 @@ public class Pacman implements Character {
     y = ycor;
     speed = s;
     dir = 3;
+    newDir = new int[2];
   }
   
   int getDir() {
@@ -54,20 +56,17 @@ public class Pacman implements Character {
     return speed;
   }
   
-  void setDirXLeft(){
-    directions[0] = -1;
+  int dirY() {
+    return directions[1];
   }
   
-  void setDirXRight(){
-    directions[0] = 1;
+  int dirX() {
+    return directions[0];
   }
-  
-  void setDirYUp(){
-    directions[1] = -1;
-  }
-  
-  void setDirYDown(){
-    directions[1] = 1;
+ 
+  void setDir(int i, int j){
+    directions[0] = i;
+    directions[1] = j;
   }
 
   void setSpeed(float newSpeed) {
@@ -82,4 +81,15 @@ public class Pacman implements Character {
   int getRadius(){
    return radius; 
   }
+  
+  void setNewDir(int num) {
+    if (num == 1) {
+    }
+    else if (num == 2) {
+    }
+    else if (num == 3) {
+    }
+    else if (num == 4) {
+    }
+  } 
 }

@@ -85,6 +85,9 @@ public class Maze {
           float offset = 6;
           rect(j*20 + ((20-offset)/2), (i+down)*20 + ((20-offset)/2), offset, offset);
         }
+        else if(maze[i][j] == 'd' || maze[i][j] == 'p') {
+          boxBackground(j, i);
+        }
       }
     }
     textSize(20);
@@ -121,6 +124,10 @@ public class Maze {
     lives += num;
     return getLives();
   }
+  
+  void addScore(int n) {
+    score += n;
+  }
 
   void storeHighScore(String file) {
     try {
@@ -147,7 +154,7 @@ public class Maze {
     }
   }
   
-  char getObject(int xV, int yV) {
+  char get(int xV, int yV) {
     return maze[xV][yV];
   }
   

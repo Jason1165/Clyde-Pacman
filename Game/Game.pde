@@ -8,7 +8,7 @@ ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
 void setup() {
   size(560, 720);
   map = new Maze("highScore.txt", "pacman.txt");
-  p = new Pacman(23, 13, 1);
+  p = new Pacman(23, 13, 20);
   // so it looks a smaller speed is actually faster due to frames 
   ghosts.add(new Ghost(15, 14, 20, color(255, 0, 0))); // red
   ghosts.add(new Ghost(15, 15, 15, color(255, 184, 255))); // brilliant lavender
@@ -30,23 +30,46 @@ void draw() {
     }
   }
 
+  if (frameCount % p.getSpeed() == 0) {
+    p.display(p.getY()*20, (p.getX()+down)*20);
+    if (p.getDir() == 3) {
+      if (map.isValid(p.getX(), p.getY()-1)) {
+        p.setDir(0, -1);
+        p.setY(p.getY()-1);
+      }
+    } else if (p.getDir() == 4) {
+      if (map.isValid(p.getX()-1, p.getY())) {
+        p.setDir(-1, 0);
+        p.setX(p.getX()-1);
+      }
+    } else if (p.getDir() == 1) {
+      if (map.isValid(p.getX(), p.getY()+1)) {
+        p.setDir(0, 1);
+        p.setY(p.getY()+1);
+      }
+    } else if (p.getDir() == 2) {
+      if (map.isValid(p.getX()+1, p.getY())) {
+        p.setDir(1, 0);
+        p.setX(p.getX()+1);
+      }
+    }
+  } 
+  
+  // MOVEMENT IS NOT SMOOTH, FLICKERING
+  //else {
+  //  if (map.isValid(p.getX()+p.dirX(), p.getY()+p.dirY())) {
+  //    p.display(p.getY()*20 + p.dirY()*(frameCount%p.getSpeed())*(20/p.getSpeed()), (p.getX()+down)*20 + p.dirX()*(frameCount%p.getSpeed())*(20/p.getSpeed()));
+  //  }
+  //  else {
+  //    p.display(p.getY()*20, (p.getX()+down)*20);
+  //  }
+  //}
   p.display(p.getY()*20, (p.getX()+down)*20);
-  if (p.getDir() == 3) {
-    if (map.isValid(p.getX(), p.getY()-1)) {
-      p.setY(p.getY()-1);
-    }
-  } else if (p.getDir() == 4) {
-    if (map.isValid(p.getX()-1, p.getY())) {
-      p.setX(p.getX()-1);
-    }
-  } else if (p.getDir() == 1) {
-    if (map.isValid(p.getX(), p.getY()+1)) {
-      p.setY(p.getY()+1);
-    }
-  } else if (p.getDir() == 2) {
-    if (map.isValid(p.getX()+1, p.getY())) {
-      p.setX(p.getX()+1);
-    }
+  
+  // ACTUAL GAME LOGIC
+  if (map.get(p.getX(), p.getY()) == 'D') {
+    map.set(p.getX(), p.getY(), 'd');
+    map.addScore(10);
   }
 }
 
@@ -63,7 +86,6 @@ void keyPressed() {
     }
   }
 }
-//branch message
 
 public static char[] toCharArray(String str) {
   char[] c = new char[str.length()];
