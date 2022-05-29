@@ -8,12 +8,12 @@ ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
 void setup() {
   size(560, 720);
   map = new Maze("highScore.txt", "pacman.txt");
-  p = new Pacman(width / 2, 529, 1);
+  p = new Pacman(23, 13, 1);
   // so it looks a smaller speed is actually faster due to frames 
-  ghosts.add(new Ghost(11, 14, 20, color(255, 0, 0))); // red
-  ghosts.add(new Ghost(11, 15, 15, color(255, 184, 255))); // brilliant lavender
-  ghosts.add(new Ghost(11, 16, 20, color(0, 255, 255))); // aqua
-  ghosts.add(new Ghost(11, 17, 20, color(255, 184, 82))); // pastel orange
+  ghosts.add(new Ghost(15, 14, 20, color(255, 0, 0))); // red
+  ghosts.add(new Ghost(15, 15, 15, color(255, 184, 255))); // brilliant lavender
+  ghosts.add(new Ghost(15, 16, 20, color(0, 255, 255))); // aqua
+  ghosts.add(new Ghost(15, 17, 20, color(255, 184, 82))); // pastel orange
   frameRate(60);
 } 
 
@@ -25,38 +25,32 @@ void draw() {
       ghosts.get(i).move();
       ghosts.get(i).chooseDir();
       g.display(g.getY()*20, (g.getX()+down)*20);
-    }
-    else {
+    } else {
       g.display(g.getY()*20 + g.dirY()*(20/g.getSpeed()) * (frameCount%g.getSpeed()), (g.getX()+down)*20 + g.dirX()*(20/g.getSpeed()) * (frameCount%g.getSpeed()));
     }
   }
-  
-  p.display(p.getX(), p.getY());
-  if (p.getDir() == 4) {
-    if (get((int)p.getX(), (int)p.getY() - p.getRadius() - 2 ) != color(51, 51, 255)) {
-      p.setDirYUp();
-      p.moveY();
+
+  p.display(p.getY()*20, (p.getX()+down)*20);
+  if (p.getDir() == 3) {
+    if (map.isValid(p.getX(), p.getY()-1)) {
+      p.setY(p.getY()-1);
     }
-  } else if (p.getDir() == 2) {
-    if (get((int)p.getX(), (int)p.getY() + p.getRadius() + 1) != color(51, 51, 255)) {
-      p.setDirYDown();
-      p.moveY();
-    }
-  } else if (p.getDir() == 3) {
-    if (get((int)p.getX() - p.getRadius() - 1, (int)p.getY()) != color(51, 51, 255)) {
-      p.setDirXLeft();
-      p.moveX();
+  } else if (p.getDir() == 4) {
+    if (map.isValid(p.getX()-1, p.getY())) {
+      p.setX(p.getX()-1);
     }
   } else if (p.getDir() == 1) {
-    if (get((int)p.getX() + p.getRadius() + 1, (int)p.getY()) != color(51, 51, 255)) {
-      p.setDirXRight();
-      p.moveX();
+    if (map.isValid(p.getX(), p.getY()+1)) {
+      p.setY(p.getY()+1);
+    }
+  } else if (p.getDir() == 2) {
+    if (map.isValid(p.getX()+1, p.getY())) {
+      p.setX(p.getX()+1);
     }
   }
 }
 
 void keyPressed() {
-  if (key == ' ') delay(500);
   if (keyPressed) {
     if (key == 'w') {
       p.setDir(4);

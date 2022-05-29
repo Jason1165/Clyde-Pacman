@@ -2,8 +2,8 @@
 public class Pacman implements Character {
   boolean abilityOn;
   int[] directions;
-  float x;
-  float y;
+  int x;
+  int y;
   float speed;
   final int radius = 9;
   int dir;
@@ -27,26 +27,26 @@ public class Pacman implements Character {
   }
 
   void moveX() {
-     x = x + speed * directions[0];
+     x = x + directions[0];
   }
   
   void moveY() {
-     y = y + speed * directions[1];
+     y = y + directions[1];
   }
 
-  float getX() {
+  int getX() {
     return x;
   }
 
-  float getY() {
+  int getY() {
     return y;
   }
 
-  void setX(float newX) {
+  void setX(int newX) {
     x = newX;
   }
 
-  void setY(float newY) {
+  void setY(int newY) {
     y = newY;
   }
 
@@ -73,10 +73,12 @@ public class Pacman implements Character {
   void setSpeed(float newSpeed) {
     speed = newSpeed;
   }
-  void display(float x, float y){
+  
+  void display(float xCor, float yCor){
     fill(255, 255, 0);
-    arc(x, y, radius * 2, radius * 2, 7*SIXTH_PI, 17*SIXTH_PI, PIE);
+    arc(xCor+10, yCor+10, radius * 2, radius * 2, (dir*3-2)*SIXTH_PI, (dir*3+8)*SIXTH_PI, PIE);
   }
+  
   int getRadius(){
    return radius; 
   }

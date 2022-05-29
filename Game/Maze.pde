@@ -153,15 +153,19 @@ public class Maze {
   
   boolean isValid(int row, int col) {
     if (row >= maze.length || maze[0].length <= col || row < 0 || col < 0) return false;
-    // println(row + " " + col);
+    //println(row + " " + col);
     char c = maze[row][col];
-    // println(c);
+    // println("Char: " + c);
     if (c == 'W' || c == 'V') return false;
+    //return c == 'P' || c == 'D' || c == 'p' || c == 'd' || c == 'S';
     return true;
-    // return c == 'P' || c == 'D' || c == 'p' || c == 'd' || c == 'S';
   }
   
   void respawn() {
     
+  }
+  
+  void set(int xPos, int yPos, char c) {
+    maze[xPos][yPos] = c;
   }
 }

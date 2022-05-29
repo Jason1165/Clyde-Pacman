@@ -1,8 +1,8 @@
 public class Ghost implements Character {
   boolean eatable;
   int mode;
-  float x; 
-  float y;
+  int x; 
+  int y;
   float speed;
   color colour;
   int[] oldDir;
@@ -92,19 +92,19 @@ public class Ghost implements Character {
   void moveY() {
   }
 
-  void setX(float newX) {
+  void setX(int newX) {
     x = newX;
   }
 
-  void setY(float newY) {
+  void setY(int newY) {
     y = newY;
   }
 
-  float getX() {
+  int getX() {
     return x;
   }
 
-  float getY() {
+  int getY() {
     return y;
   }
 
