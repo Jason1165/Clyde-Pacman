@@ -32,40 +32,71 @@ void draw() {
 
   if (frameCount % p.getSpeed() == 0) {
     p.display(p.getY()*20, (p.getX()+down)*20);
+
+    if (p.getTryDir() == 1) {
+      if (map.isValid(p.getX(), p.getY()+1)) {
+        p.setDir(p.getTryDir());
+        p.setTryDir(0);
+      }
+    } else if (p.getTryDir() == 2) {
+      if (map.isValid(p.getX()+1, p.getY())) {
+        p.setDir(p.getTryDir());
+        p.setTryDir(0);
+      }
+    } else if (p.getTryDir() == 3) {
+      if (map.isValid(p.getX(), p.getY()-1)) {
+        p.setDir(p.getTryDir());
+        p.setTryDir(0);
+      }
+    } else if (p.getTryDir() == 4) {
+      if (map.isValid(p.getX()-1, p.getY())) {
+        p.setDir(p.getTryDir());
+        p.setTryDir(0);
+      }
+    }
+
+    //println(p.getDir());
+
     if (p.getDir() == 3) {
       if (map.isValid(p.getX(), p.getY()-1)) {
         p.setDir(0, -1);
         p.setY(p.getY()-1);
+      } else {
+        p.setDir(0);
       }
     } else if (p.getDir() == 4) {
       if (map.isValid(p.getX()-1, p.getY())) {
         p.setDir(-1, 0);
         p.setX(p.getX()-1);
+      } else {
+        p.setDir(0);
       }
     } else if (p.getDir() == 1) {
       if (map.isValid(p.getX(), p.getY()+1)) {
         p.setDir(0, 1);
         p.setY(p.getY()+1);
+      } else {
+        p.setDir(0);
       }
     } else if (p.getDir() == 2) {
       if (map.isValid(p.getX()+1, p.getY())) {
         p.setDir(1, 0);
         p.setX(p.getX()+1);
+      } else {
+        p.setDir(0);
       }
     }
   } 
-  
+
   // MOVEMENT IS NOT SMOOTH, FLICKERING
-  //else {
-  //  if (map.isValid(p.getX()+p.dirX(), p.getY()+p.dirY())) {
-  //    p.display(p.getY()*20 + p.dirY()*(frameCount%p.getSpeed())*(20/p.getSpeed()), (p.getX()+down)*20 + p.dirX()*(frameCount%p.getSpeed())*(20/p.getSpeed()));
-  //  }
-  //  else {
-  //    p.display(p.getY()*20, (p.getX()+down)*20);
-  //  }
-  //}
-  p.display(p.getY()*20, (p.getX()+down)*20);
-  
+  else {
+    if (map.isValid(p.getX()+p.dirX(), p.getY()+p.dirY())) {
+      p.display(p.getY()*20 + p.dirY()*(frameCount%p.getSpeed())*(20/p.getSpeed()), (p.getX()+down)*20 + p.dirX()*(frameCount%p.getSpeed())*(20/p.getSpeed()));
+    } else if (p.getDir() == 0){
+      p.display(p.getY()*20, (p.getX()+down)*20);
+    }
+  }
+
   // ACTUAL GAME LOGIC
   if (map.get(p.getX(), p.getY()) == 'D') {
     map.set(p.getX(), p.getY(), 'd');
@@ -76,13 +107,13 @@ void draw() {
 void keyPressed() {
   if (keyPressed) {
     if (key == 'w') {
-      p.setDir(4);
+      p.setTryDir(4);
     } else if (key =='a') {
-      p.setDir(3);
+      p.setTryDir(3);
     } else if (key =='s') {
-      p.setDir(2);
+      p.setTryDir(2);
     } else if (key =='d') {
-      p.setDir(1);
+      p.setTryDir(1);
     }
   }
 }
