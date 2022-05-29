@@ -55,43 +55,47 @@ void draw() {
       }
     }
 
-    println(p.getDir());
-
+    //println(p.getDir());
 
     if (p.getDir() == 3) {
       if (map.isValid(p.getX(), p.getY()-1)) {
         p.setDir(0, -1);
         p.setY(p.getY()-1);
+      } else {
+        p.setDir(0);
       }
     } else if (p.getDir() == 4) {
       if (map.isValid(p.getX()-1, p.getY())) {
         p.setDir(-1, 0);
         p.setX(p.getX()-1);
+      } else {
+        p.setDir(0);
       }
     } else if (p.getDir() == 1) {
       if (map.isValid(p.getX(), p.getY()+1)) {
         p.setDir(0, 1);
         p.setY(p.getY()+1);
+      } else {
+        p.setDir(0);
       }
     } else if (p.getDir() == 2) {
       if (map.isValid(p.getX()+1, p.getY())) {
         p.setDir(1, 0);
         p.setX(p.getX()+1);
+      } else {
+        p.setDir(0);
       }
     }
   } 
 
   // MOVEMENT IS NOT SMOOTH, FLICKERING
-  //else {
-  //  if (map.isValid(p.getX()+p.dirX(), p.getY()+p.dirY())) {
-  //    p.display(p.getY()*20 + p.dirY()*(frameCount%p.getSpeed())*(20/p.getSpeed()), (p.getX()+down)*20 + p.dirX()*(frameCount%p.getSpeed())*(20/p.getSpeed()));
-  //  }
-  //  else {
-  //    p.display(p.getY()*20, (p.getX()+down)*20);
-  //  }
-  //}
-
-  p.display(p.getY()*20, (p.getX()+down)*20);
+  else {
+    if (map.isValid(p.getX()+p.dirX(), p.getY()+p.dirY())) {
+      p.display(p.getY()*20 + p.dirY()*(frameCount%p.getSpeed())*(20/p.getSpeed()), (p.getX()+down)*20 + p.dirX()*(frameCount%p.getSpeed())*(20/p.getSpeed()));
+    } else if (p.getDir() == 0){
+      p.display(p.getY()*20, (p.getX()+down)*20);
+    }
+  }
 
   // ACTUAL GAME LOGIC
   if (map.get(p.getX(), p.getY()) == 'D') {
