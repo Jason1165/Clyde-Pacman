@@ -37,53 +37,53 @@ void draw() {
 
   if (frameCount % p.getSpeed() == 0 && !map.over()) {
 
-    if (map.isValid(p.getX() + p.dirX(), p.getY() + p.dirY())) {
+    if (map.isValid(p.getX() + p.dirX(), p.getY() + p.dirY(), true)) {
       p.move();
     }
 
     p.display(p.getY()*20, (p.getX()+down)*20);
 
     if (p.getTryDir() == 1) {
-      if (map.isValid(p.getX(), p.getY()+1)) {
+      if (map.isValid(p.getX(), p.getY()+1, true)) {
         p.setDir(p.getTryDir());
         p.setTryDir(0);
       }
     } else if (p.getTryDir() == 2) {
-      if (map.isValid(p.getX()+1, p.getY())) {
+      if (map.isValid(p.getX()+1, p.getY(), true)) {
         p.setDir(p.getTryDir());
         p.setTryDir(0);
       }
     } else if (p.getTryDir() == 3) {
-      if (map.isValid(p.getX(), p.getY()-1)) {
+      if (map.isValid(p.getX(), p.getY()-1, true)) {
         p.setDir(p.getTryDir());
         p.setTryDir(0);
       }
     } else if (p.getTryDir() == 4) {
-      if (map.isValid(p.getX()-1, p.getY())) {
+      if (map.isValid(p.getX()-1, p.getY(), true)) {
         p.setDir(p.getTryDir());
         p.setTryDir(0);
       }
     }
 
     if (p.getDir() == 3) {
-      if (map.isValid(p.getX(), p.getY()-1)) {
+      if (map.isValid(p.getX(), p.getY()-1, true)) {
         p.setDir(0, -1);
       }
     } else if (p.getDir() == 4) {
-      if (map.isValid(p.getX()-1, p.getY())) {
+      if (map.isValid(p.getX()-1, p.getY(), true)) {
         p.setDir(-1, 0);
       }
     } else if (p.getDir() == 1) {
-      if (map.isValid(p.getX(), p.getY()+1)) {
+      if (map.isValid(p.getX(), p.getY()+1, true)) {
         p.setDir(0, 1);
       }
     } else if (p.getDir() == 2) {
-      if (map.isValid(p.getX()+1, p.getY())) {
+      if (map.isValid(p.getX()+1, p.getY(), true)) {
         p.setDir(1, 0);
       }
     }
   } else {
-    if (map.isValid(p.getX()+p.dirX(), p.getY()+p.dirY())) {
+    if (map.isValid(p.getX()+p.dirX(), p.getY()+p.dirY(), true)) {
       p.display(p.getY()*20 + p.dirY()*(frameCount%p.getSpeed())*(20/p.getSpeed()), (p.getX()+down)*20 + p.dirX()*(frameCount%p.getSpeed())*(20/p.getSpeed()));
     } else {
       p.display(p.getY()*20, (p.getX()+down)*20);

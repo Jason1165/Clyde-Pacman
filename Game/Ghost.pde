@@ -30,7 +30,7 @@ public class Ghost implements Character {
   void chooseDir() {
     int x_ = (int)random(0, 3) - 1;
     int y_ = (int)random(0, 3) - 1;
-    while (!map.isValid((int)(x+x_), (int)(y+y_)) || (x_ == y_) ||(x_*-1 == y_) || oppositeDir((int)x_, (int)y_)) {
+    while (!map.isValid((x+x_), (y+y_), false) || (x_ == y_) ||(x_*-1 == y_) || oppositeDir((int)x_, (int)y_)) {
       x_ = (int)random(0, 3) - 1;
       y_ = (int)random(0, 3) - 1;
     }

@@ -184,12 +184,13 @@ public class Maze {
     return maze[xV][yV];
   }
 
-  boolean isValid(int row, int col) {
+  boolean isValid(int row, int col, boolean isPac) {
     if (row >= maze.length || maze[0].length <= col || row < 0 || col < 0) return false;
     //println(row + " " + col);
     char c = maze[row][col];
     // println("Char: " + c);
-    if (c == 'W' || c == 'V' || c == 'G') return false;
+    if (isPac && c == 'G') return false;
+    if (c == 'W' || c == 'V') return false;
     //return c == 'P' || c == 'D' || c == 'p' || c == 'd' || c == 'S';
     return true;
   }
