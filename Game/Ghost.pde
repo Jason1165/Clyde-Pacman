@@ -86,12 +86,6 @@ public class Ghost implements Character {
     rect(xCor+13, yCor+7, 2, 2);
   }
 
-  void moveX() {
-  }
-
-  void moveY() {
-  }
-
   void setX(int newX) {
     x = newX;
   }

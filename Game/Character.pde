@@ -1,6 +1,5 @@
 interface Character {
-  void moveX();
-  void moveY();
+  void move();
   void display(float x, float y);
   int getX();
   int getY();
