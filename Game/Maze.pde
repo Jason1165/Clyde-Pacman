@@ -48,7 +48,7 @@ public class Maze {
       ex.printStackTrace();
     }
   }
-  
+
   /*
   W = Wall
    S = Space or path
@@ -84,6 +84,9 @@ public class Maze {
           fill (255, 245, 235);
           float offset = 6;
           rect(j*20 + ((20-offset)/2), (i+down)*20 + ((20-offset)/2), offset, offset);
+        }else if (maze[i][j] == 'd' || maze[i][j] == 'p') {
+          boxBackground(j, i);
+          fill(255, 128, 128);
         }
         else if(maze[i][j] == 'd' || maze[i][j] == 'p') {
           boxBackground(j, i);
@@ -94,7 +97,7 @@ public class Maze {
     fill(255);
     // experiment with PFont later
     text("1UP", 60, 20);
-    text("HIGH SCORE " + highScore , 200, 20); 
+    text("HIGH SCORE " + highScore, 200, 20); 
     text("SCORE " + score, 160, 40);
     fill(255, 255, 0);
     // lives left, you are using one of your lives
@@ -110,6 +113,10 @@ public class Maze {
 
   int getScore() {
     return score;
+  }
+  
+  void setScore(int s) {
+    score = s;
   }
 
   int getLives() {
@@ -144,7 +151,7 @@ public class Maze {
       ex.printStackTrace();
     }
   }
-  
+
   void refillFood() {
     for (int i = 0; i < maze.length; i++) {
       for (int j = 0; j < maze[i].length; j++) {
@@ -153,11 +160,12 @@ public class Maze {
       }
     }
   }
+
   
   char get(int xV, int yV) {
     return maze[xV][yV];
   }
-  
+
   boolean isValid(int row, int col) {
     if (row >= maze.length || maze[0].length <= col || row < 0 || col < 0) return false;
     //println(row + " " + col);
@@ -167,9 +175,12 @@ public class Maze {
     //return c == 'P' || c == 'D' || c == 'p' || c == 'd' || c == 'S';
     return true;
   }
-  
+
   void respawn() {
-    
+  }
+
+  void setObject(int xV, int yV, char obj) {
+    maze[xV][yV] = obj;
   }
   
   void set(int xPos, int yPos, char c) {
