@@ -10,14 +10,16 @@ void setup() {
   map = new Maze("highScore.txt", "pacman.txt");
   p = new Pacman(23, 13, 12);
   // so it looks a smaller speed is actually faster due to frames 
-  ghosts.add(new Ghost(15, 14, 20, color(255, 0, 0))); // red
-  ghosts.add(new Ghost(15, 14, 18, color(255, 184, 255))); // brilliant lavender
-  ghosts.add(new Ghost(15, 15, 20, color(0, 255, 255))); // aqua
-  ghosts.add(new Ghost(15, 16, 20, color(255, 184, 82))); // pastel orange
+  ghosts.add(new Ghost(15, 12, 20, color(255, 0, 0))); // red
+  ghosts.add(new Ghost(15, 13, 18, color(255, 184, 255))); // brilliant lavender
+  ghosts.add(new Ghost(15, 14, 20, color(0, 255, 255))); // aqua
+  ghosts.add(new Ghost(15, 15, 20, color(255, 184, 82))); // pastel orange
   frameRate(60);
 } 
 
 void draw() {
+  float count = frameCount;
+ 
   map.displayMaze();
 
   if (map.over()) {
@@ -26,16 +28,19 @@ void draw() {
 
   for (int i = 0; i < ghosts.size(); i++) {
     Ghost g = ghosts.get(i);
-    if (frameCount % g.getSpeed() == 0 && !map.over()) {
+    if (count % g.getSpeed() < 1 && !map.over()) {
       ghosts.get(i).move();
       ghosts.get(i).chooseDir();
       g.display(g.getY()*20, (g.getX()+down)*20);
-    } else {
-      g.display(g.getY()*20 + g.dirY()*(20/g.getSpeed()) * (frameCount%g.getSpeed()), (g.getX()+down)*20 + g.dirX()*(20/g.getSpeed()) * (frameCount%g.getSpeed()));
+    } 
+    else if (map.over()) {
+      g.display(g.getY()*20, (g.getX()+down)*20);
+    }else {
+      g.display(g.getY()*20 + g.dirY()*(20/g.getSpeed()) * (count%g.getSpeed()), (g.getX()+down)*20 + g.dirX()*(20/g.getSpeed()) * (count%g.getSpeed()));
     }
   }
 
-  if (frameCount % p.getSpeed() == 0 && !map.over()) {
+  if (count % p.getSpeed() < 1 && !map.over()) {
 
     if (map.isValid(p.getX() + p.dirX(), p.getY() + p.dirY(), true)) {
       p.move();
@@ -84,7 +89,7 @@ void draw() {
     }
   } else {
     if (map.isValid(p.getX()+p.dirX(), p.getY()+p.dirY(), true)) {
-      p.display(p.getY()*20 + p.dirY()*(frameCount%p.getSpeed())*(20/p.getSpeed()), (p.getX()+down)*20 + p.dirX()*(frameCount%p.getSpeed())*(20/p.getSpeed()));
+      p.display(p.getY()*20 + p.dirY()*(count%p.getSpeed())*(20/p.getSpeed()), (p.getX()+down)*20 + p.dirX()*(count%p.getSpeed())*(20/p.getSpeed()));
     } else {
       p.display(p.getY()*20, (p.getX()+down)*20);
     }
@@ -104,6 +109,7 @@ void draw() {
   if (map.containsNoFood()) {
     map.refillFood();
     map.respawn();
+    map.addLives(1);
     // map level stuff
   }
 
