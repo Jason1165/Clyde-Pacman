@@ -30,3 +30,5 @@ Ryan: pacman will eat dots and pellets and gain the respective points for them, 
 
 ##### 05/29/2022
 Jason: Made some code more concise, made pacman move within the path. Dots can be "eaten". 
+
+Ryan: Fixed small boundary issue with gate and made pellets eatable.

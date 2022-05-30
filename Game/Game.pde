@@ -95,9 +95,12 @@ void draw() {
     map.set(p.getX(), p.getY(), 'd');
     map.addScore(10);
   }
+  
   if (map.get(p.getX(), p.getY()) == 'P') {
     map.set(p.getX(), p.getY(), 'p');
+    map.addScore(50);
   }
+  
   if (map.containsNoFood()) {
     map.refillFood();
     map.respawn();

@@ -7,7 +7,7 @@ public class Maze {
   int lives;
   int level;
   int highScore;
-  
+
   boolean gameOver;
   boolean start;
 
@@ -32,11 +32,11 @@ public class Maze {
       return 0;
     }
   }
-  
+
   void changeStart() {
     start = !start;
   }
-  
+
   void gameOver() {
     gameOver = true;
   }
@@ -124,6 +124,10 @@ public class Maze {
     return score;
   }
 
+  void setScore(int s) {
+    score = s;
+  }
+
   int getLives() {
     return lives;
   }
@@ -185,7 +189,7 @@ public class Maze {
     //println(row + " " + col);
     char c = maze[row][col];
     // println("Char: " + c);
-    if (c == 'W' || c == 'V') return false;
+    if (c == 'W' || c == 'V' || c == 'G') return false;
     //return c == 'P' || c == 'D' || c == 'p' || c == 'd' || c == 'S';
     return true;
   }
@@ -202,11 +206,11 @@ public class Maze {
   void set(int xPos, int yPos, char c) {
     maze[xPos][yPos] = c;
   }
-  
+
   void gameOverDisplay() {
     displayMaze();
   }
-  
+
   boolean over() {
     return gameOver;
   }
