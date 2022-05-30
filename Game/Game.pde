@@ -31,33 +31,35 @@ void draw() {
     }
   }
 
-  if (p.getTryDir() == 1) {
-    if (map.isValid(p.getX(), p.getY()+1)) {
-      p.setDir(p.getTryDir());
-      p.setTryDir(0);
-    }
-  } else if (p.getTryDir() == 2) {
-    if (map.isValid(p.getX()+1, p.getY())) {
-      p.setDir(p.getTryDir());
-      p.setTryDir(0);
-    }
-  } else if (p.getTryDir() == 3) {
-    if (map.isValid(p.getX(), p.getY()-1)) {
-      p.setDir(p.getTryDir());
-      p.setTryDir(0);
-    }
-  } else if (p.getTryDir() == 4) {
-    if (map.isValid(p.getX()-1, p.getY())) {
-      p.setDir(p.getTryDir());
-      p.setTryDir(0);
-    }
-  }
-
   if (frameCount % p.getSpeed() == 0) {
+
     if (map.isValid(p.getX() + p.dirX(), p.getY() + p.dirY())) {
       p.move();
     }
+    
     p.display(p.getY()*20, (p.getX()+down)*20);
+
+    if (p.getTryDir() == 1) {
+      if (map.isValid(p.getX(), p.getY()+1)) {
+        p.setDir(p.getTryDir());
+        p.setTryDir(0);
+      }
+    } else if (p.getTryDir() == 2) {
+      if (map.isValid(p.getX()+1, p.getY())) {
+        p.setDir(p.getTryDir());
+        p.setTryDir(0);
+      }
+    } else if (p.getTryDir() == 3) {
+      if (map.isValid(p.getX(), p.getY()-1)) {
+        p.setDir(p.getTryDir());
+        p.setTryDir(0);
+      }
+    } else if (p.getTryDir() == 4) {
+      if (map.isValid(p.getX()-1, p.getY())) {
+        p.setDir(p.getTryDir());
+        p.setTryDir(0);
+      }
+    }
 
     if (p.getDir() == 3) {
       if (map.isValid(p.getX(), p.getY()-1)) {
@@ -84,28 +86,6 @@ void draw() {
       p.display(p.getY()*20 + p.dirY()*(frameCount%p.getSpeed())*(20/p.getSpeed()), (p.getX()+down)*20 + p.dirX()*(frameCount%p.getSpeed())*(20/p.getSpeed()));
     } else {
       p.display(p.getY()*20, (p.getX()+down)*20);
-    }
-  }
-
-  if (p.getTryDir() == 1) {
-    if (map.isValid(p.getX(), p.getY()+1)) {
-      p.setDir(p.getTryDir());
-      p.setTryDir(0);
-    }
-  } else if (p.getTryDir() == 2) {
-    if (map.isValid(p.getX()+1, p.getY())) {
-      p.setDir(p.getTryDir());
-      p.setTryDir(0);
-    }
-  } else if (p.getTryDir() == 3) {
-    if (map.isValid(p.getX(), p.getY()-1)) {
-      p.setDir(p.getTryDir());
-      p.setTryDir(0);
-    }
-  } else if (p.getTryDir() == 4) {
-    if (map.isValid(p.getX()-1, p.getY())) {
-      p.setDir(p.getTryDir());
-      p.setTryDir(0);
     }
   }
 
