@@ -160,13 +160,8 @@ public class Maze {
       }
     }
   }
-<<<<<<< HEAD
 
-  char getObject(int xV, int yV) {
-=======
-  
   char get(int xV, int yV) {
->>>>>>> dbc908bf19a631423a52151b4b193101abd3fa81
     return maze[xV][yV];
   }
 
