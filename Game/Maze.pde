@@ -88,6 +88,9 @@ public class Maze {
           boxBackground(j, i);
           fill(255, 128, 128);
         }
+        else if(maze[i][j] == 'd' || maze[i][j] == 'p') {
+          boxBackground(j, i);
+        }
       }
     }
     textSize(20);
@@ -128,6 +131,10 @@ public class Maze {
     lives += num;
     return getLives();
   }
+  
+  void addScore(int n) {
+    score += n;
+  }
 
   void storeHighScore(String file) {
     try {
@@ -153,19 +160,24 @@ public class Maze {
       }
     }
   }
+<<<<<<< HEAD
 
   char getObject(int xV, int yV) {
+=======
+  
+  char get(int xV, int yV) {
+>>>>>>> dbc908bf19a631423a52151b4b193101abd3fa81
     return maze[xV][yV];
   }
 
   boolean isValid(int row, int col) {
     if (row >= maze.length || maze[0].length <= col || row < 0 || col < 0) return false;
-    // println(row + " " + col);
+    //println(row + " " + col);
     char c = maze[row][col];
-    // println(c);
+    // println("Char: " + c);
     if (c == 'W' || c == 'V') return false;
+    //return c == 'P' || c == 'D' || c == 'p' || c == 'd' || c == 'S';
     return true;
-    // return c == 'P' || c == 'D' || c == 'p' || c == 'd' || c == 'S';
   }
 
   void respawn() {
@@ -173,5 +185,9 @@ public class Maze {
 
   void setObject(int xV, int yV, char obj) {
     maze[xV][yV] = obj;
+  }
+  
+  void set(int xPos, int yPos, char c) {
+    maze[xPos][yPos] = c;
   }
 }

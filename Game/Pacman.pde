@@ -2,10 +2,14 @@
 public class Pacman implements Character {
   boolean abilityOn;
   int[] directions;
-  float x;
-  float y;
+  int x;
+  int y;
   float speed;
   final int radius = 9;
+  int dir;
+  int[] newDir;
+  int tryDir;
+  
   public Pacman(int xcor, int ycor, float s) {
     int[] d = new int[2];
     abilityOn = false;
@@ -13,29 +17,54 @@ public class Pacman implements Character {
     x = xcor;
     y = ycor;
     speed = s;
+    dir = 3;
+    newDir = new int[2];
+    tryDir = 3;
+  }
+  
+  int getDir() {
+    return dir;
+  }
+  
+  int getTryDir() {
+    return tryDir;
+  }
+  
+  void setTryDir(int tryD) {
+    tryDir = tryD;
+  }
+  
+  void setDir(int newDir) {
+    dir = newDir;
+  }
+  
+  void move() {
+    x += directions[0];
+    y += directions[1];
   }
 
+
   void moveX() {
-     x = x + speed * directions[0];
+     x = x + directions[0];
   }
   
   void moveY() {
-     y = y + speed * directions[1];
+     y = y + directions[1];
   }
 
-  float getX() {
+  int getX() {
     return x;
   }
 
-  float getY() {
+  int getY() {
     return y;
   }
 
-  void setX(float newX) {
+  void setX(int newX) {
     x = newX;
   }
 
-  void setY(float newY) {
+  void setY(int newY) {
     y = newY;
   }
 
@@ -43,29 +72,30 @@ public class Pacman implements Character {
     return speed;
   }
   
-  void setDirXLeft(){
-    directions[0] = -1;
+  int dirY() {
+    return directions[1];
   }
   
-  void setDirXRight(){
-    directions[0] = 1;
+  int dirX() {
+    return directions[0];
   }
-  
-  void setDirYUp(){
-    directions[1] = -1;
-  }
-  
-  void setDirYDown(){
-    directions[1] = 1;
+ 
+  void setDir(int i, int j){
+    directions[0] = i;
+    directions[1] = j;
   }
 
   void setSpeed(float newSpeed) {
     speed = newSpeed;
   }
-  void display(float x, float y){
-    arc(x, y, radius * 2, radius * 2, 7*SIXTH_PI, 17*SIXTH_PI, PIE);
+  
+  void display(float xCor, float yCor){
+    fill(255, 255, 0);
+    arc(xCor+10, yCor+10, radius * 2, radius * 2, (dir*3-2)*SIXTH_PI, (dir*3+8)*SIXTH_PI, PIE);
   }
+  
   int getRadius(){
    return radius; 
   }
+
 }
