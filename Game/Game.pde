@@ -88,7 +88,7 @@ void draw() {
       p.display(p.getY()*20, (p.getX()+down)*20);
     }
   }
-  
+
   // ACTUAL GAME LOGIC
   if (map.get(p.getX(), p.getY()) == 'D') {
     map.set(p.getX(), p.getY(), 'd');
