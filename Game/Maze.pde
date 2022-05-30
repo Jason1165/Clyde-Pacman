@@ -171,7 +171,7 @@ public class Maze {
     //println(row + " " + col);
     char c = maze[row][col];
     // println("Char: " + c);
-    if (c == 'W' || c == 'V') return false;
+    if (c == 'W' || c == 'V' || c == 'G') return false;
     //return c == 'P' || c == 'D' || c == 'p' || c == 'd' || c == 'S';
     return true;
   }
