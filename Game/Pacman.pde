@@ -37,6 +37,12 @@ public class Pacman implements Character {
   void setDir(int newDir) {
     dir = newDir;
   }
+  
+  void move() {
+    x += directions[0];
+    y += directions[1];
+  }
+
 
   void moveX() {
      x = x + directions[0];
@@ -91,15 +97,5 @@ public class Pacman implements Character {
   int getRadius(){
    return radius; 
   }
-  
-  void setNewDir(int num) {
-    if (num == 1) {
-    }
-    else if (num == 2) {
-    }
-    else if (num == 3) {
-    }
-    else if (num == 4) {
-    }
-  } 
+
 }
