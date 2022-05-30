@@ -161,6 +161,7 @@ public class Maze {
     }
   }
 
+
   char get(int xV, int yV) {
     return maze[xV][yV];
   }
