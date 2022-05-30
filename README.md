@@ -25,3 +25,8 @@ Ryan: Made small adjustments to data types of instance variables for Pacman clas
 
 ##### 05/27/2022
 Jason: Improved Ghost's move, it cannot move backwards. Modified Ghost's display and changed it to display at certain coordinates which are calculated in the main.
+
+Ryan: pacman will eat dots and pellets and gain the respective points for them, added set method for score in Maze class and added to display if character in maze was p or d
+
+##### 05/29/2022
+Jason: Made some code more concise, made pacman move within the path. Dots can be "eaten". 
