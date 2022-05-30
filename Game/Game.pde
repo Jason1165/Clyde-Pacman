@@ -8,21 +8,25 @@ ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
 void setup() {
   size(560, 720);
   map = new Maze("highScore.txt", "pacman.txt");
-  p = new Pacman(23, 13, 20);
+  p = new Pacman(23, 13, 12);
   // so it looks a smaller speed is actually faster due to frames 
   ghosts.add(new Ghost(15, 14, 20, color(255, 0, 0))); // red
-  ghosts.add(new Ghost(15, 15, 15, color(255, 184, 255))); // brilliant lavender
-  ghosts.add(new Ghost(15, 16, 20, color(0, 255, 255))); // aqua
-  ghosts.add(new Ghost(15, 17, 20, color(255, 184, 82))); // pastel orange
+  ghosts.add(new Ghost(15, 14, 18, color(255, 184, 255))); // brilliant lavender
+  ghosts.add(new Ghost(15, 15, 20, color(0, 255, 255))); // aqua
+  ghosts.add(new Ghost(15, 16, 20, color(255, 184, 82))); // pastel orange
   frameRate(60);
 } 
 
 void draw() {
   map.displayMaze();
 
+  if (map.over()) {
+    map.gameOverDisplay();
+  }
+
   for (int i = 0; i < ghosts.size(); i++) {
     Ghost g = ghosts.get(i);
-    if (frameCount % g.getSpeed() == 0) {
+    if (frameCount % g.getSpeed() == 0 && !map.over()) {
       ghosts.get(i).move();
       ghosts.get(i).chooseDir();
       g.display(g.getY()*20, (g.getX()+down)*20);
@@ -31,58 +35,55 @@ void draw() {
     }
   }
 
-  if (frameCount % p.getSpeed() == 0) {
+  if (frameCount % p.getSpeed() == 0 && !map.over()) {
 
-    if (map.isValid(p.getX() + p.dirX(), p.getY() + p.dirY())) {
+    if (map.isValid(p.getX() + p.dirX(), p.getY() + p.dirY(), true)) {
       p.move();
     }
-    
+
     p.display(p.getY()*20, (p.getX()+down)*20);
 
     if (p.getTryDir() == 1) {
-      if (map.isValid(p.getX(), p.getY()+1)) {
+      if (map.isValid(p.getX(), p.getY()+1, true)) {
         p.setDir(p.getTryDir());
         p.setTryDir(0);
       }
     } else if (p.getTryDir() == 2) {
-      if (map.isValid(p.getX()+1, p.getY())) {
+      if (map.isValid(p.getX()+1, p.getY(), true)) {
         p.setDir(p.getTryDir());
         p.setTryDir(0);
       }
     } else if (p.getTryDir() == 3) {
-      if (map.isValid(p.getX(), p.getY()-1)) {
+      if (map.isValid(p.getX(), p.getY()-1, true)) {
         p.setDir(p.getTryDir());
         p.setTryDir(0);
       }
     } else if (p.getTryDir() == 4) {
-      if (map.isValid(p.getX()-1, p.getY())) {
+      if (map.isValid(p.getX()-1, p.getY(), true)) {
         p.setDir(p.getTryDir());
         p.setTryDir(0);
       }
     }
 
     if (p.getDir() == 3) {
-      if (map.isValid(p.getX(), p.getY()-1)) {
+      if (map.isValid(p.getX(), p.getY()-1, true)) {
         p.setDir(0, -1);
       }
     } else if (p.getDir() == 4) {
-      if (map.isValid(p.getX()-1, p.getY())) {
+      if (map.isValid(p.getX()-1, p.getY(), true)) {
         p.setDir(-1, 0);
       }
     } else if (p.getDir() == 1) {
-      if (map.isValid(p.getX(), p.getY()+1)) {
+      if (map.isValid(p.getX(), p.getY()+1, true)) {
         p.setDir(0, 1);
       }
     } else if (p.getDir() == 2) {
-      if (map.isValid(p.getX()+1, p.getY())) {
+      if (map.isValid(p.getX()+1, p.getY(), true)) {
         p.setDir(1, 0);
       }
     }
-  } 
-
-  // MOVEMENT IS NOT PERFECT, FLICKERING
-  else {
-    if (map.isValid(p.getX()+p.dirX(), p.getY()+p.dirY())) {
+  } else {
+    if (map.isValid(p.getX()+p.dirX(), p.getY()+p.dirY(), true)) {
       p.display(p.getY()*20 + p.dirY()*(frameCount%p.getSpeed())*(20/p.getSpeed()), (p.getX()+down)*20 + p.dirX()*(frameCount%p.getSpeed())*(20/p.getSpeed()));
     } else {
       p.display(p.getY()*20, (p.getX()+down)*20);
@@ -94,22 +95,43 @@ void draw() {
     map.set(p.getX(), p.getY(), 'd');
     map.addScore(10);
   }
+  
   if (map.get(p.getX(), p.getY()) == 'P') {
     map.set(p.getX(), p.getY(), 'p');
     map.addScore(50);
+  }
+  
+  if (map.containsNoFood()) {
+    map.refillFood();
+    map.respawn();
+    // map level stuff
+  }
+
+  for (int i = 0; i < ghosts.size(); i++) {
+    if (ghosts.get(i).getX() == p.getX() && ghosts.get(i).getY() == p.getY()) {
+      map.respawn();
+    }
+  }
+
+  if (map.getLives() == 0) {
+    map.gameOver();
+    map.storeHighScore("highScore.txt");
   }
 }
 
 void keyPressed() {
   if (keyPressed) {
-    if (key == 'w') {
+    if (key == 'w' || keyCode == UP) {
       p.setTryDir(4);
-    } else if (key =='a') {
+    } else if (key =='a' || keyCode == LEFT) {
       p.setTryDir(3);
-    } else if (key =='s') {
+    } else if (key =='s' || keyCode == DOWN) {
       p.setTryDir(2);
-    } else if (key =='d') {
+    } else if (key =='d' || keyCode == RIGHT) {
       p.setTryDir(1);
+    } else if (key == 'r') {
+      map.respawn();
+      map = new Maze("highScore.txt", "pacman.txt");
     }
   }
 }

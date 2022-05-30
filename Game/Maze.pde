@@ -8,11 +8,16 @@ public class Maze {
   int level;
   int highScore;
 
+  boolean gameOver;
+  boolean start;
+
   Maze(String score, String maze) {
     level = 0;
     lives = 3;
     highScore = getHighScore(score);
     generateMaze(maze);
+    gameOver = false;
+    start = true;
   }
 
   int getHighScore(String file) {
@@ -26,6 +31,14 @@ public class Maze {
       ex.printStackTrace();
       return 0;
     }
+  }
+
+  void changeStart() {
+    start = !start;
+  }
+
+  void gameOver() {
+    gameOver = true;
   }
 
   void generateMaze(String file) {
@@ -84,11 +97,7 @@ public class Maze {
           fill (255, 245, 235);
           float offset = 6;
           rect(j*20 + ((20-offset)/2), (i+down)*20 + ((20-offset)/2), offset, offset);
-        }else if (maze[i][j] == 'd' || maze[i][j] == 'p') {
-          boxBackground(j, i);
-          fill(255, 128, 128);
-        }
-        else if(maze[i][j] == 'd' || maze[i][j] == 'p') {
+        } else if (maze[i][j] == 'd' || maze[i][j] == 'p') {
           boxBackground(j, i);
         }
       }
@@ -114,7 +123,7 @@ public class Maze {
   int getScore() {
     return score;
   }
-  
+
   void setScore(int s) {
     score = s;
   }
@@ -131,7 +140,7 @@ public class Maze {
     lives += num;
     return getLives();
   }
-  
+
   void addScore(int n) {
     score += n;
   }
@@ -143,8 +152,9 @@ public class Maze {
       int bestScore = Integer.parseInt(x);
       if (score > bestScore) {
         PrintWriter output;
-        output = createWriter(file);
+        output = createWriter("data/"+file);
         output.println(score);
+        output.close();
       }
     }
     catch (IOException ex) {
@@ -161,29 +171,48 @@ public class Maze {
     }
   }
 
+  boolean containsNoFood() {
+    for (int i = 0; i < maze.length; i++) {
+      for (int j = 0; j < maze[i].length; j++) {
+        if (maze[i][j] == 'D' || maze[i][j] == 'P') return false;
+      }
+    }
+    return true;
+  }
 
   char get(int xV, int yV) {
     return maze[xV][yV];
   }
 
-  boolean isValid(int row, int col) {
+  boolean isValid(int row, int col, boolean isPac) {
     if (row >= maze.length || maze[0].length <= col || row < 0 || col < 0) return false;
     //println(row + " " + col);
     char c = maze[row][col];
     // println("Char: " + c);
-    if (c == 'W' || c == 'V' || c == 'G') return false;
+    if (isPac && c == 'G') return false;
+    if (c == 'W' || c == 'V') return false;
     //return c == 'P' || c == 'D' || c == 'p' || c == 'd' || c == 'S';
     return true;
   }
 
   void respawn() {
+    lives --;
+    p = new Pacman(23, 13, 12);
+    ghosts.set(0, new Ghost(15, 13, 20, color(255, 0, 0))); // red
+    ghosts.set(1, new Ghost(15, 14, 18, color(255, 184, 255))); // brilliant lavender
+    ghosts.set(2, new Ghost(15, 15, 20, color(0, 255, 255))); // aqua
+    ghosts.set(3, new Ghost(15, 16, 20, color(255, 184, 82))); // pastel orange
   }
 
-  void setObject(int xV, int yV, char obj) {
-    maze[xV][yV] = obj;
-  }
-  
   void set(int xPos, int yPos, char c) {
     maze[xPos][yPos] = c;
+  }
+
+  void gameOverDisplay() {
+    displayMaze();
+  }
+
+  boolean over() {
+    return gameOver;
   }
 }
