@@ -5,7 +5,7 @@ public class Pacman implements Character {
   int x;
   int y;
   float speed;
-  final int radius = 9;
+  final int radius = 12;
   int dir;
   int[] newDir;
   int tryDir;
