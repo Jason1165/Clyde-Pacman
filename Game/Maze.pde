@@ -12,7 +12,7 @@ public class Maze {
   boolean start;
 
   Maze(String score, String maze) {
-    level = 0;
+    level = 1;
     lives = 3;
     highScore = getHighScore(score);
     generateMaze(maze);
@@ -136,6 +136,10 @@ public class Maze {
   int getLevel() {
     return level;
   }
+  
+  void addLevel(int num) {
+    level += num;
+  }
 
   int addLives(int num) {
     lives += num;
@@ -215,7 +219,8 @@ public class Maze {
 
   void gameOverDisplay() {
     displayMaze();
-    text("GAME OVER", 240, 500);
+    fill(255);
+    text("GAME OVER", 220, 560);
   }
 
   boolean over() {
