@@ -71,6 +71,7 @@ public class Maze {
    G = Gate
    d = old dot
    p = old pellet
+   f = fruit
    */
   void displayMaze() {
     noStroke();
@@ -100,6 +101,19 @@ public class Maze {
           rect(j*20 + ((20-offset)/2), (i+down)*20 + ((20-offset)/2), offset, offset);
         } else if (maze[i][j] == 'd' || maze[i][j] == 'p') {
           boxBackground(j, i);
+        } else if (maze[i][j] == 'f') {
+          PImage cherry = loadImage("cherry.png");
+          boxBackground(j, i);
+          image(cherry, j*20, (i+down)*20, 20, 20);
+          for (int z = 0; z < cherry.width; z++) {
+            for (int w = 0; w < cherry.height; w++) {
+              color c = cherry.get(z, w);
+              if(red(c) == 247 && blue(c) == 247 && green(c) == 247){
+                color n = color(255, 245, 235);
+                cherry.set(z,w,n);
+              }
+            }
+          }
         }
       }
     }
