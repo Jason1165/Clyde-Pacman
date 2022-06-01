@@ -12,7 +12,7 @@ public class Maze {
   boolean start;
 
   Maze(String score, String maze) {
-    level = 0;
+    level = 1;
     lives = 3;
     highScore = getHighScore(score);
     generateMaze(maze);
@@ -71,6 +71,7 @@ public class Maze {
    G = Gate
    d = old dot
    p = old pellet
+   f = fruit
    */
   void displayMaze() {
     noStroke();
@@ -78,8 +79,9 @@ public class Maze {
     for (int i = 0; i < maze.length; i++) {
       for (int j = 0; j < maze[i].length; j++) {
         if (maze[i][j] == 'W') {
-          fill(51, 51, 255);
-          rect(j*20, (i+down)*20, 20, 20);
+          //fill(51, 51, 255);
+          //rect(j*20, (i+down)*20, 20, 20);
+          helperDisplay(j, i);
         } else if (maze[i][j] == 'V') {
           fill(0);
           rect(j*20, (i+down)*20, 20, 20);
@@ -99,6 +101,19 @@ public class Maze {
           rect(j*20 + ((20-offset)/2), (i+down)*20 + ((20-offset)/2), offset, offset);
         } else if (maze[i][j] == 'd' || maze[i][j] == 'p') {
           boxBackground(j, i);
+        } else if (maze[i][j] == 'f') {
+          PImage cherry = loadImage("cherry.png");
+          boxBackground(j, i);
+          image(cherry, j*20, (i+down)*20, 20, 20);
+          for (int z = 0; z < cherry.width; z++) {
+            for (int w = 0; w < cherry.height; w++) {
+              color c = cherry.get(z, w);
+              if(red(c) == 247 && blue(c) == 247 && green(c) == 247){
+                color n = color(255, 245, 235);
+                cherry.set(z,w,n);
+              }
+            }
+          }
         }
       }
     }
@@ -134,6 +149,10 @@ public class Maze {
 
   int getLevel() {
     return level;
+  }
+
+  void addLevel(int num) {
+    level += num;
   }
 
   int addLives(int num) {
@@ -181,6 +200,10 @@ public class Maze {
   }
 
   char get(int xV, int yV) {
+    //if (xV < 0 || yV < 0 || xV >= maze.length  || yV >= maze[0].length) {
+    //  println(xV + " " + yV);
+    //  return '0';
+    //}
     return maze[xV][yV];
   }
 
@@ -210,10 +233,192 @@ public class Maze {
 
   void gameOverDisplay() {
     displayMaze();
-    text("GAME OVER", 240, 500);
+    fill(255);
+    text("GAME OVER", 220, 560);
   }
 
   boolean over() {
     return gameOver;
+  }
+
+  /*
+  Code below this is used for displaying walls as close to the originals as possible.
+   Yes the code is terrible with so many booleans
+   Code can be made better by moving repeating booleans to one and just using if
+   Although the draw back is a lack of understanding which block it is refering to
+   */
+  private void helperDisplay(int j, int i) {
+    fill(51, 51, 255);
+    if (wallSurround(j, i)) {
+      // let it be darkness
+    } else if (dotI(j, i)) {
+      rect(j*20, (i+down)*20+8, 10, 4);
+      rect(j*20+8, (i+down)*20+11, 4, 10);
+    } else if (dotII(j, i)) {
+      rect(j*20+8, (i+down)*20+11, 4, 10);
+      rect(j*20+11, (i+down)*20+8, 10, 4);
+    } else if (dotIII(j, i)) {
+      rect(j*20+8, (i+down)*20, 4, 10);
+      rect(j*20+11, (i+down)*20+8, 10, 4);
+    } else if (dotIV(j, i)) {
+      rect(j*20+8, (i+down)*20, 4, 10);
+      rect(j*20, (i+down)*20+8, 10, 4);
+    } else if (houseUp(j, i) || houseDown(j, i)) {
+      rect(j*20, (i+down)*20+8, 20, 4);
+    } else if (houseRight(j, i) || houseLeft(j, i)) {
+      rect(j*20+8, (i+down)*20, 4, 20);
+    } else if (quadIV(j, i)) {
+      rect(j*20+8, (i+down)*20, 4, 10);
+      rect(j*20, (i+down)*20+8, 10, 4);
+    } else if (quadI(j, i)) {
+      rect(j*20, (i+down)*20+8, 10, 4);
+      rect(j*20+8, (i+down)*20+11, 4, 10);
+    } else if (quadIII(j, i)) {
+      rect(j*20+8, (i+down)*20, 4, 10);
+      rect(j*20+11, (i+down)*20+8, 10, 4);
+    } else if (quadII(j, i)) {
+      rect(j*20+8, (i+down)*20+11, 4, 10);
+      rect(j*20+11, (i+down)*20+8, 10, 4);
+    } else if (i == 0 && j == 0) {
+      rect(j*20+8, (i+down)*20+11, 4, 10);
+      rect(j*20+11, (i+down)*20+8, 10, 4);
+      rect(j*20, (i+down)*20+4, 4, 16);
+      rect(j*20+4, (i+down)*20, 16, 4);
+    } else if (j == 0) {
+      rect(j*20, (i+down)*20, 4, 20);
+      rect(j*20 + 8, (i+down)*20, 4, 20);
+    } else if (i == 0 || notWallHor(j, i)) {
+      rect(j*20, (i+down)*20, 20, 4);
+      rect(j*20, (i+down)*20 + 8, 20, 4);
+    } else {
+      rect(j*20, (i+down)*20, 20, 20);
+    }
+  }
+
+  private boolean wallSurround(int j, int i) {
+    if (i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1) return false;
+    boolean l = get(i, j-1) == 'W'; 
+    boolean r = get(i, j+1) == 'W';
+    boolean u = get(i-1, j) == 'W';
+    boolean d = get(i+1, j) == 'W';
+    boolean IV = get(i+1, j+1) == 'W';
+    boolean III = get(i+1, j-1) == 'W';
+    boolean II = get(i-1, j-1) == 'W';
+    boolean I = get(i-1, j+1) == 'W';
+    return l && r && u && d && I && II && III && IV;
+  }
+
+  private boolean houseUp(int j, int i) {
+    if (i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1) return false;
+    boolean l = get(i, j-1) == 'W'; 
+    boolean r = get(i, j+1) == 'W';
+    boolean u = get(i-1, j) == 'W';
+    boolean I = get(i-1, j+1) == 'W';
+    boolean II = get(i-1, j-1) == 'W';
+    return l && r && u && I && II;
+  }
+
+  private boolean houseDown(int j, int i) {
+    if (i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1) return false;
+    boolean l = get(i, j-1) == 'W'; 
+    boolean r = get(i, j+1) == 'W';
+    boolean d = get(i+1, j) == 'W';
+    boolean IV = get(i+1, j+1) == 'W';
+    boolean III = get(i+1, j-1) == 'W';
+    return l && r && d && IV && III;
+  }
+
+  private boolean houseLeft(int j, int i) {
+    if (i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1) return false;
+    boolean l = get(i, j-1) == 'W'; 
+    boolean u = get(i-1, j) == 'W';
+    boolean d = get(i+1, j) == 'W';
+    boolean III = get(i+1, j-1) == 'W';
+    boolean II = get(i-1, j-1) == 'W';
+    return l && u && d && II && III;
+  }
+
+  private boolean houseRight(int j, int i) {
+    if (i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1) return false;
+    boolean r = get(i, j+1) == 'W';
+    boolean u = get(i-1, j) == 'W';
+    boolean d = get(i+1, j) == 'W';
+    boolean IV = get(i+1, j+1) == 'W';
+    boolean I = get(i-1, j+1) == 'W';
+    return r && u && d && IV & I;
+  }
+
+  private boolean quadIV(int j, int i) {
+    if (i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1) return false;
+    boolean l = get(i, j-1) == 'W';
+    boolean u = get(i-1, j) == 'W';
+    boolean II = get(i-1, j-1) == 'W';
+    return l && u && II;
+  }
+
+  private boolean quadI(int j, int i) {
+    if (i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1) return false;
+    boolean l = get(i, j-1) == 'W'; 
+    boolean d = get(i+1, j) == 'W';
+    boolean III = get(i+1, j-1) == 'W';
+    return l && d && III;
+  }
+
+  private boolean quadIII(int j, int i) {
+    if (i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1) return false;
+    boolean r = get(i, j+1) == 'W';
+    boolean u = get(i-1, j) == 'W';
+    boolean I = get(i-1, j+1) == 'W';
+    return r && u && I;
+  }
+
+  private boolean quadII(int j, int i) {
+    if (i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1) return false;
+    boolean r = get(i, j+1) == 'W';
+    boolean d = get(i+1, j) == 'W';
+    boolean IV = get(i+1, j+1) == 'W';
+    return r && d && IV;
+  }
+
+  private boolean dotI(int j, int i) {
+    if (i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1) return false;
+    boolean l = get(i, j-1) == 'W'; 
+    boolean d = get(i+1, j) == 'W';
+    boolean III = isValid(i+1, j-1, false);
+    return l && d && III;
+  }
+
+  private boolean dotII(int j, int i) {
+    if (i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1) return false;
+    boolean r = get(i, j+1) == 'W';
+    boolean d = get(i+1, j) == 'W';
+    boolean IV = isValid(i+1, j+1, false);
+    return r && d && IV;
+  }
+
+  private boolean dotIII(int j, int i) {
+    if (i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1) return false;
+    boolean r = get(i, j+1) == 'W';
+    boolean u = get(i-1, j) == 'W';
+    boolean I = isValid(i-1, j+1, false);
+    return r && u && I;
+  }
+
+  private boolean dotIV(int j, int i) {
+    if (i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1) return false;
+    boolean l = get(i, j-1) == 'W';
+    boolean u = get(i-1, j) == 'W';
+    boolean II = isValid(i-1, j-1, false);
+    return l && u && II;
+  }
+  private boolean notWallHor(int j, int i) {
+    if (i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1) return false;
+    boolean u = get(i-1, j) != 'W';
+    boolean d = get(i+1, j) != 'W';  
+    return u && d;
+  }
+
+  private boolean notWallVert(int j, int i) {
+    return true;
   }
 }
