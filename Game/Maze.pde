@@ -104,16 +104,16 @@ public class Maze {
         } else if (maze[i][j] == 'f') {
           PImage cherry = loadImage("cherry.png");
           boxBackground(j, i);
-          image(cherry, j*20, (i+down)*20, 20, 20);
           for (int z = 0; z < cherry.width; z++) {
             for (int w = 0; w < cherry.height; w++) {
               color c = cherry.get(z, w);
-              if(red(c) == 247 && blue(c) == 247 && green(c) == 247){
+              if (red(c) == 247 && blue(c) == 247 && green(c) == 247) {
                 color n = color(255, 245, 235);
-                cherry.set(z,w,n);
+                cherry.set(z, w, n);
               }
             }
           }
+          image(cherry, j*20, (i+down)*20, 20, 20);
         }
       }
     }
