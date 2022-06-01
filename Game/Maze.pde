@@ -108,7 +108,7 @@ public class Maze {
             for (int w = 0; w < cherry.height; w++) {
               color c = cherry.get(z, w);
               if (red(c) == 247 && blue(c) == 247 && green(c) == 247) {
-                color n = color(255, 245, 235);
+                color n = color(128);
                 cherry.set(z, w, n);
               }
             }
