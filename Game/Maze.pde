@@ -78,9 +78,9 @@ public class Maze {
     for (int i = 0; i < maze.length; i++) {
       for (int j = 0; j < maze[i].length; j++) {
         if (maze[i][j] == 'W') {
-          fill(51, 51, 255);
-          rect(j*20, (i+down)*20, 20, 20);
-          //helperDisplay(j, i);
+          //fill(51, 51, 255);
+          //rect(j*20, (i+down)*20, 20, 20);
+          helperDisplay(j, i);
         } else if (maze[i][j] == 'V') {
           fill(0);
           rect(j*20, (i+down)*20, 20, 20);
@@ -136,7 +136,7 @@ public class Maze {
   int getLevel() {
     return level;
   }
-  
+
   void addLevel(int num) {
     level += num;
   }
@@ -227,12 +227,12 @@ public class Maze {
     return gameOver;
   }
 
-/*
+  /*
   Code below this is used for displaying walls as close to the originals as possible.
-  Yes the code is terrible with so many booleans
-  Code can be made better by moving repeating booleans to one and just using if
-  Although the draw back is a lack of understanding which block it is refering to
-*/
+   Yes the code is terrible with so many booleans
+   Code can be made better by moving repeating booleans to one and just using if
+   Although the draw back is a lack of understanding which block it is refering to
+   */
   private void helperDisplay(int j, int i) {
     fill(51, 51, 255);
     if (wallSurround(j, i)) {
@@ -246,7 +246,7 @@ public class Maze {
     } else if (dotIII(j, i)) {
       rect(j*20+8, (i+down)*20, 4, 10);
       rect(j*20+11, (i+down)*20+8, 10, 4);
-    }else if (dotIV(j, i)) {
+    } else if (dotIV(j, i)) {
       rect(j*20+8, (i+down)*20, 4, 10);
       rect(j*20, (i+down)*20+8, 10, 4);
     } else if (houseUp(j, i) || houseDown(j, i)) {
@@ -265,20 +265,18 @@ public class Maze {
     } else if (quadII(j, i)) {
       rect(j*20+8, (i+down)*20+11, 4, 10);
       rect(j*20+11, (i+down)*20+8, 10, 4);
-    } 
-    else if (i == 0 && j == 0) {
+    } else if (i == 0 && j == 0) {
       rect(j*20+8, (i+down)*20+11, 4, 10);
       rect(j*20+11, (i+down)*20+8, 10, 4);
       rect(j*20, (i+down)*20+4, 4, 16);
       rect(j*20+4, (i+down)*20, 16, 4);
-    }else if (j == 0) {
+    } else if (j == 0) {
       rect(j*20, (i+down)*20, 4, 20);
       rect(j*20 + 8, (i+down)*20, 4, 20);
-    } else if (i == 0) {
+    } else if (i == 0 || notWallHor(j, i)) {
       rect(j*20, (i+down)*20, 20, 4);
       rect(j*20, (i+down)*20 + 8, 20, 4);
-    }
-    else {
+    } else {
       rect(j*20, (i+down)*20, 20, 20);
     }
   }
@@ -375,28 +373,38 @@ public class Maze {
     boolean III = isValid(i+1, j-1, false);
     return l && d && III;
   }
-  
-    private boolean dotII(int j, int i) {
+
+  private boolean dotII(int j, int i) {
     if (i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1) return false;
     boolean r = get(i, j+1) == 'W';
     boolean d = get(i+1, j) == 'W';
     boolean IV = isValid(i+1, j+1, false);
     return r && d && IV;
   }
-  
-    private boolean dotIII(int j, int i) {
+
+  private boolean dotIII(int j, int i) {
     if (i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1) return false;
     boolean r = get(i, j+1) == 'W';
     boolean u = get(i-1, j) == 'W';
     boolean I = isValid(i-1, j+1, false);
     return r && u && I;
   }
-  
-    private boolean dotIV(int j, int i) {
+
+  private boolean dotIV(int j, int i) {
     if (i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1) return false;
     boolean l = get(i, j-1) == 'W';
     boolean u = get(i-1, j) == 'W';
     boolean II = isValid(i-1, j-1, false);
     return l && u && II;
+  }
+  private boolean notWallHor(int j, int i) {
+    if (i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1) return false;
+    boolean u = get(i-1, j) != 'W';
+    boolean d = get(i+1, j) != 'W';  
+    return u && d;
+  }
+
+  private boolean notWallVert(int j, int i) {
+    return true;
   }
 }
