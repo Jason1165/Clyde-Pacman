@@ -4,6 +4,7 @@ final static int down = 3; // how much space to leave at top
 // each 'pixel' is 20 by 20
 final float SIXTH_PI = HALF_PI/3; // const for pacman arc;
 ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
+int ghostsKilled;
 
 void setup() {
   size(560, 720);
@@ -15,11 +16,12 @@ void setup() {
   ghosts.add(new Ghost(15, 14, 20, color(0, 255, 255))); // aqua
   ghosts.add(new Ghost(15, 15, 20, color(255, 184, 82))); // pastel orange
   frameRate(60);
+  ghostsKilled = 0;
 } 
 
 void draw() {
   float count = frameCount;
- 
+
   map.displayMaze();
 
   if (map.over()) {
@@ -32,10 +34,9 @@ void draw() {
       ghosts.get(i).move();
       ghosts.get(i).chooseDir();
       g.display(g.getY()*20, (g.getX()+down)*20);
-    } 
-    else if (map.over()) {
+    } else if (map.over()) {
       g.display(g.getY()*20, (g.getX()+down)*20);
-    }else {
+    } else {
       g.display(g.getY()*20 + g.dirY()*(20/g.getSpeed()) * (count%g.getSpeed()), (g.getX()+down)*20 + g.dirX()*(20/g.getSpeed()) * (count%g.getSpeed()));
     }
   }
@@ -100,23 +101,42 @@ void draw() {
     map.set(p.getX(), p.getY(), 'd');
     map.addScore(10);
   }
-  
+
   if (map.get(p.getX(), p.getY()) == 'P') {
     map.set(p.getX(), p.getY(), 'p');
-    map.addScore(50);
+    map.addScore(0);
+    p.setTimer((int)(p.getSpeed()*p.getSpeed()*10 / (1 + map.getLevel()/10.0) + p.timer()));
+    p.abilityChange(true);
   }
-  
+
   if (map.containsNoFood()) {
     map.refillFood();
     map.respawn();
     map.addLives(1);
+    map.addLevel(1);
     // map level stuff
   }
 
   for (int i = 0; i < ghosts.size(); i++) {
     if (ghosts.get(i).getX() == p.getX() && ghosts.get(i).getY() == p.getY()) {
-      map.respawn();
+      if (!p.ability()) {
+        map.respawn();
+      } else {
+        ghostsKilled += 1;
+        map.addScore((int)(200*(Math.pow(2, ghostsKilled - 1))));
+        ghosts.get(i).setX(14);
+        ghosts.get(i).setY(12);
+      }
     }
+  }
+
+  if (p.timer() > 0) {
+    p.setTimer(p.timer()-1);
+    // println(p.timer());
+  }
+  if (p.timer() == 0) {
+    p.abilityChange(false);
+    ghostsKilled = 0;
   }
 
   if (map.getLives() == 0) {

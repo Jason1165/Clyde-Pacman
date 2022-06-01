@@ -20,6 +20,10 @@ public class Ghost implements Character {
     chooseDir();
   }
 
+  void canBeEaten(boolean eat) {
+    eatable = eat;
+  }
+
   void move() {
     x += newDir[0];
     y += newDir[1];
@@ -52,7 +56,11 @@ public class Ghost implements Character {
   //}
 
   void display(float xCor, float yCor) {
-    fill(colour);
+    if (p.timer() < 200 && p.timer()%4 == 0) {
+      fill(colour);
+    } else if (p.timer() > 0) {
+      fill(0, 0, 255);
+    }
     rect(xCor+8, yCor+3, 3, 1);
     rect(xCor+6, yCor+4, 7, 1);
     rect(xCor+5, yCor+5, 9, 1);

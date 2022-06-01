@@ -29,6 +29,9 @@ Jason: Improved Ghost's move, it cannot move backwards. Modified Ghost's display
 Ryan: pacman will eat dots and pellets and gain the respective points for them, added set method for score in Maze class and added to display if character in maze was p or d
 
 ##### 05/29/2022
-Jason: Made some code more concise, made pacman move within the path. Dots can be "eaten". 
+Jason: Made some code more concise, made pacman move within the path. Dots can be "eaten".
 
 Ryan: Fixed small boundary issue with gate and made pellets eatable.
+
+##### 05/31/2022
+Jason: Worked on making pellets effects work, pacman can eat ghosts for a duration, successive ghosts increase in points. Ghosts that respawn can still be eaten again which needs to be fixed.
