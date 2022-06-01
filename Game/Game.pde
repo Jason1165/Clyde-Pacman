@@ -101,6 +101,11 @@ void draw() {
     map.set(p.getX(), p.getY(), 'd');
     map.addScore(10);
   }
+  
+  if (map.get(p.getX(), p.getY()) == 'f') {
+    map.set(p.getX(), p.getY(), 'S');
+    map.addScore(100);
+  }
 
   if (map.get(p.getX(), p.getY()) == 'P') {
     map.set(p.getX(), p.getY(), 'p');
@@ -142,6 +147,10 @@ void draw() {
   if (map.getLives() == 0) {
     map.gameOver();
     map.storeHighScore("highScore.txt");
+  }
+  
+  if(map.getScore() % 150 == 0){
+   map.set(17,14,'f'); 
   }
 }
 

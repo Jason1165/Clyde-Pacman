@@ -100,6 +100,10 @@ public class Maze {
           rect(j*20 + ((20-offset)/2), (i+down)*20 + ((20-offset)/2), offset, offset);
         } else if (maze[i][j] == 'd' || maze[i][j] == 'p') {
           boxBackground(j, i);
+        } else if (maze[i][j] == 'f') {
+          PImage cherry = loadImage("cherry.png");
+          boxBackground(j, i);
+          image(cherry,j*20, (i+down)*20,20,20);
         }
       }
     }
