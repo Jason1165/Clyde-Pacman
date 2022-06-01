@@ -148,7 +148,12 @@ void draw() {
     map.gameOver();
     map.storeHighScore("highScore.txt");
   }
-  
+   
+   /*
+     Fix with boolean to determine if a fruit has spawned that level
+     Else this fruit just spawns every 5 dots eaten
+     Once score pasts a certain point, or else eating a ghost will not spawn itS
+   */
   if(map.getScore() % 150 == 0){
    map.set(17,14,'f'); 
   }
