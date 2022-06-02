@@ -35,3 +35,10 @@ Ryan: Fixed small boundary issue with gate and made pellets eatable.
 
 ##### 05/31/2022
 Jason: Worked on making pellets effects work, pacman can eat ghosts for a duration, successive ghosts increase in points. Ghosts that respawn can still be eaten again which needs to be fixed.
+
+Ryan:Added the cherry pgn and adjusted background color. Cherry will appear at a certain spot in the maze that will appear when you get a certain number of points. 
+
+##### 06/01/2022
+Jason: Worked on making the walls look semi decent or similar to the original game.
+
+Ryan: Made the tunnel working. Both pacman and ghosts can go through and back. The animation is smoothed.

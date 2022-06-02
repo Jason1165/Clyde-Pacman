@@ -89,7 +89,7 @@ public class Maze {
           boxBackground(j, i);
         } else if (maze[i][j] == 'G') {
           fill(255, 153, 204);
-          rect(j*20, (i+down)*20 + 6, 20, 8);
+          rect(j*20, (i+down)*20 + 8, 20, 12);
         } else if (maze[i][j] == 'P') {
           boxBackground(j, i);
           fill(255, 128, 128);
@@ -104,13 +104,12 @@ public class Maze {
         } else if (maze[i][j] == 'f') {
           PImage cherry = loadImage("cherry.png");
           boxBackground(j, i);
-          image(cherry, j*20, (i+down)*20, 20, 20);
           for (int z = 0; z < cherry.width; z++) {
             for (int w = 0; w < cherry.height; w++) {
               color c = cherry.get(z, w);
-              if(red(c) == 247 && blue(c) == 247 && green(c) == 247){
+              if (red(c) == 247 && blue(c) == 247 && green(c) == 247) {
                 color n = color(128);
-                cherry.set(z,w,n);
+                cherry.set(z, w, n);
               }
             }
           }
@@ -214,7 +213,7 @@ public class Maze {
     char c = maze[row][col];
     // println("Char: " + c);
     if (isPac && c == 'G') return false;
-    if (c == 'W' || c == 'V') return false;
+    if (c == 'W') return false;
     //return c == 'P' || c == 'D' || c == 'p' || c == 'd' || c == 'S';
     return true;
   }
@@ -235,7 +234,7 @@ public class Maze {
   void gameOverDisplay() {
     displayMaze();
     fill(255);
-    text("GAME OVER", 220, 560);
+    text("GAME OVER", 220, 565);
   }
 
   boolean over() {
@@ -250,176 +249,135 @@ public class Maze {
    */
   private void helperDisplay(int j, int i) {
     fill(51, 51, 255);
-    if (wallSurround(j, i)) {
-      // let it be darkness
-    } else if (dotI(j, i)) {
-      rect(j*20, (i+down)*20+8, 10, 4);
-      rect(j*20+8, (i+down)*20+11, 4, 10);
-    } else if (dotII(j, i)) {
-      rect(j*20+8, (i+down)*20+11, 4, 10);
-      rect(j*20+11, (i+down)*20+8, 10, 4);
-    } else if (dotIII(j, i)) {
-      rect(j*20+8, (i+down)*20, 4, 10);
-      rect(j*20+11, (i+down)*20+8, 10, 4);
-    } else if (dotIV(j, i)) {
-      rect(j*20+8, (i+down)*20, 4, 10);
-      rect(j*20, (i+down)*20+8, 10, 4);
-    } else if (houseUp(j, i) || houseDown(j, i)) {
-      rect(j*20, (i+down)*20+8, 20, 4);
-    } else if (houseRight(j, i) || houseLeft(j, i)) {
-      rect(j*20+8, (i+down)*20, 4, 20);
-    } else if (quadIV(j, i)) {
-      rect(j*20+8, (i+down)*20, 4, 10);
-      rect(j*20, (i+down)*20+8, 10, 4);
-    } else if (quadI(j, i)) {
-      rect(j*20, (i+down)*20+8, 10, 4);
-      rect(j*20+8, (i+down)*20+11, 4, 10);
-    } else if (quadIII(j, i)) {
-      rect(j*20+8, (i+down)*20, 4, 10);
-      rect(j*20+11, (i+down)*20+8, 10, 4);
-    } else if (quadII(j, i)) {
-      rect(j*20+8, (i+down)*20+11, 4, 10);
-      rect(j*20+11, (i+down)*20+8, 10, 4);
-    } else if (i == 0 && j == 0) {
-      rect(j*20+8, (i+down)*20+11, 4, 10);
-      rect(j*20+11, (i+down)*20+8, 10, 4);
-      rect(j*20, (i+down)*20+4, 4, 16);
-      rect(j*20+4, (i+down)*20, 16, 4);
-    } else if (j == 0) {
-      rect(j*20, (i+down)*20, 4, 20);
-      rect(j*20 + 8, (i+down)*20, 4, 20);
-    } else if (i == 0 || notWallHor(j, i)) {
-      rect(j*20, (i+down)*20, 20, 4);
-      rect(j*20, (i+down)*20 + 8, 20, 4);
+    boolean border = !(i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1);
+    if (border) {
+      boolean l = get(i, j-1) == 'W'; 
+      boolean r = get(i, j+1) == 'W';
+      boolean u = get(i-1, j) == 'W';
+      boolean d = get(i+1, j) == 'W';
+      boolean IV = get(i+1, j+1) == 'W';
+      boolean III = get(i+1, j-1) == 'W';
+      boolean II = get(i-1, j-1) == 'W';
+      boolean I = get(i-1, j+1) == 'W';
+      boolean lV = isValid(i, j-1, false); 
+      boolean rV = isValid(i, j+1, false);
+      boolean uV = isValid(i-1, j, false);
+      boolean dV = isValid(i+1, j, false);
+      boolean IVdot = isValid(i+1, j+1, false);
+      boolean IIIdot = isValid(i+1, j-1, false);
+      boolean IIdot = isValid(i-1, j-1, false);
+      boolean Idot = isValid(i-1, j+1, false);
+      if (l && r && u && d && I && II && III && IV) {
+        // its an inner wall surrounded by walls
+      } else if (get(i+1, j) == 'V') {
+        rect(j*20, (i+down)*20+8, 20, 4);
+        rect(j*20, (i+down)*20+16, 20, 4);
+      } else if (get(i-1, j) == 'V') {
+        rect(j*20, (i+down)*20, 20, 4);
+        rect(j*20, (i+down)*20+8, 20, 4);
+      } else if (get(i, j+1) == 'V') {
+        rect(j*20+8, (i+down)*20, 4, 20);
+        rect(j*20+16, (i+down)*20, 4, 20);
+      } else if (get(i, j-1) == 'V') {
+        rect(j*20, (i+down)*20, 4, 20);
+        rect(j*20+8, (i+down)*20, 4, 20);
+      } else if ((l && d && IIIdot) || (rV && uV && Idot)) {
+        // top right corner
+        rect(j*20, (i+down)*20+8, 10, 4);
+        rect(j*20+8, (i+down)*20+11, 4, 10);
+      } else if ((r && d && IVdot) || (lV && uV && IIdot)) {
+        // top left corner
+        rect(j*20+8, (i+down)*20+11, 4, 10);
+        rect(j*20+11, (i+down)*20+8, 10, 4);
+      } else if ((r && u && Idot) || (IIIdot && lV && dV)) {
+        // bottom left corner
+        rect(j*20+8, (i+down)*20, 4, 10);
+        rect(j*20+11, (i+down)*20+8, 10, 4);
+      } else if ((l && u && IIdot) || (IVdot && rV && dV)) {
+        // bottom right corner
+        rect(j*20+8, (i+down)*20, 4, 10);
+        rect(j*20, (i+down)*20+8, 10, 4);
+      } else if (l && r && u && I && II || l && r && d && IV && III) {
+        // house up and down
+        rect(j*20, (i+down)*20+8, 20, 4);
+      } else if (r && u && d && IV & I || l && u && d && II && III) {
+        // house left and right
+        rect(j*20+8, (i+down)*20, 4, 20);
+      } else if (l && u && II) {
+        // bottom right corner
+        rect(j*20+8, (i+down)*20, 4, 10);
+        rect(j*20, (i+down)*20+8, 10, 4);
+      } else if (l && d && III) {
+        // top tight corner
+        rect(j*20, (i+down)*20+8, 10, 4);
+        rect(j*20+8, (i+down)*20+11, 4, 10);
+      } else if (r && u && I) {
+        // bottom right corner
+        rect(j*20+8, (i+down)*20, 4, 10);
+        rect(j*20+11, (i+down)*20+8, 10, 4);
+      } else if (r && d && IV) {
+        // bottom left corner
+        rect(j*20+8, (i+down)*20+11, 4, 10);
+        rect(j*20+11, (i+down)*20+8, 10, 4);
+      } else {
+        rect(j*20, (i+down)*20, 20, 20);
+      }
     } else {
-      rect(j*20, (i+down)*20, 20, 20);
+      if (j == 0 && (i == 0 || i == 19)) {
+        rect(j*20+8, (i+down)*20+12, 4, 8);
+        rect(j*20+12, (i+down)*20+8, 8, 4);
+        rect(j*20, (i+down)*20+4, 4, 16);
+        rect(j*20+4, (i+down)*20, 16, 4);
+      } else if (j == maze[0].length - 1 && (i == 0 || i == 19)) {
+        rect(j*20, (i+down)*20, 16, 4);
+        rect(j*20+16, (i+down)*20 + 4, 4, 16);
+        rect(j*20, (i+down)*20 + 8, 8, 4);
+        rect(j*20 + 8, (i+down)*20 + 12, 4, 8);
+      } else if (j == 0 && (i == maze.length - 1 || i == 9)) {
+        rect(j*20, (i+down)*20, 4, 16);
+        rect(j*20+8, (i+down)*20, 4, 8);
+        rect(j*20+4, (i+down)*20+16, 16, 4);
+        rect(j*20+12, (i+down)*20+8, 8, 4);
+      } else if (j == maze[0].length - 1 && (i == maze.length-1 || i == 9)) {
+        rect(j*20+16, (i+down)*20, 4, 16);
+        rect(j*20, (i+down)*20+16, 16, 4);
+        rect(j*20 + 8, (i+down)*20, 4, 8);
+        rect(j*20, (i+down)*20 + 8, 8, 4);
+      } else if (j == 0 && i == 24) {
+        rect(j*20, (i+down)*20, 4, 20);
+        rect(j*20+8, (i+down)*20, 4, 8); 
+        rect(j*20+12, (i+down)*20+8, 8, 4);
+      } else if (j == 0 && i == 25) {
+        rect(j*20, (i+down)*20, 4, 20);
+        rect(j*20+8, (i+down)*20+12, 4, 8); 
+        rect(j*20+12, (i+down)*20+8, 8, 4);
+      } else if (j == maze[0].length - 1 && i == 24) {
+        rect(j*20+16, (i+down)*20, 4, 20);
+        rect(j*20+8, (i+down)*20, 4, 8); 
+        rect(j*20, (i+down)*20+8, 8, 4);
+      } else if (j == maze[0].length - 1 && i == 25) {
+        rect(j*20+16, (i+down)*20, 4, 20);
+        rect(j*20+8, (i+down)*20+12, 4, 8); 
+        rect(j*20, (i+down)*20+8, 8, 4);
+      } else if (i != 0 && get(i-1, j) == 'V') {
+        rect(j*20, (i+down)*20, 20, 4);
+        rect(j*20, (i+down)*20+8, 20, 4);
+      } else if (i != maze.length - 1 && get(i+1, j) == 'V') {
+        rect(j*20, (i+down)*20+8, 20, 4);
+        rect(j*20, (i+down)*20+16, 20, 4);
+      } else if (j == 0) {
+        rect(j*20, (i+down)*20, 4, 20);
+        rect(j*20 + 8, (i+down)*20, 4, 20);
+      } else if (i == 0) {
+        rect(j*20, (i+down)*20, 20, 4);
+        rect(j*20, (i+down)*20 + 8, 20, 4);
+      } else if (i == maze.length - 1) {
+        rect(j*20, (i+down)*20 + 8, 20, 4);
+        rect(j*20, (i+down)*20 + 16, 20, 4);
+      } else if (j == maze[i].length - 1) {
+        rect(j*20 + 16, (i+down)*20, 4, 20);
+        rect(j*20 + 8, (i+down)*20, 4, 20);
+      }
     }
-  }
-
-  private boolean wallSurround(int j, int i) {
-    if (i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1) return false;
-    boolean l = get(i, j-1) == 'W'; 
-    boolean r = get(i, j+1) == 'W';
-    boolean u = get(i-1, j) == 'W';
-    boolean d = get(i+1, j) == 'W';
-    boolean IV = get(i+1, j+1) == 'W';
-    boolean III = get(i+1, j-1) == 'W';
-    boolean II = get(i-1, j-1) == 'W';
-    boolean I = get(i-1, j+1) == 'W';
-    return l && r && u && d && I && II && III && IV;
-  }
-
-  private boolean houseUp(int j, int i) {
-    if (i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1) return false;
-    boolean l = get(i, j-1) == 'W'; 
-    boolean r = get(i, j+1) == 'W';
-    boolean u = get(i-1, j) == 'W';
-    boolean I = get(i-1, j+1) == 'W';
-    boolean II = get(i-1, j-1) == 'W';
-    return l && r && u && I && II;
-  }
-
-  private boolean houseDown(int j, int i) {
-    if (i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1) return false;
-    boolean l = get(i, j-1) == 'W'; 
-    boolean r = get(i, j+1) == 'W';
-    boolean d = get(i+1, j) == 'W';
-    boolean IV = get(i+1, j+1) == 'W';
-    boolean III = get(i+1, j-1) == 'W';
-    return l && r && d && IV && III;
-  }
-
-  private boolean houseLeft(int j, int i) {
-    if (i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1) return false;
-    boolean l = get(i, j-1) == 'W'; 
-    boolean u = get(i-1, j) == 'W';
-    boolean d = get(i+1, j) == 'W';
-    boolean III = get(i+1, j-1) == 'W';
-    boolean II = get(i-1, j-1) == 'W';
-    return l && u && d && II && III;
-  }
-
-  private boolean houseRight(int j, int i) {
-    if (i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1) return false;
-    boolean r = get(i, j+1) == 'W';
-    boolean u = get(i-1, j) == 'W';
-    boolean d = get(i+1, j) == 'W';
-    boolean IV = get(i+1, j+1) == 'W';
-    boolean I = get(i-1, j+1) == 'W';
-    return r && u && d && IV & I;
-  }
-
-  private boolean quadIV(int j, int i) {
-    if (i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1) return false;
-    boolean l = get(i, j-1) == 'W';
-    boolean u = get(i-1, j) == 'W';
-    boolean II = get(i-1, j-1) == 'W';
-    return l && u && II;
-  }
-
-  private boolean quadI(int j, int i) {
-    if (i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1) return false;
-    boolean l = get(i, j-1) == 'W'; 
-    boolean d = get(i+1, j) == 'W';
-    boolean III = get(i+1, j-1) == 'W';
-    return l && d && III;
-  }
-
-  private boolean quadIII(int j, int i) {
-    if (i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1) return false;
-    boolean r = get(i, j+1) == 'W';
-    boolean u = get(i-1, j) == 'W';
-    boolean I = get(i-1, j+1) == 'W';
-    return r && u && I;
-  }
-
-  private boolean quadII(int j, int i) {
-    if (i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1) return false;
-    boolean r = get(i, j+1) == 'W';
-    boolean d = get(i+1, j) == 'W';
-    boolean IV = get(i+1, j+1) == 'W';
-    return r && d && IV;
-  }
-
-  private boolean dotI(int j, int i) {
-    if (i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1) return false;
-    boolean l = get(i, j-1) == 'W'; 
-    boolean d = get(i+1, j) == 'W';
-    boolean III = isValid(i+1, j-1, false);
-    return l && d && III;
-  }
-
-  private boolean dotII(int j, int i) {
-    if (i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1) return false;
-    boolean r = get(i, j+1) == 'W';
-    boolean d = get(i+1, j) == 'W';
-    boolean IV = isValid(i+1, j+1, false);
-    return r && d && IV;
-  }
-
-  private boolean dotIII(int j, int i) {
-    if (i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1) return false;
-    boolean r = get(i, j+1) == 'W';
-    boolean u = get(i-1, j) == 'W';
-    boolean I = isValid(i-1, j+1, false);
-    return r && u && I;
-  }
-
-  private boolean dotIV(int j, int i) {
-    if (i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1) return false;
-    boolean l = get(i, j-1) == 'W';
-    boolean u = get(i-1, j) == 'W';
-    boolean II = isValid(i-1, j-1, false);
-    return l && u && II;
-  }
-  private boolean notWallHor(int j, int i) {
-    if (i == 0 || i == maze.length - 1 || j == 0 || j == maze[0].length - 1) return false;
-    boolean u = get(i-1, j) != 'W';
-    boolean d = get(i+1, j) != 'W';  
-    return u && d;
-  }
-
-  private boolean notWallVert(int j, int i) {
-    return true;
   }
 }
