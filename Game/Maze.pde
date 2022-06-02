@@ -209,12 +209,9 @@ public class Maze {
 
   boolean isValid(int row, int col, boolean isPac) {
     if (row >= maze.length || maze[0].length <= col || row < 0 || col < 0) return false;
-    //println(row + " " + col);
     char c = maze[row][col];
-    // println("Char: " + c);
-    if (isPac && c == 'G') return false;
+    if (isPac && c == 'G') return false; // pacman cannot enter wall
     if (c == 'W') return false;
-    //return c == 'P' || c == 'D' || c == 'p' || c == 'd' || c == 'S';
     return true;
   }
 
