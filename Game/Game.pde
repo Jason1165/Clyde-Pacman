@@ -5,6 +5,8 @@ final static int down = 3; // how much space to leave at top
 final float SIXTH_PI = HALF_PI/3; // const for pacman arc;
 ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
 int ghostsKilled;
+int dotsEaten;
+boolean fruitSpawned;
 
 void setup() {
   size(560, 720);
@@ -17,6 +19,8 @@ void setup() {
   ghosts.add(new Ghost(15, 15, 20, color(255, 184, 82))); // pastel orange
   frameRate(60);
   ghostsKilled = 0;
+  dotsEaten = 0;
+  fruitSpawned = false;
 } 
 
 void draw() {
@@ -114,11 +118,15 @@ void draw() {
   if (map.get(p.getX(), p.getY()) == 'D') {
     map.set(p.getX(), p.getY(), 'd');
     map.addScore(10);
+    if(fruitSpawned == false){
+     dotsEaten ++; 
+    }
   }
 
   if (map.get(p.getX(), p.getY()) == 'f') {
     map.set(p.getX(), p.getY(), 'S');
     map.addScore(100);
+    fruitSpawned = false;
   }
 
   if (map.get(p.getX(), p.getY()) == 'P') {
@@ -168,9 +176,12 @@ void draw() {
      Else this fruit just spawns every 5 dots eaten
      Once score pasts a certain point, or else eating a ghost will not spawn itS
    */
-  if(map.getScore() % 150 == 0){
-   map.set(17,14,'f'); 
-  }
+   if(dotsEaten == 10){
+     fruitSpawned = true;
+     dotsEaten = 0;
+     map.set(17,14,'f'); 
+   }
+   
 }
 
 void keyPressed() {
