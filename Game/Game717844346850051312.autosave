@@ -40,18 +40,10 @@ void draw() {
       g.display(g.getY()*20 + g.dirY()*(20/g.getSpeed()) * (count%g.getSpeed()), (g.getX()+down)*20 + g.dirX()*(20/g.getSpeed()) * (count%g.getSpeed()));
     }
   }
-  
-  //System.out.println(p.getY());
+
   if (count % p.getSpeed() < 1 && !map.over()) {
-    if(p.getY() == 1 && p.getDir() == 3){
-      p.setY(28);
-      p.move();
-    }
-    else if(p.getY() == 26 && p.getDir() == 1){
-      p.setY(0);
-      p.move();
-    }
-    else if (map.isValid(p.getX() + p.dirX(), p.getY() + p.dirY(), true)) {
+
+    if (map.isValid(p.getX() + p.dirX(), p.getY() + p.dirY(), true)) {
       p.move();
     }
 
