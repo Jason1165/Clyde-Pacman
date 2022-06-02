@@ -32,14 +32,17 @@ public class Ghost implements Character {
   }
 
   void chooseDir() {
-    int x_ = (int)random(0, 3) - 1;
-    int y_ = (int)random(0, 3) - 1;
-    while (!map.isValid((x+x_), (y+y_), false) || (x_ == y_) ||(x_*-1 == y_) || oppositeDir((int)x_, (int)y_)) {
-      x_ = (int)random(0, 3) - 1;
-      y_ = (int)random(0, 3) - 1;
+    ArrayList<int[]> choices = new ArrayList<int[]>();
+    for (int i = 0; i < directional.size(); i++) {
+      int[] temp = directional.get(i);
+      if (map.isValid(temp[0]+x, temp[1]+y, false) && !oppositeDir(temp[0], temp[1])){
+        choices.add(directional.get(i));
+        if (!inCage() && map.get(temp[0]+x, temp[1]+y) == 'G') choices.remove(choices.size()-1);
+      }
     }
-    newDir[0] = x_;
-    newDir[1] = y_;
+    int choice = (int)(Math.random()*choices.size());
+    newDir[0] = choices.get(choice)[0];
+    newDir[1] = choices.get(choice)[1];
   }
 
   int dirX() {
@@ -49,11 +52,10 @@ public class Ghost implements Character {
   int dirY() {
     return newDir[1];
   }
-
-  //void display(float xCor, float yCor) {
-  //  fill(colour);
-  //  rect(xCor, yCor, 20, 20);
-  //}
+  
+  boolean inCage() {
+    return (x >= 13 && x <= 17) && (y >= 10 && y <= 17);
+  }
 
   void display(float xCor, float yCor) {
     if (p.timer() < 200 && p.timer()%4 == 0) {
