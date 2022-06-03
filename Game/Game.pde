@@ -7,16 +7,23 @@ ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
 int ghostsKilled;
 int dotsEaten;
 boolean fruitSpawned;
+ArrayList<int[]> directional = new ArrayList<int[]>();
 
 void setup() {
+  
+  directional.add(new int[] {1, 0});
+  directional.add(new int[] {-1, 0});
+  directional.add(new int[] {0, 1});
+  directional.add(new int[] {0, -1});
+  
   size(560, 720);
   map = new Maze("highScore.txt", "pacman.txt");
   p = new Pacman(23, 13, 12);
   // so it looks a smaller speed is actually faster due to frames 
-  ghosts.add(new Ghost(14, 19, 20, color(255, 0, 0))); // red
-  ghosts.add(new Ghost(15, 13, 18, color(255, 184, 255))); // brilliant lavender
-  ghosts.add(new Ghost(15, 14, 20, color(0, 255, 255))); // aqua
-  ghosts.add(new Ghost(15, 15, 20, color(255, 184, 82))); // pastel orange
+  ghosts.add(new Ghost(11, 14, 12, color(255, 0, 0))); // red
+  ghosts.add(new Ghost(15, 13, 12, color(255, 184, 255))); // brilliant lavender
+  ghosts.add(new Ghost(15, 14, 12, color(0, 255, 255))); // aqua
+  ghosts.add(new Ghost(15, 15, 12, color(255, 184, 82))); // pastel orange
   frameRate(60);
   ghostsKilled = 0;
   dotsEaten = 0;
@@ -131,7 +138,7 @@ void draw() {
 
   if (map.get(p.getX(), p.getY()) == 'P') {
     map.set(p.getX(), p.getY(), 'p');
-    map.addScore(0);
+    map.addScore(50);
     p.setTimer((int)(p.getSpeed()*p.getSpeed()*10 / (1 + map.getLevel()/10.0) + p.timer()));
     p.abilityChange(true);
   }
@@ -139,7 +146,6 @@ void draw() {
   if (map.containsNoFood()) {
     map.refillFood();
     map.respawn();
-    map.addLives(1);
     map.addLevel(1);
     // map level stuff
   }
