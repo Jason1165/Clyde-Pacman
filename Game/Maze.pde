@@ -251,19 +251,19 @@ public class Maze {
         if (current[0] == xTarget && current[1] == yTarget) {
           return ticks;
         }
-        if (isValid(current[0]+1, current[1], true) && visited[current[0]+1][current[1]] <= 0) {
+        if (isValid(current[0]+1, current[1], false) && visited[current[0]+1][current[1]] <= 0) {
           visited[current[0]+1][current[1]] += 1;
           frontier.add(new int[] {current[0]+1, current[1]});
         }
-        if (isValid(current[0]-1, current[1], true) && visited[current[0]-1][current[1]] <= 0) {
+        if (isValid(current[0]-1, current[1], false) && visited[current[0]-1][current[1]] <= 0) {
           visited[current[0]-1][current[1]] += 1;  
           frontier.add(new int[] {current[0]-1, current[1]});
         }
-        if (isValid(current[0], current[1]+1, true) && visited[current[0]][current[1]+1] <= 0) {
+        if (isValid(current[0], current[1]+1, false) && visited[current[0]][current[1]+1] <= 0) {
           visited[current[0]][current[1]+1] += 1;
           frontier.add(new int[] {current[0], current[1]+1});
         }
-        if (isValid(current[0], current[1]-1, true) && visited[current[0]][current[1]-1] <= 0) {
+        if (isValid(current[0], current[1]-1, false) && visited[current[0]][current[1]-1] <= 0) {
           visited[current[0]][current[1]-1] += 1;  
           frontier.add(new int[] {current[0], current[1]-1});
         }

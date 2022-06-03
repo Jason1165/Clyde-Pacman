@@ -1,11 +1,15 @@
 Maze map;
 Pacman p;
 final static int down = 3; // how much space to leave at top
-final static int pixel = 20;
 final float SIXTH_PI = HALF_PI/3; // const for pacman arc;
 ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
 int ghostsKilled;
 ArrayList<int[]> directional = new ArrayList<int[]>();
+
+// modes
+final static int CHASE = 1;
+final static int SCATTER = 0;
+final static int FRIGHT = 2;
 
 void setup() {
 
@@ -18,10 +22,10 @@ void setup() {
   map = new Maze("highScore.txt", "pacman.txt");
   p = new Pacman(23, 13, 12);
   // so it looks a smaller speed is actually faster due to frames 
-  ghosts.add(new Ghost(11, 14, 12, color(255, 0, 0))); // red
-  ghosts.add(new Ghost(15, 13, 12, color(255, 184, 255))); // brilliant lavender
-  ghosts.add(new Ghost(15, 14, 12, color(0, 255, 255))); // aqua
-  ghosts.add(new Ghost(15, 15, 12, color(255, 184, 82))); // pastel orange
+  ghosts.add(new Blinky()); // red
+  //ghosts.add(new Ghost(15, 13, 12, color(255, 184, 255))); // brilliant lavender
+  //ghosts.add(new Ghost(15, 14, 12, color(0, 255, 255))); // aqua
+  //ghosts.add(new Ghost(15, 15, 12, color(255, 184, 82))); // pastel orange
   frameRate(60);
   ghostsKilled = 0;
 } 
