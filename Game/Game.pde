@@ -1,7 +1,7 @@
 Maze map;
 Pacman p;
 final static int down = 3; // how much space to leave at top
-// each 'pixel' is 20 by 20
+final static int pixel = 20;
 final float SIXTH_PI = HALF_PI/3; // const for pacman arc;
 ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
 int ghostsKilled;

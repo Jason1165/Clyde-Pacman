@@ -383,6 +383,14 @@ public class Maze {
         rect(j*20, (i+down)*20, 4, 20);
         rect(j*20+8, (i+down)*20+12, 4, 8); 
         rect(j*20+12, (i+down)*20+8, 8, 4);
+      }  else if (i == 0 && j == 13) {
+        rect(j*20, (i+down)*20, 20, 4);
+        rect(j*20+8, (i+down)*20+12, 4, 8);
+        rect(j*20, (i+down)*20+8, 8, 4);
+      } else if (i == 0 && j == 14) {
+        rect(j*20, (i+down)*20, 20, 4);
+        rect(j*20+8, (i+down)*20+12, 4, 8); 
+        rect(j*20+12, (i+down)*20+8, 8, 4);
       } else if (j == maze[0].length - 1 && i == 24) {
         rect(j*20+16, (i+down)*20, 4, 20);
         rect(j*20+8, (i+down)*20, 4, 8); 
