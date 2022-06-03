@@ -8,12 +8,12 @@ int ghostsKilled;
 ArrayList<int[]> directional = new ArrayList<int[]>();
 
 void setup() {
-  
+
   directional.add(new int[] {1, 0});
   directional.add(new int[] {-1, 0});
   directional.add(new int[] {0, 1});
   directional.add(new int[] {0, -1});
-  
+
   size(560, 720);
   map = new Maze("highScore.txt", "pacman.txt");
   p = new Pacman(23, 13, 12);
@@ -27,8 +27,8 @@ void setup() {
 } 
 
 void draw() {
-  float count = frameCount;
-
+  float count = frameCount;  
+  println(map.BFS(p.getX(), p.getY(), 1, 1));
   map.displayMaze();
 
   if (map.over()) {
@@ -58,7 +58,6 @@ void draw() {
 
   //System.out.println(p.getY());
   if (count % p.getSpeed() < 1 && !map.over()) {
-    println(map.BFS(p.getX(), p.getY(), 1, 1));
     if (p.getY() == 1 && p.getDir() == 3 && map.get(p.getX(), p.getY()-1) == 'S') {
       p.setY(28);
       p.move();
@@ -169,14 +168,14 @@ void draw() {
     map.gameOver();
     map.storeHighScore("highScore.txt");
   }
-   
-   /*
+
+  /*
      Fix with boolean to determine if a fruit has spawned that level
-     Else this fruit just spawns every 5 dots eaten
-     Once score pasts a certain point, or else eating a ghost will not spawn itS
+   Else this fruit just spawns every 5 dots eaten
+   Once score pasts a certain point, or else eating a ghost will not spawn itS
    */
-  if(map.getScore() % 150 == 0){
-   map.set(17,14,'f'); 
+  if (map.getScore() % 150 == 0) {
+    map.set(17, 14, 'f');
   }
 }
 

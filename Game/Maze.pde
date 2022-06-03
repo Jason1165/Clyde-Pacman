@@ -244,22 +244,29 @@ public class Maze {
     frontier.add(new int[] {xStart, yStart});
     int ticks = 0;
     while (frontier.size() != 0) {
-      int[] current = frontier.poll();
-      visited[current[0]][current[1]] += 1;
-      if (current[0] == xTarget && current[1] == yTarget) {
-        return ticks;
-      }
-      if (isValid(current[0]+1, current[1], false) && visited[current[0]+1][current[1]] == 0) {
-        frontier.addFirst(new int[] {current[0]+1, current[1]});
-      }
-      if (isValid(current[0]-1, current[1], false) && visited[current[0]-1][current[1]] == 0) {
-        frontier.addFirst(new int[] {current[0]-1, current[1]});
-      }
-      if (isValid(current[0], current[1]+1, false) && visited[current[0]][current[1]+1] == 0) {
-        frontier.addFirst(new int[] {current[0]+1, current[1]});
-      }
-      if (isValid(current[0], current[1]-1, false) && visited[current[0]][current[1]-1] == 0) {
-        frontier.addFirst(new int[] {current[0], current[1]-1});
+      int len = frontier.size();
+      for (int i = 0; i < len; i++) {
+        int[] current = frontier.removeFirst();
+        visited[current[0]][current[1]] += 1;
+        if (current[0] == xTarget && current[1] == yTarget) {
+          return ticks;
+        }
+        if (isValid(current[0]+1, current[1], true) && visited[current[0]+1][current[1]] <= 0) {
+          visited[current[0]+1][current[1]] += 1;
+          frontier.add(new int[] {current[0]+1, current[1]});
+        }
+        if (isValid(current[0]-1, current[1], true) && visited[current[0]-1][current[1]] <= 0) {
+          visited[current[0]-1][current[1]] += 1;  
+          frontier.add(new int[] {current[0]-1, current[1]});
+        }
+        if (isValid(current[0], current[1]+1, true) && visited[current[0]][current[1]+1] <= 0) {
+          visited[current[0]][current[1]+1] += 1;
+          frontier.add(new int[] {current[0], current[1]+1});
+        }
+        if (isValid(current[0], current[1]-1, true) && visited[current[0]][current[1]-1] <= 0) {
+          visited[current[0]][current[1]-1] += 1;  
+          frontier.add(new int[] {current[0], current[1]-1});
+        }
       }
       ticks++;
     }
