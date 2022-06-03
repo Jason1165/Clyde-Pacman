@@ -58,6 +58,7 @@ void draw() {
 
   //System.out.println(p.getY());
   if (count % p.getSpeed() < 1 && !map.over()) {
+    println(map.BFS(p.getX(), p.getY(), 1, 1));
     if (p.getY() == 1 && p.getDir() == 3 && map.get(p.getX(), p.getY()-1) == 'S') {
       p.setY(28);
       p.move();

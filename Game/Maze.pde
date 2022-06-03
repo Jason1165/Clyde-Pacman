@@ -238,6 +238,34 @@ public class Maze {
     return gameOver;
   }
 
+  int BFS(int xStart, int yStart, int xTarget, int yTarget) {
+    ArrayDeque<int[]> frontier = new ArrayDeque<int[]>();
+    int[][] visited = new int[maze.length][maze[0].length];
+    frontier.add(new int[] {xStart, yStart});
+    int ticks = 0;
+    while (frontier.size() != 0) {
+      int[] current = frontier.poll();
+      visited[current[0]][current[1]] += 1;
+      if (current[0] == xTarget && current[1] == yTarget) {
+        return ticks;
+      }
+      if (isValid(current[0]+1, current[1], false) && visited[current[0]+1][current[1]] == 0) {
+        frontier.addFirst(new int[] {current[0]+1, current[1]});
+      }
+      if (isValid(current[0]-1, current[1], false) && visited[current[0]-1][current[1]] == 0) {
+        frontier.addFirst(new int[] {current[0]-1, current[1]});
+      }
+      if (isValid(current[0], current[1]+1, false) && visited[current[0]][current[1]+1] == 0) {
+        frontier.addFirst(new int[] {current[0]+1, current[1]});
+      }
+      if (isValid(current[0], current[1]-1, false) && visited[current[0]][current[1]-1] == 0) {
+        frontier.addFirst(new int[] {current[0], current[1]-1});
+      }
+      ticks++;
+    }
+    return -1;
+  }
+
   /*
   Code below this is used for displaying walls as close to the originals as possible.
    Yes the code is terrible with so many booleans
