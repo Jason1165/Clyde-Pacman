@@ -238,6 +238,41 @@ public class Maze {
     return gameOver;
   }
 
+  int BFS(int xStart, int yStart, int xTarget, int yTarget) {
+    ArrayDeque<int[]> frontier = new ArrayDeque<int[]>();
+    int[][] visited = new int[maze.length][maze[0].length];
+    frontier.add(new int[] {xStart, yStart});
+    int ticks = 0;
+    while (frontier.size() != 0) {
+      int len = frontier.size();
+      for (int i = 0; i < len; i++) {
+        int[] current = frontier.removeFirst();
+        visited[current[0]][current[1]] += 1;
+        if (current[0] == xTarget && current[1] == yTarget) {
+          return ticks;
+        }
+        if (isValid(current[0]+1, current[1], false) && visited[current[0]+1][current[1]] <= 0) {
+          visited[current[0]+1][current[1]] += 1;
+          frontier.add(new int[] {current[0]+1, current[1]});
+        }
+        if (isValid(current[0]-1, current[1], false) && visited[current[0]-1][current[1]] <= 0) {
+          visited[current[0]-1][current[1]] += 1;  
+          frontier.add(new int[] {current[0]-1, current[1]});
+        }
+        if (isValid(current[0], current[1]+1, false) && visited[current[0]][current[1]+1] <= 0) {
+          visited[current[0]][current[1]+1] += 1;
+          frontier.add(new int[] {current[0], current[1]+1});
+        }
+        if (isValid(current[0], current[1]-1, false) && visited[current[0]][current[1]-1] <= 0) {
+          visited[current[0]][current[1]-1] += 1;  
+          frontier.add(new int[] {current[0], current[1]-1});
+        }
+      }
+      ticks++;
+    }
+    return -1;
+  }
+
   /*
   Code below this is used for displaying walls as close to the originals as possible.
    Yes the code is terrible with so many booleans
@@ -346,6 +381,14 @@ public class Maze {
         rect(j*20+12, (i+down)*20+8, 8, 4);
       } else if (j == 0 && i == 25) {
         rect(j*20, (i+down)*20, 4, 20);
+        rect(j*20+8, (i+down)*20+12, 4, 8); 
+        rect(j*20+12, (i+down)*20+8, 8, 4);
+      }  else if (i == 0 && j == 13) {
+        rect(j*20, (i+down)*20, 20, 4);
+        rect(j*20+8, (i+down)*20+12, 4, 8);
+        rect(j*20, (i+down)*20+8, 8, 4);
+      } else if (i == 0 && j == 14) {
+        rect(j*20, (i+down)*20, 20, 4);
         rect(j*20+8, (i+down)*20+12, 4, 8); 
         rect(j*20+12, (i+down)*20+8, 8, 4);
       } else if (j == maze[0].length - 1 && i == 24) {
