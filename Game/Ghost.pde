@@ -35,14 +35,27 @@ public class Ghost implements Character {
     ArrayList<int[]> choices = new ArrayList<int[]>();
     for (int i = 0; i < directional.size(); i++) {
       int[] temp = directional.get(i);
-      if (map.isValid(temp[0]+x, temp[1]+y, false) && !oppositeDir(temp[0], temp[1])){
+      if (map.isValid(temp[0]+x, temp[1]+y, false) && !oppositeDir(temp[0], temp[1])) {
         choices.add(directional.get(i));
         if (!inCage() && map.get(temp[0]+x, temp[1]+y) == 'G') choices.remove(choices.size()-1);
       }
     }
-    int choice = (int)(Math.random()*choices.size());
-    newDir[0] = choices.get(choice)[0];
-    newDir[1] = choices.get(choice)[1];
+    if (mode == CHASE) {
+      int best = 0; 
+      int len = map.BFS(x + choices.get(0)[0], y + choices.get(0)[1], p.getX(), p.getY());
+      for (int i = 1; i < choices.size(); i++) {
+        if (len > map.BFS(x + choices.get(i)[0], y + choices.get(i)[1], p.getX(), p.getY())) {
+          len = map.BFS(x + choices.get(i)[0], y + choices.get(i)[1], p.getX(), p.getY());
+          best = i;
+        }
+      }
+      newDir[0] = choices.get(best)[0];
+      newDir[1] = choices.get(best)[1];
+    } else {
+      int choice = (int)(Math.random()*choices.size());
+      newDir[0] = choices.get(choice)[0];
+      newDir[1] = choices.get(choice)[1];
+    }
   }
 
   int dirX() {
@@ -52,7 +65,7 @@ public class Ghost implements Character {
   int dirY() {
     return newDir[1];
   }
-  
+
   boolean inCage() {
     return (x >= 13 && x <= 17) && (y >= 10 && y <= 17);
   }

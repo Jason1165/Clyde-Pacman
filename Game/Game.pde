@@ -1,34 +1,42 @@
 Maze map;
 Pacman p;
 final static int down = 3; // how much space to leave at top
-// each 'pixel' is 20 by 20
 final float SIXTH_PI = HALF_PI/3; // const for pacman arc;
 ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
 int ghostsKilled;
+int dotsEaten;
+boolean fruitSpawned;
 ArrayList<int[]> directional = new ArrayList<int[]>();
 
+// modes
+final static int CHASE = 1;
+final static int SCATTER = 0;
+final static int FRIGHT = 2;
+
 void setup() {
-  
+
   directional.add(new int[] {1, 0});
   directional.add(new int[] {-1, 0});
   directional.add(new int[] {0, 1});
   directional.add(new int[] {0, -1});
-  
+
   size(560, 720);
   map = new Maze("highScore.txt", "pacman.txt");
   p = new Pacman(23, 13, 12);
   // so it looks a smaller speed is actually faster due to frames 
-  ghosts.add(new Ghost(11, 14, 12, color(255, 0, 0))); // red
-  ghosts.add(new Ghost(15, 13, 12, color(255, 184, 255))); // brilliant lavender
-  ghosts.add(new Ghost(15, 14, 12, color(0, 255, 255))); // aqua
-  ghosts.add(new Ghost(15, 15, 12, color(255, 184, 82))); // pastel orange
+  ghosts.add(new Blinky()); // red
+  //ghosts.add(new Ghost(15, 13, 12, color(255, 184, 255))); // brilliant lavender
+  //ghosts.add(new Ghost(15, 14, 12, color(0, 255, 255))); // aqua
+  //ghosts.add(new Ghost(15, 15, 12, color(255, 184, 82))); // pastel orange
   frameRate(60);
   ghostsKilled = 0;
+  dotsEaten = 0;
+  fruitSpawned = false;
 } 
 
 void draw() {
-  float count = frameCount;
-
+  float count = frameCount;  
+  println(map.BFS(p.getX(), p.getY(), 1, 1));
   map.displayMaze();
 
   if (map.over()) {
@@ -121,11 +129,15 @@ void draw() {
   if (map.get(p.getX(), p.getY()) == 'D') {
     map.set(p.getX(), p.getY(), 'd');
     map.addScore(10);
+    if(fruitSpawned == false){
+     dotsEaten ++; 
+    }
   }
 
   if (map.get(p.getX(), p.getY()) == 'f') {
     map.set(p.getX(), p.getY(), 'S');
     map.addScore(100);
+    fruitSpawned = false;
   }
 
   if (map.get(p.getX(), p.getY()) == 'P') {
@@ -168,15 +180,19 @@ void draw() {
     map.gameOver();
     map.storeHighScore("highScore.txt");
   }
-   
-   /*
+
+  /*
      Fix with boolean to determine if a fruit has spawned that level
-     Else this fruit just spawns every 5 dots eaten
-     Once score pasts a certain point, or else eating a ghost will not spawn itS
+   Else this fruit just spawns every 5 dots eaten
+   Once score pasts a certain point, or else eating a ghost will not spawn itS
    */
-  if(map.getScore() % 150 == 0){
-   map.set(17,14,'f'); 
-  }
+
+   if(dotsEaten == 10){
+     fruitSpawned = true;
+     dotsEaten = 0;
+     map.set(17,14,'f'); 
+   }
+   
 }
 
 void keyPressed() {
