@@ -47,3 +47,7 @@ Ryan: Made the tunnel working. Both pacman and ghosts can go through and back. T
 Jason: Prevented ghost from going back into their cage. Also modified moving for ghosts so future implementation of specific ghosts can be smoother.
 
 Ryan: Fixed the cherry. It will check how many dots pacman has eaten when not spawned. When spawned it will not count the dots.
+
+##### 06/05/2022
+
+Ryan: Added to Pinky file to chase pacman. Not perfect yet, need to test.
