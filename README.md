@@ -48,6 +48,8 @@ Jason: Prevented ghost from going back into their cage. Also modified moving for
 
 Ryan: Fixed the cherry. It will check how many dots pacman has eaten when not spawned. When spawned it will not count the dots.
 
-##### 06/05/2022
+##### 06/03/2022
+Jason: Made function that returns path distance using breadth first search. Using it to help make AI for ghosts.
 
+##### 06/05/2022
 Ryan: Added to Pinky file to chase pacman. Not perfect yet, need to test.
