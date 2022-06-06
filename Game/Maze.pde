@@ -218,8 +218,8 @@ public class Maze {
   void respawn() {
     lives --;
     p = new Pacman(23, 13, 12);
-    ghosts.set(0, new Ghost(15, 12, 20, color(255, 0, 0))); // red
-    ghosts.set(1, new Ghost(15, 13, 18, color(255, 184, 255))); // brilliant lavender
+    ghosts.set(0, new Blinky()); // red
+    ghosts.set(1, new Pinky()); // brilliant lavender
     //ghosts.set(2, new Ghost(15, 14, 20, color(0, 255, 255))); // aqua
     //ghosts.set(3, new Ghost(15, 15, 20, color(255, 184, 82))); // pastel orange
   }
