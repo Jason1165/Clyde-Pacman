@@ -25,9 +25,12 @@ void setup() {
   p = new Pacman(23, 13, 12);
   // so it looks a smaller speed is actually faster due to frames 
   ghosts.add(new Blinky()); // red
-  ghosts.add(new Ghost(15, 13, 12, color(255, 184, 255))); // brilliant lavender
   ghosts.add(new Ghost(15, 14, 12, color(0, 255, 255))); // aqua
   ghosts.add(new Clyde()); // pastel orange
+  ghosts.add(new Pinky()); // brilliant lavender
+  //ghosts.add(new Ghost(15, 14, 12, color(0, 255, 255))); // aqua
+  //ghosts.add(new Ghost(15, 15, 12, color(255, 184, 82))); // pastel orange
+>>>>>>> dd7fa44156246f3936ae79d7be453c60cf836d84
   frameRate(60);
   ghostsKilled = 0;
   dotsEaten = 0;
