@@ -71,11 +71,10 @@ public class Ghost implements Character {
   }
 
   void display(float xCor, float yCor) {
-    if (p.timer() < 200 && p.timer()%4 == 0) {
-      fill(colour);
-    } else if (p.timer() > 0) {
+    if (p.timer()>0) {
       fill(0, 0, 255);
     }
+    fill(colour);
     rect(xCor+8, yCor+3, 3, 1);
     rect(xCor+6, yCor+4, 7, 1);
     rect(xCor+5, yCor+5, 9, 1);
@@ -123,6 +122,14 @@ public class Ghost implements Character {
 
   int getY() {
     return y;
+  }
+  
+  void setMode(int newMode) {
+    mode = newMode;
+  }
+   
+  int getMode() {
+    return mode;
   }
 
   void setSpeed(float newSpeed) {

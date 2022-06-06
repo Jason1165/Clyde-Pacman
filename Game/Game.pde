@@ -2,11 +2,11 @@ Maze map;
 Pacman p;
 final static int down = 3; // how much space to leave at top
 final float SIXTH_PI = HALF_PI/3; // const for pacman arc;
-ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
 int ghostsKilled;
 int dotsEaten;
 boolean fruitSpawned;
 ArrayList<int[]> directional = new ArrayList<int[]>();
+ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
 
 // modes
 final static int CHASE = 1;
@@ -35,13 +35,15 @@ void setup() {
 } 
 
 void draw() {
-  float count = frameCount;  
-  println(map.BFS(p.getX(), p.getY(), 1, 1));
+  float count = frameCount; 
+  // println(map.BFS(p.getX(), p.getY(), 1, 1));
   map.displayMaze();
 
   if (map.over()) {
     map.gameOverDisplay();
   }
+
+  //ghosts.tick();
 
   for (int i = 0; i < ghosts.size(); i++) {
     Ghost g = ghosts.get(i);
@@ -64,7 +66,6 @@ void draw() {
     }
   }
 
-  //System.out.println(p.getY());
   if (count % p.getSpeed() < 1 && !map.over()) {
     if (p.getY() == 1 && p.getDir() == 3 && map.get(p.getX(), p.getY()-1) == 'S') {
       p.setY(28);
@@ -129,8 +130,8 @@ void draw() {
   if (map.get(p.getX(), p.getY()) == 'D') {
     map.set(p.getX(), p.getY(), 'd');
     map.addScore(10);
-    if(fruitSpawned == false){
-     dotsEaten ++; 
+    if (fruitSpawned == false) {
+      dotsEaten ++;
     }
   }
 
@@ -154,6 +155,7 @@ void draw() {
     // map level stuff
   }
 
+  //ghosts.eaten();
   for (int i = 0; i < ghosts.size(); i++) {
     if (ghosts.get(i).getX() == p.getX() && ghosts.get(i).getY() == p.getY()) {
       if (!p.ability()) {
@@ -187,12 +189,11 @@ void draw() {
    Once score pasts a certain point, or else eating a ghost will not spawn itS
    */
 
-   if(dotsEaten == 10){
-     fruitSpawned = true;
-     dotsEaten = 0;
-     map.set(17,14,'f'); 
-   }
-   
+  if (dotsEaten == 10) {
+    fruitSpawned = true;
+    dotsEaten = 0;
+    map.set(17, 14, 'f');
+  }
 }
 
 void keyPressed() {
