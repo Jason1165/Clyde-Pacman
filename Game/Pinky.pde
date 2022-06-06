@@ -30,10 +30,10 @@ public class Pinky extends Ghost {
     } 
     if (mode == CHASE) {
       int best = 0; 
-      int len = map.BFS(x + choices.get(0)[0], y + choices.get(0)[1], p.getX() + 2 * p.dirX(), p.getY() + 2 * p.dirX());
+      int len = map.BFS(x + choices.get(0)[0], y + choices.get(0)[1], p.getX() + 2 * p.dirX(), p.getY() + 2 * p.dirY());
       for (int i = 1; i < choices.size(); i++) {
-        if (len > map.BFS(x + choices.get(i)[0], y + choices.get(i)[1], p.getX() + 2 * p.dirX(), p.getY() + 2 * p.dirX())) {
-          len = map.BFS(x + choices.get(i)[0], y + choices.get(i)[1], p.getX() + 2 * p.dirX(), p.getY() + 2 * p.dirX());
+        if (len > map.BFS(x + choices.get(i)[0], y + choices.get(i)[1], p.getX() + 2 * p.dirX(), p.getY() + 2 * p.dirY())) {
+          len = map.BFS(x + choices.get(i)[0], y + choices.get(i)[1], p.getX() + 2 * p.dirX(), p.getY() + 2 * p.dirY());
           best = i;
         }
       }
