@@ -53,3 +53,6 @@ Jason: Made function that returns path distance using breadth first search. Usin
 
 ##### 06/05/2022
 Ryan: Added to Pinky file to chase pacman. Not perfect yet, need to test.
+
+##### 06/06/2022
+Jason: Working on the AI for Clyde (orange).
