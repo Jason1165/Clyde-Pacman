@@ -27,7 +27,7 @@ void setup() {
   ghosts.add(new Blinky()); // red
   ghosts.add(new Ghost(15, 13, 12, color(255, 184, 255))); // brilliant lavender
   ghosts.add(new Ghost(15, 14, 12, color(0, 255, 255))); // aqua
-  ghosts.add(new Ghost(15, 15, 12, color(255, 184, 82))); // pastel orange
+  ghosts.add(new Clyde()); // pastel orange
   frameRate(60);
   ghostsKilled = 0;
   dotsEaten = 0;
@@ -36,7 +36,6 @@ void setup() {
 
 void draw() {
   float count = frameCount; 
-  // println(map.BFS(p.getX(), p.getY(), 1, 1));
   map.displayMaze();
 
   if (map.over()) {

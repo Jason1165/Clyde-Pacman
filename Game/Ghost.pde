@@ -10,7 +10,7 @@ public class Ghost implements Character {
 
   Ghost(int xcor, int ycor, float s, color c) {
     eatable = false;
-    mode = 0;
+    mode = SCATTER;
     x = xcor;
     y = ycor;
     speed = s;
@@ -71,10 +71,10 @@ public class Ghost implements Character {
   }
 
   void display(float xCor, float yCor) {
+    fill(colour);
     if (p.timer()>0) {
       fill(0, 0, 255);
     }
-    fill(colour);
     rect(xCor+8, yCor+3, 3, 1);
     rect(xCor+6, yCor+4, 7, 1);
     rect(xCor+5, yCor+5, 9, 1);
@@ -106,6 +106,8 @@ public class Ghost implements Character {
     fill(0, 0, 255);
     rect(xCor+8, yCor+7, 2, 2);
     rect(xCor+13, yCor+7, 2, 2);
+    //PImage test = loadImage("red.png");
+    //image(test, xCor, yCor);
   }
 
   void setX(int newX) {
@@ -123,11 +125,11 @@ public class Ghost implements Character {
   int getY() {
     return y;
   }
-  
+
   void setMode(int newMode) {
     mode = newMode;
   }
-   
+
   int getMode() {
     return mode;
   }
