@@ -30,7 +30,6 @@ void setup() {
   ghosts.add(new Pinky()); // brilliant lavender
   //ghosts.add(new Ghost(15, 14, 12, color(0, 255, 255))); // aqua
   //ghosts.add(new Ghost(15, 15, 12, color(255, 184, 82))); // pastel orange
->>>>>>> dd7fa44156246f3936ae79d7be453c60cf836d84
   frameRate(60);
   ghostsKilled = 0;
   dotsEaten = 0;
