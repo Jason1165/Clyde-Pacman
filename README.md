@@ -58,3 +58,6 @@ Ryan: Added to Pinky file to chase pacman. Not perfect yet, need to test.
 Jason: Working on the AI for Clyde (orange).
 
 Ryan: Cleaned up some code in Pinky and I will work on Inky (blue).
+
+##### 06/06/2022
+Ryan: Started working on Inky.
