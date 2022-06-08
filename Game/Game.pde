@@ -147,6 +147,9 @@ void draw() {
     map.addScore(50);
     p.setTimer((int)(p.getSpeed()*p.getSpeed()*10 / (1 + map.getLevel()/10.0) + p.timer()));
     p.abilityChange(true);
+    for (int i = 0; i < ghosts.size(); i++) {
+      ghosts.get(i).setMode(FRIGHT);
+    }
   }
 
   if (map.containsNoFood()) {
@@ -177,6 +180,9 @@ void draw() {
   if (p.timer() == 0) {
     p.abilityChange(false);
     ghostsKilled = 0;
+    for (int i = 0; i < ghosts.size(); i++) {
+      ghosts.get(i).setMode(CHASE);
+    }
   }
 
   if (map.getLives() == 0) {
@@ -210,6 +216,21 @@ void keyPressed() {
     } else if (key == 'r') {
       map.respawn();
       map = new Maze("highScore.txt", "pacman.txt");
+    } else if (key == '1') {
+      map.addLives(-1*(map.getLives()-1));
+    } else if (key == '2') {
+      p.setSpeed(p.getSpeed()*0.5);
+    } else if (key == '3') {
+      p.setSpeed(p.getSpeed()*1.5);
+    } else if (key == 'x') {
+      for (int i = 0; i < ghosts.size(); i++) {
+        ghosts.get(i).setSpeed(5);
+        ghosts.get(i).setMode(CHASE);
+      }
+    } else if (key == '4') {
+      map.addLevel(1);
+    } else if (key == '5') {
+      map.addLevel(-1);
     }
   }
 }

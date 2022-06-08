@@ -106,8 +106,6 @@ public class Ghost implements Character {
     fill(0, 0, 255);
     rect(xCor+8, yCor+7, 2, 2);
     rect(xCor+13, yCor+7, 2, 2);
-    //PImage test = loadImage("red.png");
-    //image(test, xCor, yCor);
   }
 
   void setX(int newX) {
