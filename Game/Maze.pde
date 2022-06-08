@@ -153,6 +153,17 @@ public class Maze {
 
   void addLevel(int num) {
     level += num;
+    if (level != 0) {
+      if (num > 0) {
+        for (int i = 0; i < ghosts.size(); i++) {
+          ghosts.get(i).setSpeed(ghosts.get(i).getSpeed()*0.95);
+        }
+      } else {
+        for (int i = 0; i < ghosts.size(); i++) {
+          ghosts.get(i).setSpeed(ghosts.get(i).getSpeed()*1.05);
+        }
+      }
+    }
   }
 
   int addLives(int num) {
@@ -383,7 +394,7 @@ public class Maze {
         rect(j*20, (i+down)*20, 4, 20);
         rect(j*20+8, (i+down)*20+12, 4, 8); 
         rect(j*20+12, (i+down)*20+8, 8, 4);
-      }  else if (i == 0 && j == 13) {
+      } else if (i == 0 && j == 13) {
         rect(j*20, (i+down)*20, 20, 4);
         rect(j*20+8, (i+down)*20+12, 4, 8);
         rect(j*20, (i+down)*20+8, 8, 4);
