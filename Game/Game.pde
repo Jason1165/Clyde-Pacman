@@ -12,6 +12,7 @@ ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
 final static int CHASE = 1;
 final static int SCATTER = 0;
 final static int FRIGHT = 2;
+final static int CAGE = 3;
 
 void setup() {
 
@@ -25,11 +26,9 @@ void setup() {
   p = new Pacman(23, 13, 12);
   // so it looks a smaller speed is actually faster due to frames 
   ghosts.add(new Blinky()); // red
-  ghosts.add(new Ghost(15, 14, 12, color(0, 255, 255))); // aqua
   ghosts.add(new Clyde()); // pastel orange
   ghosts.add(new Pinky()); // brilliant lavender
-  //ghosts.add(new Ghost(15, 14, 12, color(0, 255, 255))); // aqua
-  //ghosts.add(new Ghost(15, 15, 12, color(255, 184, 82))); // pastel orange
+  ghosts.add(new Ghost(15, 14, 12, color(0, 255, 255))); // aqua
   frameRate(60);
   ghostsKilled = 0;
   dotsEaten = 0;
@@ -169,6 +168,7 @@ void draw() {
         map.addScore((int)(200*(Math.pow(2, ghostsKilled - 1))));
         ghosts.get(i).setX(14);
         ghosts.get(i).setY(12);
+        ghosts.get(i).setMode(CHASE);
       }
     }
   }
@@ -177,7 +177,8 @@ void draw() {
     p.setTimer(p.timer()-1);
     // println(p.timer());
   }
-  if (p.timer() == 0) {
+
+  if (p.timer() == 1) {
     p.abilityChange(false);
     ghostsKilled = 0;
     for (int i = 0; i < ghosts.size(); i++) {
@@ -190,13 +191,7 @@ void draw() {
     map.storeHighScore("highScore.txt");
   }
 
-  /*
-     Fix with boolean to determine if a fruit has spawned that level
-   Else this fruit just spawns every 5 dots eaten
-   Once score pasts a certain point, or else eating a ghost will not spawn itS
-   */
-
-  if (dotsEaten == 10) {
+  if (dotsEaten == 30) {
     fruitSpawned = true;
     dotsEaten = 0;
     map.set(17, 14, 'f');

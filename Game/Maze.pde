@@ -228,11 +228,15 @@ public class Maze {
 
   void respawn() {
     lives --;
-    p = new Pacman(23, 13, 12);
-    ghosts.set(0, new Blinky()); // red
-    ghosts.set(1, new Pinky()); // brilliant lavender
-    //ghosts.set(2, new Ghost(15, 14, 20, color(0, 255, 255))); // aqua
-    //ghosts.set(3, new Ghost(15, 15, 20, color(255, 184, 82))); // pastel orange
+    p.setX(23);
+    p.setY(13);
+    ghosts.get(0).setX(11);
+    ghosts.get(0).setY(14);
+    ghosts.get(1).setX(15);
+    ghosts.get(1).setY(15);
+    ghosts.get(2).setX(15);
+    ghosts.get(2).setY(13);
+    ghosts.set(3, new Ghost(15, 14, 12, color(0, 255, 255))); // pastel orange
   }
 
   void set(int xPos, int yPos, char c) {

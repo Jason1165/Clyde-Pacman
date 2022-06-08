@@ -69,6 +69,10 @@ public class Ghost implements Character {
   boolean inCage() {
     return (x >= 13 && x <= 17) && (y >= 10 && y <= 17);
   }
+  
+  boolean inCage(int xCor, int yCor) {
+    return (xCor >= 13 && xCor <= 17) && (yCor >= 10 && yCor <= 17);
+  }
 
   void display(float xCor, float yCor) {
     fill(colour);
