@@ -1,6 +1,7 @@
 public class Blinky extends Ghost {
   Blinky() {
     super(11, 14, 12, color(255, 0, 0));
+    //setMode(CAGE);
   }
 
   void chooseDir() {
@@ -9,7 +10,7 @@ public class Blinky extends Ghost {
       int[] temp = directional.get(i);
       if (map.isValid(temp[0]+x, temp[1]+y, false) && !oppositeDir(temp[0], temp[1])) {
         choices.add(directional.get(i));
-        if (!inCage() && map.get(temp[0]+x, temp[1]+y) == 'G') choices.remove(choices.size()-1);
+        // if (!inCage() && map.get(temp[0]+x, temp[1]+y) == 'G') choices.remove(choices.size()-1);
       }
     }
     if (mode == SCATTER) {

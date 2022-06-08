@@ -1,6 +1,7 @@
 public class Clyde extends Ghost {
   Clyde() {
     super(15, 15, 12, color(255, 184, 82));
+    setMode(CAGE);
   }
 
   void chooseDir() {
@@ -9,9 +10,10 @@ public class Clyde extends Ghost {
       int[] temp = directional.get(i);
       if (map.isValid(temp[0]+x, temp[1]+y, false) && !oppositeDir(temp[0], temp[1])) {
         choices.add(directional.get(i));
-        if (!inCage() && map.get(temp[0]+x, temp[1]+y) == 'G') choices.remove(choices.size()-1);
+        // if (!inCage() && map.get(temp[0]+x, temp[1]+y) == 'G') choices.remove(choices.size()-1);
       }
     }
+
     int tempLen = map.BFS(x, y, p.getX(), p.getY());
     if (tempLen <= 8) {
       mode = SCATTER;
@@ -48,6 +50,13 @@ public class Clyde extends Ghost {
       int choice = (int)(Math.random()*choices.size());
       newDir[0] = choices.get(choice)[0];
       newDir[1] = choices.get(choice)[1];
+    }
+    if (mode == CAGE) {
+      for (int i = 0; i < choices.size(); i++) {
+        if (inCage(x + choices.get(i)[0], y+choices.get(i)[1]));
+        newDir[0] = choices.get(i)[0];
+        newDir[1] = choices.get(i)[1];
+      }
     }
   }
 }
