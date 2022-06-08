@@ -58,3 +58,8 @@ Ryan: Added to Pinky file to chase pacman. Not perfect yet, need to test.
 Jason: Working on the AI for Clyde (orange).
 
 Ryan: Cleaned up some code in Pinky and I will work on Inky (blue).
+
+##### 06/07/2022
+Ryan: Started working on Inky.
+
+Jason: Added a few keyPress cheats to make dying faster. Modify addLevel so speed of characters increased.
