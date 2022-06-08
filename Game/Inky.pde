@@ -3,7 +3,9 @@ public class Inky extends Ghost {
     super(15, 14, 12, color(0, 255, 255));
   }
 
-  void chooseDir(int XblinkyDis, int YblinkyDis) {
+  void chooseDir() {
+    int XblinkyDis = p.getX() - ghosts.get(0).x;
+    int YblinkyDis = p.getY() - ghosts.get(0).y;
     ArrayList<int[]> choices = new ArrayList<int[]>();
     for (int i = 0; i < directional.size(); i++) {
       int[] temp = directional.get(i);
