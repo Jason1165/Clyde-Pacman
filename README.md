@@ -63,3 +63,6 @@ Ryan: Cleaned up some code in Pinky and I will work on Inky (blue).
 Ryan: Started working on Inky.
 
 Jason: Added a few keyPress cheats to make dying faster. Modify addLevel so speed of characters increased.
+
+##### 06/09/2022
+Ryan: added more keyPress cheats to display ghosts seperately. Will work on showing the square targeted by each ghost.
