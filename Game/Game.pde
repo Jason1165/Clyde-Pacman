@@ -8,6 +8,7 @@ boolean fruitSpawned;
 ArrayList<int[]> directional = new ArrayList<int[]>();
 ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
 ArrayList<Ghost> ghostsTemp = new ArrayList<Ghost>();
+boolean display6, display7, display8, display9;
 
 // modes
 final static int CHASE = 1;
@@ -35,6 +36,10 @@ void setup() {
   dotsEaten = 0;
   fruitSpawned = false;
   ghostsTemp = ghosts;
+  display6 = true;
+  display7 = true;
+  display8 = true;
+  display9 = true;
 } 
 
 void draw() {
@@ -230,6 +235,10 @@ void keyPressed() {
       map.addLevel(-1);
     }
     else if(key == '6'){
+      display6 = true;
+      display7 = false;
+      display8 = false;
+      display9 = false;
       ghosts = ghostsTemp;
       Ghost g = ghostsTemp.get(0);
       ArrayList<Ghost> ghostsNew = new ArrayList<Ghost>();
@@ -237,6 +246,10 @@ void keyPressed() {
       ghosts = ghostsNew;
     }
     else if(key == '7'){
+      display6 = false;
+      display7 = true;
+      display8 = false;
+      display9 = false;
       ghosts = ghostsTemp;
       Ghost g = ghostsTemp.get(1);
       ArrayList<Ghost> ghostsNew = new ArrayList<Ghost>();
@@ -244,6 +257,10 @@ void keyPressed() {
       ghosts = ghostsNew;
     }
     else if(key == '8'){
+      display6 = false;
+      display7 = false;
+      display8 = true;
+      display9 = false;
       ghosts = ghostsTemp;
       Ghost g = ghostsTemp.get(2);
       ArrayList<Ghost> ghostsNew = new ArrayList<Ghost>();
@@ -251,6 +268,10 @@ void keyPressed() {
       ghosts = ghostsNew;
     }
     else if(key == '9'){
+      display6 = false;
+      display7 = false;
+      display8 = false;
+      display9 = true;
       ghosts = ghostsTemp;
       Ghost g = ghostsTemp.get(3);
       ArrayList<Ghost> ghostsNew = new ArrayList<Ghost>();
@@ -258,7 +279,16 @@ void keyPressed() {
       ghosts = ghostsNew;
     }
     else if(key == '0'){
+      display6 = true;
+      display7 = true;
+      display8 = true;
+      display9 = true;
       ghosts = ghostsTemp;
+    }
+    else if(key == ' '){
+      if(display6){
+       rect(p.getX()*20, p.getY()*20, p.getX(), p.getY() );
+      }
     }
   }
 }
