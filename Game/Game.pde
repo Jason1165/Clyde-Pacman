@@ -7,6 +7,7 @@ int dotsEaten;
 boolean fruitSpawned;
 ArrayList<int[]> directional = new ArrayList<int[]>();
 ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
+ArrayList<Ghost> ghostsTemp = new ArrayList<Ghost>();
 
 // modes
 final static int CHASE = 1;
@@ -33,6 +34,7 @@ void setup() {
   ghostsKilled = 0;
   dotsEaten = 0;
   fruitSpawned = false;
+  ghostsTemp = ghosts;
 } 
 
 void draw() {
@@ -226,6 +228,37 @@ void keyPressed() {
       map.addLevel(1);
     } else if (key == '5') {
       map.addLevel(-1);
+    }
+    else if(key == '6'){
+      ghosts = ghostsTemp;
+      Ghost g = ghostsTemp.get(0);
+      ArrayList<Ghost> ghostsNew = new ArrayList<Ghost>();
+      ghostsNew.add(g);
+      ghosts = ghostsNew;
+    }
+    else if(key == '7'){
+      ghosts = ghostsTemp;
+      Ghost g = ghostsTemp.get(1);
+      ArrayList<Ghost> ghostsNew = new ArrayList<Ghost>();
+      ghostsNew.add(g);
+      ghosts = ghostsNew;
+    }
+    else if(key == '8'){
+      ghosts = ghostsTemp;
+      Ghost g = ghostsTemp.get(2);
+      ArrayList<Ghost> ghostsNew = new ArrayList<Ghost>();
+      ghostsNew.add(g);
+      ghosts = ghostsNew;
+    }
+    else if(key == '9'){
+      ghosts = ghostsTemp;
+      Ghost g = ghostsTemp.get(3);
+      ArrayList<Ghost> ghostsNew = new ArrayList<Ghost>();
+      ghostsNew.add(g);
+      ghosts = ghostsNew;
+    }
+    else if(key == '0'){
+      ghosts = ghostsTemp;
     }
   }
 }
