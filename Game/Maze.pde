@@ -156,11 +156,11 @@ public class Maze {
     if (level != 0) {
       if (num > 0) {
         for (int i = 0; i < ghosts.size(); i++) {
-          ghosts.get(i).setSpeed(ghosts.get(i).getSpeed()*0.95);
+          ghosts.get(i).setSpeed(ghosts.get(i).getSpeed()*pow(11.0/9, level));
         }
       } else {
         for (int i = 0; i < ghosts.size(); i++) {
-          ghosts.get(i).setSpeed(ghosts.get(i).getSpeed()*1.05);
+          ghosts.get(i).setSpeed(ghosts.get(i).getSpeed()*pow(9.0/11, level));
         }
       }
     }
@@ -227,16 +227,23 @@ public class Maze {
   }
 
   void respawn() {
+    count == 0;
     lives --;
     p.setX(23);
     p.setY(13);
+    p.setSpeed(10);
     ghosts.get(0).setX(11);
     ghosts.get(0).setY(14);
     ghosts.get(1).setX(15);
     ghosts.get(1).setY(15);
     ghosts.get(2).setX(15);
     ghosts.get(2).setY(13);
-    ghosts.set(3, new Ghost(15, 14, 12, color(0, 255, 255))); // pastel orange
+    ghosts.get(3).setY(15);
+    ghosts.get(3).setY(14);
+    for (int i = 0; i < ghosts.size(); i++) {
+      ghosts.get(i).setSpeed(12);
+      ghosts.get(i).setMode(SCATTER);
+    }
   }
 
   void set(int xPos, int yPos, char c) {

@@ -5,6 +5,9 @@ public class Clyde extends Ghost {
   }
 
   void chooseDir() {
+    if (count > 300 && map.getScore() > 300) {
+      setMode(SCATTER);
+    }
     ArrayList<int[]> choices = new ArrayList<int[]>();
     for (int i = 0; i < directional.size(); i++) {
       int[] temp = directional.get(i);
