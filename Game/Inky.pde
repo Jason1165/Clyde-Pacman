@@ -1,9 +1,13 @@
 public class Inky extends Ghost {
   Inky() {
     super(15, 14, 12, color(0, 255, 255));
+    setMode(CAGE);
   }
 
   void chooseDir() {
+    if (mode == CAGE && count % 200 == 0) {
+      setMode(SCATTER);
+    }
     int XblinkyDis = p.getX() - ghosts.get(0).x;
     int YblinkyDis = p.getY() - ghosts.get(0).y;
     ArrayList<int[]> choices = new ArrayList<int[]>();
@@ -46,6 +50,14 @@ public class Inky extends Ghost {
       int choice = (int)(Math.random()*choices.size());
       newDir[0] = choices.get(choice)[0];
       newDir[1] = choices.get(choice)[1];
+    }
+    if (mode == CAGE) {
+      for (int i = 0; i < choices.size(); i++) {
+        if (inCage(x + choices.get(i)[0], y+choices.get(i)[1])) {
+          newDir[0] = choices.get(i)[0];
+          newDir[1] = choices.get(i)[1];
+        }
+      }
     }
   }
 }

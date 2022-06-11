@@ -227,23 +227,15 @@ public class Maze {
   }
 
   void respawn() {
-    count == 0;
+    count = 0;
     lives --;
     p.setX(23);
     p.setY(13);
     p.setSpeed(10);
-    ghosts.get(0).setX(11);
-    ghosts.get(0).setY(14);
-    ghosts.get(1).setX(15);
-    ghosts.get(1).setY(15);
-    ghosts.get(2).setX(15);
-    ghosts.get(2).setY(13);
-    ghosts.get(3).setY(15);
-    ghosts.get(3).setY(14);
-    for (int i = 0; i < ghosts.size(); i++) {
-      ghosts.get(i).setSpeed(12);
-      ghosts.get(i).setMode(SCATTER);
-    }
+    ghosts.set(0, new Blinky());
+    ghosts.set(1, new Clyde());
+    ghosts.set(2, new Pinky());
+    ghosts.set(3, new Inky());
   }
 
   void set(int xPos, int yPos, char c) {

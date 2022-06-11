@@ -5,8 +5,8 @@ final float SIXTH_PI = HALF_PI/3; // const for pacman arc;
 int ghostsKilled;
 int dotsEaten;
 boolean fruitSpawned;
-ArrayList<int[]> directional = new ArrayList<int[]>();
-ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
+ArrayList<int[]> directional;
+ArrayList<Ghost> ghosts;
 int count;
 boolean pause;
 
@@ -17,6 +17,8 @@ final static int FRIGHT = 2;
 final static int CAGE = 3;
 
 void setup() {
+  ghosts = new ArrayList<Ghost>();
+  directional = new ArrayList<int[]>();
   pause = false;
   count= 0;
   directional.add(new int[] {1, 0});
@@ -164,14 +166,14 @@ void draw() {
     //ghosts.eaten();
     for (int i = 0; i < ghosts.size(); i++) {
       if (ghosts.get(i).getX() == p.getX() && ghosts.get(i).getY() == p.getY()) {
-        if (!p.ability()) {
+        if (!p.ability() || ghosts.get(i).getMode() != FRIGHT) {
           map.respawn();
         } else {
           ghostsKilled += 1;
           map.addScore((int)(200*(Math.pow(2, ghostsKilled - 1))));
           ghosts.get(i).setX(14);
           ghosts.get(i).setY(12);
-          ghosts.get(i).setMode(CHASE);
+          ghosts.get(i).setMode(CAGE);
         }
       }
     }
@@ -213,8 +215,7 @@ void keyPressed() {
     } else if (key =='d' || keyCode == RIGHT) {
       p.setTryDir(1);
     } else if (key == 'r') {
-      map.respawn();
-      map = new Maze("highScore.txt", "pacman.txt");
+      setup();
     } else if (key == '1') {
       map.addLives(-1*(map.getLives()-1));
     } else if (key == '2') {
