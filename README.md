@@ -66,3 +66,6 @@ Jason: Added a few keyPress cheats to make dying faster. Modify addLevel so spee
 
 ##### 06/09/2022
 Ryan: added more keyPress cheats to display ghosts seperately. Will work on showing the square targeted by each ghost.
+
+##### 06/10/2022
+Ryan: target will show on each ghost with space bar press
