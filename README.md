@@ -3,6 +3,20 @@
 [Googledoc](https://docs.google.com/document/d/1tpnc-Wm02frSSIznljnABScj6-JBMjXSTv66EZFsAFE/edit)
 
 ### Compile Instructions
+To play the game just open up any of the code files in Processing.
+
+To move Pacman just use the WASD keys or the arrow keys.
+
+#### Buttons
++ **wasd/arrow** - movement
++ **1** - takes away one life, so you can lose faster
++ **2** - makes Pacman twice as fast
++ **3** - makes Pacman 50% slower
++ **x** - Ghosts are set to a faster speed and will "chase" after you. By chase they will use their brains and catch you quickly.
++ **4** - increase level by 1, level modifies speed and duration of effects
++ **5** - decrease level by 1
++ **p** - pauses the game
++ **l** - Pacman eats a power pellet that mimics the actual power pellet for a specific duration of time
 
 ### Development Log
 ##### 05/23/2022
@@ -69,3 +83,6 @@ Ryan: added more keyPress cheats to display ghosts seperately. Will work on show
 
 ##### 06/10/2022
 Ryan: target will show on each ghost with space bar press
+
+##### 06/11/2022
+Jason: Debugging existing code and modifying certain parameters. Added sprites for the ghosts. 
