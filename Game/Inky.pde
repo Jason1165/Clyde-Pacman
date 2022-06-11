@@ -5,8 +5,11 @@ public class Inky extends Ghost {
   }
 
   void chooseDir() {
-    if (mode == CAGE && count % 200 == 0) {
+    if (mode == CAGE && count % 240 == 0) {
       setMode(SCATTER);
+    }
+        if (mode == CHASE && count % 1800 == 0) {
+      mode = SCATTER;
     }
     int XblinkyDis = p.getX() - ghosts.get(0).x;
     int YblinkyDis = p.getY() - ghosts.get(0).y;

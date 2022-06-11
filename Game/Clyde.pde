@@ -5,10 +5,13 @@ public class Clyde extends Ghost {
   }
 
   void chooseDir() {
-    if (mode == CAGE && count > 300 && map.getScore() > 300) {
+    if (mode == CAGE && count > 420 && map.getScore() > 300) {
       setMode(SCATTER);
     }
-    
+    if (mode == CHASE && count % 1440 == 0) {
+      mode = SCATTER;
+    }
+
     ArrayList<int[]> choices = new ArrayList<int[]>();
     for (int i = 0; i < directional.size(); i++) {
       int[] temp = directional.get(i);
@@ -19,7 +22,7 @@ public class Clyde extends Ghost {
     }
 
     int tempLen = map.BFS(x, y, p.getX(), p.getY());
-    if (tempLen <= 8) {
+    if (tempLen <= 8 && mode != FRIGHT) {
       mode = SCATTER;
     }
     if (mode == SCATTER) {
@@ -58,8 +61,8 @@ public class Clyde extends Ghost {
     if (mode == CAGE) {
       for (int i = 0; i < choices.size(); i++) {
         if (inCage(x + choices.get(i)[0], y+choices.get(i)[1])) {
-        newDir[0] = choices.get(i)[0];
-        newDir[1] = choices.get(i)[1];
+          newDir[0] = choices.get(i)[0];
+          newDir[1] = choices.get(i)[1];
         }
       }
     }

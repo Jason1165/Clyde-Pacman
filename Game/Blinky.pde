@@ -5,7 +5,10 @@ public class Blinky extends Ghost {
   }
 
   void chooseDir() {
-    if (mode == CAGE && count % 100 == 0) {
+    if (mode == CAGE && count % 120 == 0) {
+      mode = SCATTER;
+    }
+    if (mode == CHASE && count % 1200 == 0) {
       mode = SCATTER;
     }
     ArrayList<int[]> choices = new ArrayList<int[]>();

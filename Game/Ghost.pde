@@ -83,16 +83,36 @@ public class Ghost implements Character {
     if (dirX() == 1 && dirY() == 0) dir = "d";
     if (count % 10 >= 4) num = "1";
     if (count % 10 <= 5) num = "2";
+    if (mode == FRIGHT) dir = "f";
     String file = "g"+dir+num+".png";
     PImage image = loadImage(file);
-    for (int i = 0; i < image.width; i++) {
-      for (int j = 0; j < image.width; j++) {
-        if (image.get(i, j) == color(0, 0, 0)) {
-          image.set(i, j, colour);
+    if (p.timer()!= 0 &&  p.timer() < 200 && p.timer() % 20 >= 10 && mode == FRIGHT) {
+      for (int i = 0; i < image.width; i++) {
+        for (int j = 0; j < image.width; j++) {
+          if (image.get(i, j) == color(0, 0, 255)) {
+            image.set(i, j, color(255, 255, 255));
+          }
+          if (image.get(i, j) == color(255, 255, 0)) {
+            image.set(i, j, color(255, 0, 0));
+          }
+          if (image.get(i, j) == color(255, 255, 153)) {
+            image.set(i, j, color(204, 0, 0));
+          }
         }
       }
+      image(image, xCor, yCor);
+    } else if (mode == FRIGHT) {
+      image(image, xCor, yCor);
+    } else {
+      for (int i = 0; i < image.width; i++) {
+        for (int j = 0; j < image.width; j++) {
+          if (image.get(i, j) == color(0, 0, 0)) {
+            image.set(i, j, colour);
+          }
+        }
+      }
+      image(image, xCor, yCor);
     }
-    image(image, xCor, yCor);
   }
 
   void setX(int newX) {

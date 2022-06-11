@@ -8,6 +8,9 @@ public class Pinky extends Ghost {
     if (mode == CAGE) {
       setMode(SCATTER);
     }
+    if (mode == CHASE && count % 840 == 0) {
+      mode = SCATTER;
+    }
     ArrayList<int[]> choices = new ArrayList<int[]>();
     for (int i = 0; i < directional.size(); i++) {
       int[] temp = directional.get(i);

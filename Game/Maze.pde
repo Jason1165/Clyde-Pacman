@@ -158,10 +158,10 @@ public class Maze {
         for (int i = 0; i < ghosts.size(); i++) {
           ghosts.get(i).setSpeed(ghosts.get(i).getSpeed()*pow(11.0/9, level));
         }
+        p.setSpeed(p.getSpeed()*pow(11.0/10, level));
       } else {
-        for (int i = 0; i < ghosts.size(); i++) {
-          ghosts.get(i).setSpeed(ghosts.get(i).getSpeed()*pow(9.0/11, level));
-        }
+        for (int i = 0; i < ghosts.size(); i++) 
+          p.setSpeed(p.getSpeed()*pow(10.0/11, level));
       }
     }
   }

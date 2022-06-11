@@ -28,7 +28,7 @@ void setup() {
 
   size(560, 720);
   map = new Maze("highScore.txt", "pacman.txt");
-  p = new Pacman(23, 13, 10);
+  p = new Pacman(23, 13, 8);
   // so it looks a smaller speed is actually faster due to frames 
   ghosts.add(new Blinky()); // red
   ghosts.add(new Clyde()); // pastel orange
