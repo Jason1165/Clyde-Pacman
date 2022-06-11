@@ -5,8 +5,10 @@ final float SIXTH_PI = HALF_PI/3; // const for pacman arc;
 int ghostsKilled;
 int dotsEaten;
 boolean fruitSpawned;
-ArrayList<int[]> directional = new ArrayList<int[]>();
-ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
+ArrayList<int[]> directional;
+ArrayList<Ghost> ghosts;
+int count;
+boolean pause;
 
 // modes
 final static int CHASE = 1;
@@ -15,7 +17,10 @@ final static int FRIGHT = 2;
 final static int CAGE = 3;
 
 void setup() {
-
+  ghosts = new ArrayList<Ghost>();
+  directional = new ArrayList<int[]>();
+  pause = false;
+  count= 0;
   directional.add(new int[] {1, 0});
   directional.add(new int[] {-1, 0});
   directional.add(new int[] {0, 1});
@@ -23,7 +28,7 @@ void setup() {
 
   size(560, 720);
   map = new Maze("highScore.txt", "pacman.txt");
-  p = new Pacman(23, 13, 12);
+  p = new Pacman(23, 13, 8);
   // so it looks a smaller speed is actually faster due to frames 
   ghosts.add(new Blinky()); // red
   ghosts.add(new Clyde()); // pastel orange
@@ -36,165 +41,166 @@ void setup() {
 } 
 
 void draw() {
-  float count = frameCount; 
+
+  if (!pause) {
+    count ++;
+  } 
   map.displayMaze();
 
   if (map.over()) {
     map.gameOverDisplay();
-  }
-
-  //ghosts.tick();
-
-  for (int i = 0; i < ghosts.size(); i++) {
-    Ghost g = ghosts.get(i);
-    if (count % g.getSpeed() < 1 && !map.over()) {
-      if (g.getY() == 1 && g.dirY() == -1 && map.get(g.getX(), g.getY()-1) == 'S') {
-        g.setY(28);
-        g.move();
-      } else if (g.getY() == 26 && g.dirY() == 1 && map.get(g.getX(), g.getY()+1) == 'S') {
-        g.setY(0);
-        g.move();
-      } else {
-        ghosts.get(i).move();
-        ghosts.get(i).chooseDir();
-        g.display(g.getY()*20, (g.getX()+down)*20);
-      }
-    } else if (map.over()) {
-      g.display(g.getY()*20, (g.getX()+down)*20);
-    } else {
-      g.display(g.getY()*20 + g.dirY()*(20/g.getSpeed()) * (count%g.getSpeed()), (g.getX()+down)*20 + g.dirX()*(20/g.getSpeed()) * (count%g.getSpeed()));
-    }
-  }
-
-  if (count % p.getSpeed() < 1 && !map.over()) {
-    if (p.getY() == 1 && p.getDir() == 3 && map.get(p.getX(), p.getY()-1) == 'S') {
-      p.setY(28);
-      p.move();
-    } else if (p.getY() == 26 && p.getDir() == 1 && map.get(p.getX(), p.getY()+1) == 'S') {
-      p.setY(0);
-      p.move();
-    } else if (map.isValid(p.getX() + p.dirX(), p.getY() + p.dirY(), true)) {
-      p.move();
-    }
-
-    p.display(p.getY()*20, (p.getX()+down)*20);
-
-    if (p.getTryDir() == 1) {
-      if (map.isValid(p.getX(), p.getY()+1, true)) {
-        p.setDir(p.getTryDir());
-        p.setTryDir(0);
-      }
-    } else if (p.getTryDir() == 2) {
-      if (map.isValid(p.getX()+1, p.getY(), true)) {
-        p.setDir(p.getTryDir());
-        p.setTryDir(0);
-      }
-    } else if (p.getTryDir() == 3) {
-      if (map.isValid(p.getX(), p.getY()-1, true)) {
-        p.setDir(p.getTryDir());
-        p.setTryDir(0);
-      }
-    } else if (p.getTryDir() == 4) {
-      if (map.isValid(p.getX()-1, p.getY(), true)) {
-        p.setDir(p.getTryDir());
-        p.setTryDir(0);
-      }
-    }
-
-    if (p.getDir() == 3) {
-      if (map.isValid(p.getX(), p.getY()-1, true)) {
-        p.setDir(0, -1);
-      }
-    } else if (p.getDir() == 4) {
-      if (map.isValid(p.getX()-1, p.getY(), true)) {
-        p.setDir(-1, 0);
-      }
-    } else if (p.getDir() == 1) {
-      if (map.isValid(p.getX(), p.getY()+1, true)) {
-        p.setDir(0, 1);
-      }
-    } else if (p.getDir() == 2) {
-      if (map.isValid(p.getX()+1, p.getY(), true)) {
-        p.setDir(1, 0);
-      }
-    }
   } else {
-    if (map.isValid(p.getX()+p.dirX(), p.getY()+p.dirY(), true)) {
-      p.display(p.getY()*20 + p.dirY()*(count%p.getSpeed())*(20/p.getSpeed()), (p.getX()+down)*20 + p.dirX()*(count%p.getSpeed())*(20/p.getSpeed()));
-    } else {
-      p.display(p.getY()*20, (p.getX()+down)*20);
-    }
-  }
-
-  // ACTUAL GAME LOGIC
-  if (map.get(p.getX(), p.getY()) == 'D') {
-    map.set(p.getX(), p.getY(), 'd');
-    map.addScore(10);
-    if (fruitSpawned == false) {
-      dotsEaten ++;
-    }
-  }
-
-  if (map.get(p.getX(), p.getY()) == 'f') {
-    map.set(p.getX(), p.getY(), 'S');
-    map.addScore(100);
-    fruitSpawned = false;
-  }
-
-  if (map.get(p.getX(), p.getY()) == 'P') {
-    map.set(p.getX(), p.getY(), 'p');
-    map.addScore(50);
-    p.setTimer((int)(p.getSpeed()*p.getSpeed()*10 / (1 + map.getLevel()/10.0) + p.timer()));
-    p.abilityChange(true);
     for (int i = 0; i < ghosts.size(); i++) {
-      ghosts.get(i).setMode(FRIGHT);
-    }
-  }
-
-  if (map.containsNoFood()) {
-    map.refillFood();
-    map.respawn();
-    map.addLevel(1);
-    // map level stuff
-  }
-
-  //ghosts.eaten();
-  for (int i = 0; i < ghosts.size(); i++) {
-    if (ghosts.get(i).getX() == p.getX() && ghosts.get(i).getY() == p.getY()) {
-      if (!p.ability()) {
-        map.respawn();
+      Ghost g = ghosts.get(i);
+      if (count % g.getSpeed() < 1 && !map.over() && !pause) {
+        if (g.getY() == 1 && g.dirY() == -1 && map.get(g.getX(), g.getY()-1) == 'S') {
+          g.setY(28);
+          g.move();
+        } else if (g.getY() == 26 && g.dirY() == 1 && map.get(g.getX(), g.getY()+1) == 'S') {
+          g.setY(0);
+          g.move();
+        } else {
+          ghosts.get(i).move();
+          ghosts.get(i).chooseDir();
+          g.display(g.getY()*20, (g.getX()+down)*20);
+        }
+      } else if (map.over()) {
+        g.display(g.getY()*20, (g.getX()+down)*20);
       } else {
-        ghostsKilled += 1;
-        map.addScore((int)(200*(Math.pow(2, ghostsKilled - 1))));
-        ghosts.get(i).setX(14);
-        ghosts.get(i).setY(12);
+        g.display(g.getY()*20 + g.dirY()*(20/g.getSpeed()) * (count%g.getSpeed()), (g.getX()+down)*20 + g.dirX()*(20/g.getSpeed()) * (count%g.getSpeed()));
+      }
+    }
+
+    if (count % p.getSpeed() < 1 && !map.over() && !pause) {
+      if (p.getY() == 1 && p.getDir() == 3 && map.get(p.getX(), p.getY()-1) == 'S') {
+        p.setY(28);
+        p.move();
+      } else if (p.getY() == 26 && p.getDir() == 1 && map.get(p.getX(), p.getY()+1) == 'S') {
+        p.setY(0);
+        p.move();
+      } else if (map.isValid(p.getX() + p.dirX(), p.getY() + p.dirY(), true)) {
+        p.move();
+      }
+
+      p.display(p.getY()*20, (p.getX()+down)*20);
+
+      if (p.getTryDir() == 1) {
+        if (map.isValid(p.getX(), p.getY()+1, true)) {
+          p.setDir(p.getTryDir());
+          p.setTryDir(0);
+        }
+      } else if (p.getTryDir() == 2) {
+        if (map.isValid(p.getX()+1, p.getY(), true)) {
+          p.setDir(p.getTryDir());
+          p.setTryDir(0);
+        }
+      } else if (p.getTryDir() == 3) {
+        if (map.isValid(p.getX(), p.getY()-1, true)) {
+          p.setDir(p.getTryDir());
+          p.setTryDir(0);
+        }
+      } else if (p.getTryDir() == 4) {
+        if (map.isValid(p.getX()-1, p.getY(), true)) {
+          p.setDir(p.getTryDir());
+          p.setTryDir(0);
+        }
+      }
+
+      if (p.getDir() == 3) {
+        if (map.isValid(p.getX(), p.getY()-1, true)) {
+          p.setDir(0, -1);
+        }
+      } else if (p.getDir() == 4) {
+        if (map.isValid(p.getX()-1, p.getY(), true)) {
+          p.setDir(-1, 0);
+        }
+      } else if (p.getDir() == 1) {
+        if (map.isValid(p.getX(), p.getY()+1, true)) {
+          p.setDir(0, 1);
+        }
+      } else if (p.getDir() == 2) {
+        if (map.isValid(p.getX()+1, p.getY(), true)) {
+          p.setDir(1, 0);
+        }
+      }
+    } else {
+      if (map.isValid(p.getX()+p.dirX(), p.getY()+p.dirY(), true)) {
+        p.display(p.getY()*20 + p.dirY()*(count%p.getSpeed())*(20/p.getSpeed()), (p.getX()+down)*20 + p.dirX()*(count%p.getSpeed())*(20/p.getSpeed()));
+      } else {
+        p.display(p.getY()*20, (p.getX()+down)*20);
+      }
+    }
+
+    // ACTUAL GAME LOGIC
+    if (map.get(p.getX(), p.getY()) == 'D') {
+      map.set(p.getX(), p.getY(), 'd');
+      map.addScore(10);
+      if (fruitSpawned == false) {
+        dotsEaten ++;
+      }
+    }
+
+    if (map.get(p.getX(), p.getY()) == 'f') {
+      map.set(p.getX(), p.getY(), 'S');
+      map.addScore(100);
+      fruitSpawned = false;
+    }
+
+    if (map.get(p.getX(), p.getY()) == 'P') {
+      map.set(p.getX(), p.getY(), 'p');
+      map.addScore(50);
+      p.setTimer((int)(p.getSpeed()*p.getSpeed()*10 / (1 + map.getLevel()/5.0) + p.timer()));
+      p.abilityChange(true);
+      for (int i = 0; i < ghosts.size(); i++) {
+        ghosts.get(i).setMode(FRIGHT);
+      }
+    }
+
+    if (map.containsNoFood()) {
+      map.refillFood();
+      map.respawn();
+      map.addLevel(1);
+      // map level stuff
+    }
+
+    //ghosts.eaten();
+    for (int i = 0; i < ghosts.size(); i++) {
+      if (ghosts.get(i).getX() == p.getX() && ghosts.get(i).getY() == p.getY()) {
+        if (!p.ability() || ghosts.get(i).getMode() != FRIGHT) {
+          map.respawn();
+        } else {
+          ghostsKilled += 1;
+          map.addScore((int)(200*(Math.pow(2, ghostsKilled - 1))));
+          ghosts.get(i).setX(14);
+          ghosts.get(i).setY(12);
+          ghosts.get(i).setMode(CAGE);
+        }
+      }
+    }
+
+    if (p.timer() > 0) {
+      p.setTimer(p.timer()-1);
+      // println(p.timer());
+    }
+
+    if (p.timer() == 1) {
+      p.abilityChange(false);
+      ghostsKilled = 0;
+      for (int i = 0; i < ghosts.size(); i++) {
         ghosts.get(i).setMode(CHASE);
       }
     }
-  }
 
-  if (p.timer() > 0) {
-    p.setTimer(p.timer()-1);
-    // println(p.timer());
-  }
-
-  if (p.timer() == 1) {
-    p.abilityChange(false);
-    ghostsKilled = 0;
-    for (int i = 0; i < ghosts.size(); i++) {
-      ghosts.get(i).setMode(CHASE);
+    if (map.getLives() == 0) {
+      map.gameOver();
+      map.storeHighScore("highScore.txt");
     }
-  }
 
-  if (map.getLives() == 0) {
-    map.gameOver();
-    map.storeHighScore("highScore.txt");
-  }
-
-  if (dotsEaten == 30) {
-    fruitSpawned = true;
-    dotsEaten = 0;
-    map.set(17, 14, 'f');
+    if (dotsEaten == 30) {
+      fruitSpawned = true;
+      dotsEaten = 0;
+      map.set(17, 14, 'f');
+    }
   }
 }
 
@@ -209,8 +215,7 @@ void keyPressed() {
     } else if (key =='d' || keyCode == RIGHT) {
       p.setTryDir(1);
     } else if (key == 'r') {
-      map.respawn();
-      map = new Maze("highScore.txt", "pacman.txt");
+      setup();
     } else if (key == '1') {
       map.addLives(-1*(map.getLives()-1));
     } else if (key == '2') {
@@ -226,6 +231,14 @@ void keyPressed() {
       map.addLevel(1);
     } else if (key == '5') {
       map.addLevel(-1);
+    } else if (key == 'p') {
+      pause = !pause;
+    } else if (key == 'l') {
+      p.setTimer((int)(420 + p.timer()));
+      p.abilityChange(true);
+      for (int i = 0; i < ghosts.size(); i++) {
+        ghosts.get(i).setMode(FRIGHT);
+      }
     }
   }
 }
