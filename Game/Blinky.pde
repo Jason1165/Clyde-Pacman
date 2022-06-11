@@ -1,6 +1,6 @@
 public class Blinky extends Ghost {
   Blinky() {
-    super(15, 12, 12, color(255, 0, 0));
+    super(15, 12, 12 * pow(19.0/20, map.getLevel() - 1), color(255, 0, 0));
     setMode(CAGE);
   }
 
@@ -8,7 +8,7 @@ public class Blinky extends Ghost {
     if (mode == CAGE && count % 120 == 0) {
       mode = SCATTER;
     }
-    if (mode == CHASE && count % 1200 == 0) {
+    if (mode == CHASE && count % (int)(1200 / (1+map.getLevel()-1)) == 0) {
       mode = SCATTER;
     }
     ArrayList<int[]> choices = new ArrayList<int[]>();

@@ -1,6 +1,6 @@
 public class Clyde extends Ghost {
   Clyde() {
-    super(15, 13, 12, color(255, 184, 82));
+    super(15, 13, 12 * pow(19.0/20, map.getLevel() - 1), color(255, 184, 82));
     setMode(CAGE);
   }
 
@@ -8,7 +8,7 @@ public class Clyde extends Ghost {
     if (mode == CAGE && count > 420 && map.getScore() > 300) {
       setMode(SCATTER);
     }
-    if (mode == CHASE && count % 1440 == 0) {
+    if (mode == CHASE && count % (int)(1440 / (1+map.getLevel()-1)) == 0) {
       mode = SCATTER;
     }
 

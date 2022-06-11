@@ -1,6 +1,6 @@
 public class Inky extends Ghost {
   Inky() {
-    super(15, 14, 12, color(0, 255, 255));
+    super(15, 14, 12 * pow(19.0/20, map.getLevel() - 1), color(0, 255, 255));
     setMode(CAGE);
   }
 
@@ -8,7 +8,7 @@ public class Inky extends Ghost {
     if (mode == CAGE && count % 240 == 0) {
       setMode(SCATTER);
     }
-        if (mode == CHASE && count % 1800 == 0) {
+        if (mode == CHASE && count % (int)(1800 / (1+map.getLevel()-1)) == 0) {
       mode = SCATTER;
     }
     int XblinkyDis = p.getX() - ghosts.get(0).x;

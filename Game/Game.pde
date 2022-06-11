@@ -149,7 +149,7 @@ void draw() {
     if (map.get(p.getX(), p.getY()) == 'P') {
       map.set(p.getX(), p.getY(), 'p');
       map.addScore(50);
-      p.setTimer((int)(p.getSpeed()*p.getSpeed()*10 / (1 + map.getLevel()/10.0) + p.timer()));
+      p.setTimer((int)(p.getSpeed()*p.getSpeed()*10 / (1 + map.getLevel()/5.0) + p.timer()));
       p.abilityChange(true);
       for (int i = 0; i < ghosts.size(); i++) {
         ghosts.get(i).setMode(FRIGHT);
@@ -233,6 +233,12 @@ void keyPressed() {
       map.addLevel(-1);
     } else if (key == 'p') {
       pause = !pause;
+    } else if (key == 'l') {
+      p.setTimer((int)(420 + p.timer()));
+      p.abilityChange(true);
+      for (int i = 0; i < ghosts.size(); i++) {
+        ghosts.get(i).setMode(FRIGHT);
+      }
     }
   }
 }

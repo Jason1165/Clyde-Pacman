@@ -152,17 +152,12 @@ public class Maze {
   }
 
   void addLevel(int num) {
-    level += num;
-    if (level != 0) {
-      if (num > 0) {
-        for (int i = 0; i < ghosts.size(); i++) {
-          ghosts.get(i).setSpeed(ghosts.get(i).getSpeed()*pow(11.0/9, level));
-        }
-        p.setSpeed(p.getSpeed()*pow(11.0/10, level));
-      } else {
-        for (int i = 0; i < ghosts.size(); i++) 
-          p.setSpeed(p.getSpeed()*pow(10.0/11, level));
+    if (level + num > 0) {
+      level += num;
+      for (int i = 0; i < ghosts.size(); i++) {
+        ghosts.get(i).setSpeed(12*pow(19.0/20, level));
       }
+      p.setSpeed(8*pow(99.0/100, level));
     }
   }
 

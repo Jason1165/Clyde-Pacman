@@ -1,6 +1,6 @@
 public class Pinky extends Ghost {
   Pinky() {
-    super(15, 15, 12, color(255, 184, 255));
+    super(15, 15, 12 * pow(19.0/20, map.getLevel() - 1), color(255, 184, 255));
     setMode(CAGE);
   }
 
@@ -8,7 +8,7 @@ public class Pinky extends Ghost {
     if (mode == CAGE) {
       setMode(SCATTER);
     }
-    if (mode == CHASE && count % 840 == 0) {
+    if (mode == CHASE && count % (int)(840 / (1+map.getLevel()-1)) == 0) {
       mode = SCATTER;
     }
     ArrayList<int[]> choices = new ArrayList<int[]>();
