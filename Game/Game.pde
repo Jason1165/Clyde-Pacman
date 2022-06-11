@@ -8,7 +8,7 @@ boolean fruitSpawned;
 ArrayList<int[]> directional = new ArrayList<int[]>();
 ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
 ArrayList<Ghost> ghostsTemp = new ArrayList<Ghost>();
-boolean display6, display7, display8, display9;
+boolean display6, display7, display8, display9, toggle6, toggle7, toggle8, toggle9;
 
 // modes
 final static int CHASE = 1;
@@ -40,6 +40,10 @@ void setup() {
   display7 = true;
   display8 = true;
   display9 = true;
+  toggle6 = false;
+  toggle7 = false;
+  toggle8 = false;
+  toggle9 = false;
 } 
 
 void draw() {
@@ -48,6 +52,19 @@ void draw() {
 
   if (map.over()) {
     map.gameOverDisplay();
+  }
+
+  if (toggle6) {
+    fill(255, 0, 0);
+    rect(p.getY()*20, p.getX()*20 + 20 * 3, 20, 20);
+  }
+  if (toggle7) {
+  }
+  if (toggle8) {
+    fill(255, 184, 255);
+    rect((p.getY() + 2 * p.dirY()) * 20, (p.getX() + 2 * p.dirX()) * 20 + 20 * 3, 20, 20);
+  }
+  if (toggle9) {
   }
 
   //ghosts.tick();
@@ -161,6 +178,11 @@ void draw() {
   if (map.containsNoFood()) {
     map.refillFood();
     map.respawn();
+    ghosts = ghostsTemp;
+    toggle6 = false;
+    toggle7 = false;
+    toggle8 = false;
+    toggle9 = false;  
     map.addLevel(1);
     // map level stuff
   }
@@ -169,6 +191,11 @@ void draw() {
   for (int i = 0; i < ghosts.size(); i++) {
     if (ghosts.get(i).getX() == p.getX() && ghosts.get(i).getY() == p.getY()) {
       if (!p.ability()) {
+        ghosts = ghostsTemp;
+        toggle6 = false;
+        toggle7 = false;
+        toggle8 = false;
+        toggle9 = false;  
         map.respawn();
       } else {
         ghostsKilled += 1;
@@ -233,61 +260,96 @@ void keyPressed() {
       map.addLevel(1);
     } else if (key == '5') {
       map.addLevel(-1);
-    }
-    else if(key == '6'){
+    } else if (key == '6') {
       display6 = true;
       display7 = false;
       display8 = false;
       display9 = false;
+      toggle6 = false;
+      toggle7 = false;
+      toggle8 = false;
+      toggle9 = false;
       ghosts = ghostsTemp;
       Ghost g = ghostsTemp.get(0);
       ArrayList<Ghost> ghostsNew = new ArrayList<Ghost>();
       ghostsNew.add(g);
       ghosts = ghostsNew;
-    }
-    else if(key == '7'){
+    } else if (key == '7') {
       display6 = false;
       display7 = true;
       display8 = false;
       display9 = false;
+      toggle6 = false;
+      toggle7 = false;
+      toggle8 = false;
+      toggle9 = false;
       ghosts = ghostsTemp;
       Ghost g = ghostsTemp.get(1);
       ArrayList<Ghost> ghostsNew = new ArrayList<Ghost>();
       ghostsNew.add(g);
       ghosts = ghostsNew;
-    }
-    else if(key == '8'){
+    } else if (key == '8') {
       display6 = false;
       display7 = false;
       display8 = true;
       display9 = false;
+      toggle6 = false;
+      toggle7 = false;
+      toggle8 = false;
+      toggle9 = false;
       ghosts = ghostsTemp;
       Ghost g = ghostsTemp.get(2);
       ArrayList<Ghost> ghostsNew = new ArrayList<Ghost>();
       ghostsNew.add(g);
       ghosts = ghostsNew;
-    }
-    else if(key == '9'){
+    } else if (key == '9') {
       display6 = false;
       display7 = false;
       display8 = false;
       display9 = true;
+      toggle6 = false;
+      toggle7 = false;
+      toggle8 = false;
+      toggle9 = false;
       ghosts = ghostsTemp;
       Ghost g = ghostsTemp.get(3);
       ArrayList<Ghost> ghostsNew = new ArrayList<Ghost>();
       ghostsNew.add(g);
       ghosts = ghostsNew;
-    }
-    else if(key == '0'){
+    } else if (key == '0') {
       display6 = true;
       display7 = true;
       display8 = true;
       display9 = true;
+      toggle6 = false;
+      toggle7 = false;
+      toggle8 = false;
+      toggle9 = false;
       ghosts = ghostsTemp;
-    }
-    else if(key == ' '){
-      if(display6){
-       rect(p.getX()*20, p.getY()*20, p.getX(), p.getY() );
+    } else if (key == ' ') {
+      if (display6 && !display7 && !display8 && !display9) {
+        toggle6 = true;
+        toggle7 = false;
+        toggle8 = false;
+        toggle9 = false;
+      }
+      if (!display6 && display7 && !display8 && !display9) {
+        toggle6 = false;
+        toggle7 = true;
+        toggle8 = false;
+        toggle9 = false;
+      }
+      if (!display6 && !display7 && display8 && !display9) {
+        toggle6 = false;
+        toggle7 = false;
+        toggle8 = true;
+        toggle9 = false;
+      }
+      if (!display6 && !display7 && !display8 && display9) {
+        toggle6 = false;
+        toggle7 = false;
+        toggle8 = false;
+        toggle9 = true;
       }
     }
   }
