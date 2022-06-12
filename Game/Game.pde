@@ -242,8 +242,7 @@ void keyPressed() {
       for (int i = 0; i < ghosts.size(); i++) {
         ghosts.get(i).setMode(FRIGHT);
       }
-    }
-    else if (key == 'c') {
+    } else if (key == 'c') {
       map.clearFood();
     }
   }
