@@ -49,6 +49,8 @@ void draw() {
 
   if (map.over()) {
     map.gameOverDisplay();
+  } else if (count <= 120) {
+    map.ready();
   } else {
     for (int i = 0; i < ghosts.size(); i++) {
       Ghost g = ghosts.get(i);
@@ -142,7 +144,7 @@ void draw() {
 
     if (map.get(p.getX(), p.getY()) == 'f') {
       map.set(p.getX(), p.getY(), 'S');
-      map.addScore(100);
+      map.addScore(100 * (map.getLevel()*2 - 1));
       fruitSpawned = false;
     }
 
@@ -159,6 +161,7 @@ void draw() {
     if (map.containsNoFood()) {
       map.refillFood();
       map.respawn();
+      map.addLives(1);
       map.addLevel(1);
       // map level stuff
     }
@@ -239,6 +242,9 @@ void keyPressed() {
       for (int i = 0; i < ghosts.size(); i++) {
         ghosts.get(i).setMode(FRIGHT);
       }
+    }
+    else if (key == 'c') {
+      map.clearFood();
     }
   }
 }
