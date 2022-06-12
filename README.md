@@ -1,4 +1,8 @@
 # Clyde-Pacman
+# Jason Lin & Ryan Lee
+### Project Description
+We plan to make the game Pacman in Processing. There will be a maze in which the player controls the character called Pacman and attempts to eat all the dots in the map and evade four ghosts. The ghosts will move in their own individual manner. If the player comes in contact with a ghost, they will lose a life. A player will start with three lives. As the player eats more dots, the ghosts will become faster, making the game harder. There will be pellets that give the player the ability to consume ghosts for a short duration. In this duration, the ghosts will try to run away from the player and if the player consumes a ghost, the ghost will go back to its spawning point. Whenever the player consumes a certain number of dots, a fruit will spawn in a particular location where the player can consume for extra points.
+
 ### Design Document #####
 [Googledoc](https://docs.google.com/document/d/1tpnc-Wm02frSSIznljnABScj6-JBMjXSTv66EZFsAFE/edit)
 
