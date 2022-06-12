@@ -264,7 +264,7 @@ public class Maze {
     displayMaze();
     fill(255, 255, 0);
     text("READY !", 240, 415);
-    ellipse(p.getY()*20+10, (p.getX()+down)*20+10, 20, 20);
+    ellipse(p.getY()*20+p.getRadius(), (p.getX()+down)*20+p.getRadius(), p.getRadius()*2, p.getRadius()*2);
   }
 
   boolean over() {
