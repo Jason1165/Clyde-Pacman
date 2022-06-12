@@ -6,7 +6,7 @@ public class Pacman implements Character {
   int x;
   int y;
   float speed;
-  final int radius = 12;
+  final int radius = 10;
   int dir;
   int[] newDir;
   int tryDir;
@@ -108,13 +108,20 @@ public class Pacman implements Character {
 
   void display(float xCor, float yCor) {
     fill(255, 255, 0);
-    arc(xCor+10, yCor+10, radius * 2, radius * 2, (dir*3-2)*SIXTH_PI, (dir*3+8)*SIXTH_PI, PIE);
-    //if (frameCount % 4 <= 2) {
-    //  arc(xCor+10, yCor+10, radius * 2, radius * 2, (dir*3-2)*SIXTH_PI, (dir*3+8)*SIXTH_PI, PIE);
-    //}
-    //else {
-    //  arc(xCor+10, yCor+10, radius * 2, radius * 2, (dir*2-1)*QUARTER_PI, (dir*2+5)*QUARTER_PI, PIE);
-    //}
+    //arc(xCor+10, yCor+10, radius * 2, radius * 2, (dir*3-2)*SIXTH_PI, (dir*3+8)*SIXTH_PI, PIE);
+    int module = count % 11;
+    if (module < 3) {
+      arc(xCor+10, yCor+10, radius * 2, radius * 2, (dir*3-2)*SIXTH_PI, (dir*3+8)*SIXTH_PI, PIE);
+    }
+    else if (module < 6){
+      arc(xCor+10, yCor+10, radius * 2, radius * 2, (dir*2-1)*QUARTER_PI, (dir*2+5)*QUARTER_PI, PIE);
+    }
+    else if (module < 9) {
+      arc(xCor+10, yCor+10, radius * 2, radius * 2, (dir*3-2)*SIXTH_PI, (dir*3+8)*SIXTH_PI, PIE);
+    }
+    else {
+      ellipse(xCor+10, yCor+10, radius * 2, radius * 2);
+    }
   }
 
   int getRadius() {

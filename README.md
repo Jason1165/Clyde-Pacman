@@ -17,6 +17,7 @@ To move Pacman just use the WASD keys or the arrow keys.
 + **5** - decrease level by 1
 + **p** - pauses the game
 + **l** - Pacman eats a power pellet that mimics the actual power pellet for a specific duration of time
++ **c** - Clears the map of any food and places a single food behind Pacman when possible. (Not possible when you respawn and last direction was up or down)
 
 ### Development Log
 ##### 05/23/2022
@@ -85,4 +86,7 @@ Ryan: added more keyPress cheats to display ghosts seperately. Will work on show
 Ryan: target will show on each ghost with space bar press
 
 ##### 06/11/2022
-Jason: Debugging existing code and modifying certain parameters. Added sprites for the ghosts. 
+Jason: Debugging existing code and modifying certain parameters. Added sprites for the ghosts.
+
+##### 06/12/2022
+Jason: A start screenish and clearFood().
