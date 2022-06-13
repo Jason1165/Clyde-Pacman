@@ -69,47 +69,50 @@ public class Ghost implements Character {
   boolean inCage() {
     return (x >= 13 && x <= 17) && (y >= 10 && y <= 17);
   }
-  
+
   boolean inCage(int xCor, int yCor) {
     return (xCor >= 13 && xCor <= 17) && (yCor >= 10 && yCor <= 17);
   }
 
   void display(float xCor, float yCor) {
-    fill(colour);
-    if (p.timer()>0) {
-      fill(0, 0, 255);
+    String dir = "";
+    String num = "";
+    if (dirX() == 0 && dirY() == 1) dir = "r";
+    if (dirX() == 0 && dirY() == -1) dir = "l";
+    if (dirX() == -1 && dirY() == 0) dir = "u";
+    if (dirX() == 1 && dirY() == 0) dir = "d";
+    if (count % 10 >= 4) num = "1";
+    if (count % 10 <= 5) num = "2";
+    if (mode == FRIGHT) dir = "f";
+    String file = "g"+dir+num+".png";
+    PImage image = loadImage(file);
+    if (p.timer()!= 0 &&  p.timer() < 200 && p.timer() % 20 >= 10 && mode == FRIGHT) {
+      for (int i = 0; i < image.width; i++) {
+        for (int j = 0; j < image.width; j++) {
+          if (image.get(i, j) == color(0, 0, 255)) {
+            image.set(i, j, color(255, 255, 255));
+          }
+          if (image.get(i, j) == color(255, 255, 0)) {
+            image.set(i, j, color(255, 0, 0));
+          }
+          if (image.get(i, j) == color(255, 255, 153)) {
+            image.set(i, j, color(204, 0, 0));
+          }
+        }
+      }
+      image(image, xCor, yCor);
+    } else if (mode == FRIGHT) {
+      image(image, xCor, yCor);
+    } else {
+      for (int i = 0; i < image.width; i++) {
+        for (int j = 0; j < image.width; j++) {
+          if (image.get(i, j) == color(0, 0, 0)) {
+            image.set(i, j, colour);
+          }
+        }
+      }
+      image(image, xCor, yCor);
     }
-    rect(xCor+8, yCor+3, 3, 1);
-    rect(xCor+6, yCor+4, 7, 1);
-    rect(xCor+5, yCor+5, 9, 1);
-    rect(xCor+4, yCor+6, 3, 1);
-    rect(xCor+9, yCor+6, 3, 1);
-    rect(xCor+14, yCor+6, 1, 1);
-    rect(xCor+3, yCor+9, 1, 8);
-    rect(xCor+4, yCor+7, 1, 9);
-    rect(xCor+5, yCor+7, 1, 8);
-    rect(xCor+6, yCor+10, 1, 6);
-    rect(xCor+7, yCor+11, 1, 6);
-    rect(xCor+8, yCor+11, 1, 4);
-    rect(xCor+9, yCor+10, 1, 5);
-    rect(xCor+10, yCor+7, 1, 10);
-    rect(xCor+11, yCor+10, 1, 7);
-    rect(xCor+12, yCor+11, 1, 5);
-    rect(xCor+13, yCor+11, 1, 4);
-    rect(xCor+14, yCor+10, 1, 6);
-    rect(xCor+15, yCor+9, 1, 8);
-    fill(255);
-    rect(xCor+7, yCor+6, 2, 1);
-    rect(xCor+6, yCor+7, 2, 2);
-    rect(xCor+6, yCor+9, 4, 1);
-    rect(xCor+7, yCor+10, 2, 1);
-    rect(xCor+12, yCor+6, 2, 1);
-    rect(xCor+11, yCor+7, 2, 2);
-    rect(xCor+11, yCor+9, 4, 1);
-    rect(xCor+12, yCor+10, 2, 1);
-    fill(0, 0, 255);
-    rect(xCor+8, yCor+7, 2, 2);
-    rect(xCor+13, yCor+7, 2, 2);
   }
 
   void setX(int newX) {

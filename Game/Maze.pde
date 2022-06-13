@@ -123,6 +123,7 @@ public class Maze {
     text("1UP", 60, 20);
     text("HIGH SCORE " + highScore, 200, 20); 
     text("SCORE " + score, 160, 40);
+    text("LEVEL: " + map.getLevel(), 460, 700);
     fill(255, 255, 0);
     // lives left, you are using one of your lives
     for (int i = 1; i < lives; i++) {
@@ -152,17 +153,12 @@ public class Maze {
   }
 
   void addLevel(int num) {
-    level += num;
-    if (level != 0) {
-      if (num > 0) {
-        for (int i = 0; i < ghosts.size(); i++) {
-          ghosts.get(i).setSpeed(ghosts.get(i).getSpeed()*0.95);
-        }
-      } else {
-        for (int i = 0; i < ghosts.size(); i++) {
-          ghosts.get(i).setSpeed(ghosts.get(i).getSpeed()*1.05);
-        }
+    if (level + num > 0) {
+      level += num;
+      for (int i = 0; i < ghosts.size(); i++) {
+        ghosts.get(i).setSpeed(12*pow(19.0/20, level));
       }
+      p.setSpeed(8*pow(99.0/100, level));
     }
   }
 
@@ -210,6 +206,19 @@ public class Maze {
     return true;
   }
 
+  void clearFood() {
+    for (int i = 0; i < maze.length; i++) {
+      for (int j = 0; j < maze[i].length; j++) {
+        if (maze[i][j] == 'D') maze[i][j] = 'd';
+        if (maze[i][j] == 'P') maze[i][j] = 'p';
+        if (maze[i][j] == 'f') maze[i][j] = 'S';
+      }
+    }
+    if (isValid(p.getX() - p.dirX(), p.getY() - p.dirY(), true)) {
+      maze[p.getX() - p.dirX()][p.getY() - p.dirY()] = 'D';
+    }
+  }
+
   char get(int xV, int yV) {
     //if (xV < 0 || yV < 0 || xV >= maze.length  || yV >= maze[0].length) {
     //  println(xV + " " + yV);
@@ -227,16 +236,18 @@ public class Maze {
   }
 
   void respawn() {
+    set(17, 14, 'S');
+    fruitSpawned = false;
+    dotsEaten = 0;
+    count = 0;
     lives --;
     p.setX(23);
     p.setY(13);
-    ghosts.get(0).setX(11);
-    ghosts.get(0).setY(14);
-    ghosts.get(1).setX(15);
-    ghosts.get(1).setY(15);
-    ghosts.get(2).setX(15);
-    ghosts.get(2).setY(13);
-    ghosts.set(3, new Ghost(15, 14, 12, color(0, 255, 255))); // pastel orange
+    p.setSpeed(8*pow(99.0/100, level));
+    ghosts.set(0, new Blinky());
+    ghosts.set(1, new Clyde());
+    ghosts.set(2, new Pinky());
+    ghosts.set(3, new Inky());
   }
 
   void set(int xPos, int yPos, char c) {
@@ -247,6 +258,13 @@ public class Maze {
     displayMaze();
     fill(255);
     text("GAME OVER", 220, 565);
+  }
+
+  void ready() {
+    displayMaze();
+    fill(255, 255, 0);
+    text("READY !", 240, 415);
+    ellipse(p.getY()*20+p.getRadius(), (p.getX()+down)*20+p.getRadius(), p.getRadius()*2, p.getRadius()*2);
   }
 
   boolean over() {

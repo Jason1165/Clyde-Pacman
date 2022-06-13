@@ -1,8 +1,27 @@
 # Clyde-Pacman
+### Jason Lin & Ryan Lee
+### Project Description
+We plan to make the game Pacman in Processing. There will be a maze in which the player controls the character called Pacman and attempts to eat all the dots in the map and evade four ghosts. The ghosts will move in their own individual manner. If the player comes in contact with a ghost, they will lose a life. A player will start with three lives. As the player eats more dots, the ghosts will become faster, making the game harder. There will be pellets that give the player the ability to consume ghosts for a short duration. In this duration, the ghosts will try to run away from the player and if the player consumes a ghost, the ghost will go back to its spawning point. Whenever the player consumes a certain number of dots, a fruit will spawn in a particular location where the player can consume for extra points.
+
 ### Design Document #####
 [Googledoc](https://docs.google.com/document/d/1tpnc-Wm02frSSIznljnABScj6-JBMjXSTv66EZFsAFE/edit)
 
 ### Compile Instructions
+To play the game just open up any of the code files in Processing.
+
+To move Pacman just use the WASD keys or the arrow keys.
+
+#### Buttons
++ **wasd/arrow** - movement
++ **1** - takes away one life, so you can lose faster
++ **2** - makes Pacman twice as fast
++ **3** - makes Pacman 50% slower
++ **x** - Ghosts are set to a faster speed and will "chase" after you. By chase they will use their brains and catch you quickly.
++ **4** - increase level by 1, level modifies speed and duration of effects
++ **5** - decrease level by 1
++ **p** - pauses the game
++ **l** - Pacman eats a power pellet that mimics the actual power pellet for a specific duration of time
++ **c** - Clears the map of any food and places a single food behind Pacman when possible. (Not possible when you respawn and last direction was up or down)
 
 ### Development Log
 ##### 05/23/2022
@@ -63,3 +82,15 @@ Ryan: Cleaned up some code in Pinky and I will work on Inky (blue).
 Ryan: Started working on Inky.
 
 Jason: Added a few keyPress cheats to make dying faster. Modify addLevel so speed of characters increased.
+
+##### 06/09/2022
+Ryan: added more keyPress cheats to display ghosts seperately. Will work on showing the square targeted by each ghost.
+
+##### 06/10/2022
+Ryan: target will show on each ghost with space bar press
+
+##### 06/11/2022
+Jason: Debugging existing code and modifying certain parameters. Added sprites for the ghosts.
+
+##### 06/12/2022
+Jason: A start screenish and clearFood().
