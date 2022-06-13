@@ -55,19 +55,46 @@ void setup() {
 void draw() {
   map.displayMaze();
   if (toggle6) {
-    fill(255, 0, 0);
-    rect(p.getY()*20, p.getX()*20 + 20 * 3, 20, 20);
+    if (ghosts.get(0).getMode() == CHASE) {
+      fill(255, 0, 0);
+      rect(p.getY()*20, p.getX()*20 + 20 * 3, 20, 20);
+    }
+    else if (ghosts.get(0).getMode() == SCATTER) {
+      fill(255, 0, 0);
+      rect(26*20, 20 + 20 * 3, 20, 20);
+    }
   }
   if (toggle7) {
-    fill(255, 184, 82);
-    rect(p.getY()*20, p.getX()*20 + 20 * 3, 20, 20);
+    if (ghosts.get(0).getMode() == CHASE) {
+      fill(255, 184, 82);
+      rect(p.getY()*20, p.getX()*20 + 20 * 3, 20, 20);
+    }
+    else if (ghosts.get(0).getMode() == SCATTER) {
+      fill(255, 184, 82);
+      rect(20, 29 * 20 + 20 * 3, 20, 20);
+    }
   }
   if (toggle8) {
-    fill(255, 184, 255);
-    rect((p.getY() + 2 * p.dirY()) * 20, (p.getX() + 2 * p.dirX()) * 20 + 20 * 3, 20, 20);
+    if (ghosts.get(0).getMode() == CHASE) {
+      fill(255, 184, 255);
+      rect((p.getY() + 2 * p.dirY()) * 20, (p.getX() + 2 * p.dirX()) * 20 + 20 * 3, 20, 20);
+    }
+    else if (ghosts.get(0).getMode() == SCATTER) {
+      fill(255, 184, 255);
+      rect(20, 20 + 20 * 3, 20, 20);
+    }
   }
   if (toggle9) {
-    
+    if (ghosts.get(1).getMode() == CHASE) {
+      fill(0, 255, 255);
+      int XblinkyDis = p.getX() - ghosts.get(0).x;
+      int YblinkyDis = p.getY() - ghosts.get(0).y;
+      rect((p.getY() + 2 * YblinkyDis) * 20, (p.getX() + 2 * XblinkyDis) * 20 + 20 * 3, 20, 20);
+    }
+    else if (ghosts.get(1).getMode() == SCATTER) {
+      fill(0, 255, 255);
+      rect(26 * 20, 29 * 20 + 20 * 3, 20, 20);
+    }
   }
 
   if (!pause) {
@@ -187,6 +214,11 @@ void draw() {
 
     if (map.containsNoFood()) {
       map.refillFood();
+      ghosts = ghostsTemp;
+      toggle6 = false;
+      toggle7 = false;
+      toggle8 = false;
+      toggle9 = false; 
       map.respawn();
       map.addLives(1);
       map.addLevel(1);
@@ -197,6 +229,11 @@ void draw() {
     for (int i = 0; i < ghosts.size(); i++) {
       if (ghosts.get(i).getX() == p.getX() && ghosts.get(i).getY() == p.getY()) {
         if (!p.ability() || ghosts.get(i).getMode() != FRIGHT) {
+          ghosts = ghostsTemp;
+          toggle6 = false;
+          toggle7 = false;
+          toggle8 = false;
+          toggle9 = false; 
           map.respawn();
         } else {
           ghostsKilled += 1;
@@ -348,7 +385,9 @@ void keyPressed() {
       toggle9 = false;
       ghosts = ghostsTemp;
       Ghost g = ghostsTemp.get(3);
+      Ghost g1 = ghostsTemp.get(0);
       ArrayList<Ghost> ghostsNew = new ArrayList<Ghost>();
+      ghostsNew.add(g1);
       ghostsNew.add(g);
       ghosts = ghostsNew;
     } else if (key == '0') {
