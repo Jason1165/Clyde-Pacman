@@ -260,7 +260,7 @@ void draw() {
 
     //ghosts.eaten();
     for (int i = 0; i < ghosts.size(); i++) {
-      if (ghosts.get(i).getX() == p.getX() && ghosts.get(i).getY() == p.getY()) {
+      if (abs(ghosts.get(i).getX() - p.getX()) < 1 && abs(ghosts.get(i).getY() - p.getY()) < 1) {
         if (!p.ability() || ghosts.get(i).getMode() != FRIGHT) {
           ghosts = ghostsTemp;
           toggle6 = false;
