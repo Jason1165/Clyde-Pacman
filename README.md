@@ -19,6 +19,12 @@ To move Pacman just use the WASD keys or the arrow keys.
 + **x** - Ghosts are set to a faster speed and will "chase" after you. By chase they will use their brains and catch you quickly.
 + **4** - increase level by 1, level modifies speed and duration of effects
 + **5** - decrease level by 1
++ **6** - Display only Blinky, the red ghost. (Press only when all the ghosts are outside the "Cage" or else they may get stuck)
++ **7** - Display only Clyde, the yellow ghost. (Press only when all the ghosts are outside the "Cage" or else they may get stuck)
++ **8** - Display only Pinky, the pink ghost. (Press only when all the ghosts are outside the "Cage" or else they may get stuck)
++ **9** - Display only Inky, the blue ghost, and Blinky, the red ghost. (This is because when Inky chases, it is dependent on the location of Blinky) (Press only when all the ghosts are outside the "Cage" or else they may get stuck)
++ **0** - Bring back all the ghosts if you have pressed any of 6-9.
++ ** ** - (spacebar) If any of 6-9 have been pressed, the square that the designated ghost will target will be highlighted its color.
 + **p** - pauses the game
 + **l** - Pacman eats a power pellet that mimics the actual power pellet for a specific duration of time
 + **c** - Clears the map of any food and places a single food behind Pacman when possible. (Not possible when you respawn and last direction was up or down)
@@ -92,5 +98,9 @@ Ryan: target will show on each ghost with space bar press
 ##### 06/11/2022
 Jason: Debugging existing code and modifying certain parameters. Added sprites for the ghosts.
 
+Ryan: working on cheat codes for the ghosts.
+
 ##### 06/12/2022
 Jason: A start screenish and clearFood().
+
+Ryan: finished cheat codes for ghosts.
