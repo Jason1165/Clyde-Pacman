@@ -59,6 +59,8 @@ void draw() {
     rect(p.getY()*20, p.getX()*20 + 20 * 3, 20, 20);
   }
   if (toggle7) {
+    fill(255, 184, 82);
+    rect(p.getY()*20, p.getX()*20 + 20 * 3, 20, 20);
   }
   if (toggle8) {
     fill(255, 184, 255);
